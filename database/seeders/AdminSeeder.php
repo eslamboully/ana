@@ -60,7 +60,8 @@ class AdminSeeder extends Seeder
         SmallBoard::create([
             'title' => 'To Do',
             'board_id' => 1,
-            'bg-color' => 'blue'
+            'bg-color' => 'blue',
+            'count_number' => 1
         ]);
 
         VerySmallBoard::create([
