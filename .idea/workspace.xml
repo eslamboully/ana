@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/VerySmallBoard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VerySmallBoard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +18,7 @@
     </execution>
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="5442" />
+    <option name="totalTimeSeconds" value="5613" />
     <option name="idleThresholdMs" value="2000" />
     <option name="autoCountIdleSeconds" value="2" />
   </component>
@@ -216,7 +211,7 @@
       <workItem from="1601193859617" duration="34995000" />
       <workItem from="1601557780639" duration="5220000" />
       <workItem from="1601722942393" duration="35182000" />
-      <workItem from="1601978677308" duration="13108000" />
+      <workItem from="1601978677308" duration="14015000" />
     </task>
     <servers />
   </component>

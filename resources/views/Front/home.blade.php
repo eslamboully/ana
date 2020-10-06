@@ -408,7 +408,7 @@
                 let formData = new FormData();
                 formData.append('file', $('input[name=attachment_file]')[0].files[0]);
                 formData.append('comment', comment);
-                formData.append('labelColor', labelColor);
+                formData.append('border', labelColor);
                 formData.append('id', id);
                 formData.append('dueDate', dueDate);
                 formData.append('title', title);
