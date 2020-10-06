@@ -27,6 +27,14 @@
     <!-- END: Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url('Front') }}/app-assets/css{{ App()->getLocale() == 'ar' ? '-rtl' : '' }}/custom/custom.css">
 
+    @if(App()->getLocale() == 'ar')
+        <link href="https://fonts.googleapis.com/css?family=Cairo:400,700" rel="stylesheet">
+        <style>
+            body, h1, h2, h3, h4, h5, h6, a, li, label, input, span, button th, td, p ,tr{
+                font-family: 'Cairo', sans-serif !important;
+            }
+        </style>
+    @endif
 
     @stack('css')
 </head>
@@ -37,15 +45,15 @@
 <!-- BEGIN: Header-->
 <header class="page-topbar" id="header">
     <div class="navbar navbar-fixed">
-        <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-light-blue-cyan">
+        <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-light-orange-cyan" style="background-color: #FFC107">
             <div class="nav-wrapper">
                 <ul class="left">
                     <li>
-                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="index.html"><img src="{{ url('Front') }}/app-assets/images/logo/materialize-logo.png" alt="materialize logo"><span class="logo-text hide-on-med-and-down">Materialize</span></a></h1>
+                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="index.html"><img src="{{ url('Front') }}/app-assets/images/logo/materialize-logo.png" alt="materialize logo"><span class="logo-text hide-on-med-and-down">@lang('front.site_name')</span></a></h1>
                     </li>
                 </ul>
-                <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons">search</i>
-                    <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Explore Materialize" data-search="template-list">
+                <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons" style="font-family: 'Cairo', sans-serif !important;"> @lang('front.search')</i>
+                    <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="@lang('front.search_desc')" data-search="template-list">
                     <ul class="search-list collection display-none"></ul>
                 </div>
                 <ul class="navbar-list right">
@@ -53,7 +61,7 @@
                     <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                     <li class="hide-on-large-only"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search </i></a></li>
                     <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge orange accent-3">5</small></i></a></li>
-                    <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{ url('Front') }}/app-assets/images/avatar/avatar-7.png" alt="avatar"><i></i></span></a></li>
+                    <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" alt="avatar"><i></i></span></a></li>
                     <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
                 </ul>
                 <!-- translation-button-->
@@ -109,271 +117,43 @@
         <nav class="white hide-on-med-and-down" id="horizontal-nav">
             <div class="nav-wrapper">
                 <ul class="left hide-on-med-and-down" id="ul-horizontal-nav" data-menu="menu-navigation">
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="DashboardDropdown"><i class="material-icons">dashboard</i><span><span class="dropdown-title" data-i18n="Dashboard">Dashboard</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
+                    <li>
+                        <a class="dropdown-menu" href="Javascript:void(0)" data-target="DashboardDropdown">
+                            <i class="material-icons">dashboard</i>
+                            <span>
+                                <span class="dropdown-title" data-i18n="Dashboard">
+                                    @lang('front.dashboard')
+                                </span>
+                                <i class="material-icons right">keyboard_arrow_down</i>
+                            </span>
+                        </a>
                         <ul class="dropdown-content dropdown-horizontal-list" id="DashboardDropdown">
-                            <li data-menu=""><a href="dashboard-modern.html"><span data-i18n="Modern">Modern</span></a>
+                            <li data-menu=""><a href="{{ route('home') }}"><span data-i18n="Modern">@lang('front.my')</span></a>
                             </li>
-                            <li data-menu=""><a href="dashboard-ecommerce.html"><span data-i18n="eCommerce">eCommerce</span></a>
-                            </li>
-                            <li data-menu=""><a href="dashboard-analytics.html"><span data-i18n="Analytics">Analytics</span></a>
+                            <li data-menu=""><a href="#"><span data-i18n="eCommerce">@lang('front.latest_ques')</span></a>
                             </li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="TemplatesDropdown"><i class="material-icons">dvr</i><span><span class="dropdown-title" data-i18n="Templates">Templates</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
+                    <li>
+                        <a class="dropdown-menu" href="Javascript:void(0)" data-target="TemplatesDropdown">
+                            <i class="material-icons">dvr</i>
+                            <span>
+                                <span class="dropdown-title" data-i18n="Templates">
+                                    @lang('front.permissions')
+                                </span>
+                                <i class="material-icons right">keyboard_arrow_down</i>
+                            </span>
+                        </a>
                         <ul class="dropdown-content dropdown-horizontal-list" id="TemplatesDropdown">
-                            <li data-menu=""><a href="../vertical-modern-menu-template/"><span data-i18n="Modern Menu">Modern Menu</span></a>
-                            </li>
-                            <li data-menu=""><a href="../vertical-menu-nav-dark-template/"><span data-i18n="Navbar Dark">Navbar Dark</span></a>
-                            </li>
-                            <li data-menu=""><a href="../vertical-gradient-menu-template/"><span data-i18n="Gradient Menu">Gradient Menu</span></a>
-                            </li>
-                            <li data-menu=""><a href="../vertical-dark-menu-template/"><span data-i18n="Dark Menu">Dark Menu</span></a>
-                            </li>
-                            <li data-menu=""><a href="../horizontal-menu-template/"><span data-i18n="Horizontal Menu">Horizontal Menu</span></a>
+                            <li data-menu=""><a href="../vertical-modern-menu-template/"><span data-i18n="Modern Menu">لوح اخري</span></a>
                             </li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AppsDropdown"><i class="material-icons">mail_outline</i><span><span class="dropdown-title" data-i18n="Apps">Apps</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
+                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AppsDropdown"><i class="material-icons">mail_outline</i><span><span class="dropdown-title" data-i18n="Apps">@lang('front.settings')</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
                         <ul class="dropdown-content dropdown-horizontal-list" id="AppsDropdown">
-                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">Mail</span></a>
+                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.settings')</span></a>
                             </li>
-                            <li data-menu=""><a href="app-chat.html"><span data-i18n="Chat">Chat</span></a>
-                            </li>
-                            <li data-menu=""><a href="app-todo.html"><span data-i18n="ToDo">ToDo</span></a>
-                            </li>
-                            <li data-menu=""><a href="app-contacts.html"><span data-i18n="Contacts">Contacts</span></a>
-                            </li>
-                            <li data-menu=""><a href="app-calendar.html"><span data-i18n="Calendar">Calendar</span></a>
-                            </li>
-                            <li class="active" data-menu=""><a href="app-kanban.html"><span data-i18n="Kanban">Kanban</span></a>
-                            </li>
-                            <li data-menu=""><a href="app-file-manager.html"><span data-i18n="File Manager">File manager</span></a>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="invoiceDropdown"><span data-i18n="Invoice">Invoice</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="invoiceDropdown">
-                                    <li data-menu=""><a href="app-invoice-list.html"><span data-i18n="Invoice List">Invoice List</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="app-invoice-view.html"><span data-i18n="Invoice View">Invoice View</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="app-invoice-edit.html"><span data-i18n="Invoice Edit">Invoice Edit</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="app-invoice-add.html"><span data-i18n="Invoice Add">Invoice Add</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="eCommerceDropdown"><span data-i18n="eCommerce">eCommerce</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="eCommerceDropdown">
-                                    <li data-menu=""><a href="eCommerce-products-page.html"><span data-i18n="Products Page">Products Page</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="eCommerce-pricing.html"><span data-i18n="Pricing">Pricing</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="PageDropdown"><i class="material-icons">content_paste</i><span><span class="dropdown-title" data-i18n="Pages">Pages</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="PageDropdown">
-                            <li data-menu=""><a href="page-contact.html"><span data-i18n="Contact">Contact</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-blog-list.html"><span data-i18n="Blog">Blog</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-search.html"><span data-i18n="Search">Search</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-knowledge.html"><span data-i18n="Knowledge">Knowledge</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-timeline.html"><span data-i18n="Timeline">Timeline</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-faq.html"><span data-i18n="FAQs">FAQs</span></a>
-                            </li>
-                            <li data-menu=""><a href="page-blank.html"><span data-i18n="Page Blank">Page Blank</span></a>
-                            </li>
-                            <li data-menu=""><a href="user-profile-page.html"><span data-i18n="User Profile">User Profile</span></a>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="userDropdown"><span data-i18n="User">User</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="userDropdown">
-                                    <li data-menu=""><a href="page-users-list.html"><span data-i18n="List">List</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="page-users-view.html"><span data-i18n="View">View</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="page-users-edit.html"><span data-i18n="Edit">Edit</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="mediasDropdown"><span data-i18n="Medias">Medias</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="mediasDropdown">
-                                    <li data-menu=""><a href="media-gallery-page.html"><span data-i18n="Gallery Page">Gallery Page</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="media-hover-effects.html"><span data-i18n="Media Hover Effects">Media Hover Effects</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="authDropdown"><span data-i18n="Authentication">Authentication</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="authDropdown">
-                                    <li data-menu=""><a href="user-login.html" target="_blank"><span data-i18n="Login">Login</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="user-register.html" target="_blank"><span data-i18n="Register">Register</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="user-forgot-password.html" target="_blank"><span data-i18n="Forgot Password">Forgot Password</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="user-lock-screen.html" target="_blank"><span data-i18n="Lock Screen">Lock Screen</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="miscDropdown"><span data-i18n="Misc">Misc</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="miscDropdown">
-                                    <li data-menu=""><a href="page-404.html" target="_blank"><span data-i18n="404">404</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="page-500.html" target="_blank"><span data-i18n="500">500</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="page-maintenance.html" target="_blank"><span data-i18n="Page Maintenanace">Page Maintenanace</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li data-menu=""><a href="page-account-settings.html"><span data-i18n="Account Settings">Account Settings</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="Cards"><i class="material-icons">cast</i><span><span class="dropdown-title" data-i18n="Cards">Cards</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="Cards">
-                            <li data-menu=""><a href="cards-basic.html"><span data-i18n="Cards">Cards</span></a>
-                            </li>
-                            <li data-menu=""><a href="cards-advance.html"><span data-i18n="Cards Advance">Cards Advance</span></a>
-                            </li>
-                            <li data-menu=""><a href="cards-extended.html"><span data-i18n="Cards Extended">Cards Extended</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="CssDropdown"><i class="material-icons">invert_colors</i><span><span class="dropdown-title" data-i18n="CSS">CSS</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="CssDropdown">
-                            <li data-menu=""><a href="css-typography.html"><span data-i18n="Typograpy">Typograpy</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-color.html"><span data-i18n="Color">Color</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-grid.html"><span data-i18n="Grid">Grid</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-helpers.html"><span data-i18n="Helpers">Helpers</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-media.html"><span data-i18n="Media">Media</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-pulse.html"><span data-i18n="Pulse">Pulse</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-sass.html"><span data-i18n="Sass">Sass</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-shadow.html"><span data-i18n="Shadow">Shadow</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-animations.html"><span data-i18n="Animations">Animations</span></a>
-                            </li>
-                            <li data-menu=""><a href="css-transitions.html"><span data-i18n="Transitions">Transitions</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="BasicUIDropdown"><i class="material-icons">photo_filter</i><span><span class="dropdown-title" data-i18n="Basic UI">Basic UI</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="BasicUIDropdown">
-                            <li data-menu=""><a href="ui-basic-buttons.html"><span data-i18n="Basic Buttons">Basic Buttons</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-extended-buttons.html"><span data-i18n="Extended Buttons">Extended Buttons</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-icons.html"><span data-i18n="Icons">Icons</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-alerts.html"><span data-i18n="Alerts">Alerts</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-badges.html"><span data-i18n="Badges">Badges</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-breadcrumbs.html"><span data-i18n="Breadcrumbs">Breadcrumbs</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-chips.html"><span data-i18n="Chips">Chips</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-collections.html"><span data-i18n="Collections">Collections</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-navbar.html"><span data-i18n="Navbar">Navbar</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-pagination.html"><span data-i18n="Pagination">Pagination</span></a>
-                            </li>
-                            <li data-menu=""><a href="ui-preloader.html"><span data-i18n="Preloader">Preloader</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AdvancedUIDropdown"><i class="material-icons">settings_brightness</i><span><span class="dropdown-title" data-i18n="Advanced UI">Advanced UI</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="AdvancedUIDropdown">
-                            <li data-menu=""><a href="advance-ui-carousel.html"><span data-i18n="Carousel">Carousel</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-collapsibles.html"><span data-i18n="Collapsibles">Collapsibles</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-toasts.html"><span data-i18n="Toasts">Toasts</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-tooltip.html"><span data-i18n="Tooltip">Tooltip</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-dropdown.html"><span data-i18n="Dropdown">Dropdown</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-feature-discovery.html"><span data-i18n="Discovery">Discovery</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-media.html"><span data-i18n="Media">Media</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-modals.html"><span data-i18n="Modals">Modals</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-scrollspy.html"><span data-i18n="Scrollspy">Scrollspy</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-tabs.html"><span data-i18n="Tabs">Tabs</span></a>
-                            </li>
-                            <li data-menu=""><a href="advance-ui-waves.html"><span data-i18n="Waves">Waves</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="ExtraComponentsDropdown"><i class="material-icons">add_to_queue</i><span><span class="dropdown-title" data-i18n="Extra Components">Extra Components</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="ExtraComponentsDropdown">
-                            <li data-menu=""><a href="extra-components-range-slider.html"><span data-i18n="Range Slider">Range Slider</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-sweetalert.html"><span data-i18n="Sweetalert">Sweetalert</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-nestable.html"><span data-i18n="Nestable">Nestable</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-treeview.html"><span data-i18n="Treeview">Treeview</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-ratings.html"><span data-i18n="Ratings">Ratings</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-tour.html"><span data-i18n="Tour">Tour</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-i18n.html"><span data-i18n="i18n">i18n</span></a>
-                            </li>
-                            <li data-menu=""><a href="extra-components-highlight.html"><span data-i18n="Highlight">Highlight</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="formsTables"><i class="material-icons">chrome_reader_mode</i><span><span class="dropdown-title" data-i18n="Forms &amp; Tables">Forms &amp; Tables</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="formsTables">
-                            <li data-menu=""><a href="table-basic.html"><span data-i18n="Basic Tables">Basic Tables</span></a>
-                            </li>
-                            <li data-menu=""><a href="table-data-table.html"><span data-i18n="Data Tables">Data Tables</span></a>
-                            </li>
-                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdownSub-menu" href="Javascript:void(0)" data-target="formsDropdown"><span data-i18n="Forms">Forms</span><i class="material-icons right">chevron_right</i></a>
-                                <ul class="dropdown-content dropdown-horizontal-list" id="formsDropdown">
-                                    <li data-menu=""><a href="form-elements.html"><span data-i18n="Form Elements">Form Elements</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="form-select2.html"><span data-i18n="Form Select2">Form Select2</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="form-validation.html"><span data-i18n="Form Validation">Form Validation</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="form-masks.html"><span data-i18n="Form Masks">Form Masks</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="form-editor.html"><span data-i18n="Form Editor">Form Editor</span></a>
-                                    </li>
-                                    <li data-menu=""><a href="form-file-uploads.html"><span data-i18n="File Uploads">File Uploads</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li data-menu=""><a href="form-layouts.html"><span data-i18n="Form Layouts">Form Layouts</span></a>
-                            </li>
-                            <li data-menu=""><a href="form-wizard.html"><span data-i18n="Form Wizard">Form Wizard</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="ChartDropdown"><i class="material-icons">pie_chart_outlined</i><span><span class="dropdown-title" data-i18n="Chart">Chart</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="ChartDropdown">
-                            <li data-menu=""><a href="charts-chartjs.html"><span data-i18n="ChartJS">ChartJS</span></a>
-                            </li>
-                            <li data-menu=""><a href="charts-chartist.html"><span data-i18n="Chartist">Chartist</span></a>
-                            </li>
-                            <li data-menu=""><a href="charts-sparklines.html"><span data-i18n="Sparkline Charts">Sparkline Charts</span></a>
+                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.others')</span></a>
                             </li>
                         </ul>
                     </li>
@@ -834,8 +614,8 @@
                     <div class="row">
                         <div class="col s12">
                             <!-- New kanban board add button -->
-                            <button type="button" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
-                                <i class='material-icons left'>add</i> Add New Board
+                            <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
+                                <i class='material-icons left'>add</i> @lang('front.add_new_board')
                             </button>
                             <!-- kanban container -->
                             @yield('content')
@@ -847,7 +627,7 @@
                         <div class="card quill-wrapper">
                             <div class="card-content pt-0">
                                 <div class="card-header display-flex pb-2">
-                                    <h3 class="card-title">UI Design</h3>
+                                    <h3 class="card-title">@lang('front.ques_detail')</h3>
                                     <div class="close close-icon">
                                         <i class="material-icons">close</i>
                                     </div>
@@ -856,33 +636,34 @@
                                 <!-- form start -->
                                 <form class="edit-kanban-item mt-10 mb-10">
                                     <div class="input-field">
+                                        <input type="hidden" class="item-id">
                                         <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">
-                                        <label for="edit-item-title">Card Title</label>
+                                        <label for="edit-item-title">@lang('front.title')</label>
                                     </div>
                                     <div class="input-field">
                                         <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">
-                                        <label for="edit-item-date">Due Date</label>
+                                        <label for="edit-item-date">@lang('front.duedate')</label>
                                     </div>
                                     <div class="row">
                                         <div class="col s6">
                                             <div class="input-field mt-0">
-                                                <small>Label</small>
-                                                <select class="browser-default">
-                                                    <option class="blue-text">Blue</option>
-                                                    <option class="red-text">Red</option>
-                                                    <option class="green-text">Green</option>
-                                                    <option class="cyan-text">Cyan</option>
-                                                    <option class="orange-text">Orange </option>
-                                                    <option class="blue-grey-text">Blue-grey</option>
+                                                <small>@lang('front.label_color')</small>
+                                                <select id="kanban-item-color" name="color" class="browser-default">
+                                                    <option class="blue" value="blue">Blue</option>
+                                                    <option class="red" value="red">Red</option>
+                                                    <option class="green" value="green">Green</option>
+                                                    <option class="cyan" value="cyan">Cyan</option>
+                                                    <option class="orange" value="orange">Orange </option>
+                                                    <option class="blue-grey" value="blue-grey">Blue-grey</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col s6">
                                             <div class="input-field mt-0">
-                                                <small>Member</small>
+                                                <small>@lang('front.members')</small>
                                                 <div class="display-flex">
                                                     <div class="avatar ">
-                                                        <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-11.png" class="circle" height="36" width="36" alt="avtar img holder">
+                                                        <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle" height="36" width="36" alt="avtar img holder">
                                                     </div>
                                                     <a class="btn-floating btn-small pulse ml-10">
                                                         <i class="material-icons">add</i>
@@ -893,37 +674,45 @@
                                     </div>
                                     <div class="file-field input-field">
                                         <div class="btn btn-file">
-                                            <span>File</span>
-                                            <input type="file">
+                                            <span>@lang('front.upload_file')</span>
+                                            <input type="file" name="attachment_file">
                                         </div>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text">
                                         </div>
                                     </div>
+
+                                    <div class="file-field input-field">
+                                        <div class="file-path-wrapper spectacular_files" style="width: 100%;">
+
+                                        </div>
+                                    </div>
                                     <!-- Compose mail Quill editor -->
                                     <div class="input-field">
-                                        <span>Comment</span>
+                                        <span>@lang('front.comments')</span>
                                         <div class="snow-container mt-2">
                                             <div class="compose-editor"></div>
                                             <div class="compose-quill-toolbar">
-                                                    <span class="ql-formats mr-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-link"></button>
-                                                        <button class="ql-image"></button>
-                                                        <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>
-                                                    </span>
+{{--                                                    <span class="ql-formats mr-0">--}}
+{{--                                                        <button class="ql-bold"></button>--}}
+{{--                                                        <button class="ql-italic"></button>--}}
+{{--                                                        <button class="ql-underline"></button>--}}
+{{--                                                        <button class="ql-link"></button>--}}
+{{--                                                        <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>--}}
+{{--                                                    </span>--}}
                                             </div>
+                                        </div>
+                                        <div class="snow-container mt-1">
+                                            <div class="compose-editor comments_paragraph"></div>
                                         </div>
                                     </div>
                                 </form>
                                 <div class="card-action pl-0 pr-0">
-                                    <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
-                                        <span>Delete</span>
-                                    </button>
                                     <button class="btn-small blue waves-effect waves-light update-kanban-item">
-                                        <span>Save</span>
+                                        <span>@lang('front.save')</span>
+                                    </button>
+                                    <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
+                                        <span>@lang('front.delete')</span>
                                     </button>
                                 </div>
                                 <!-- form start end-->
@@ -943,7 +732,7 @@
 
 <!-- BEGIN: Footer-->
 
-<footer class="page-footer footer footer-static footer-dark gradient-45deg-light-blue-cyan gradient-shadow navbar-border navbar-shadow">
+<footer class="page-footer footer footer-static footer-dark gradient-shadow navbar-border navbar-shadow" style="background-color: #ffc107 !important;">
     <div class="footer-copyright">
         <div class="container"><span>&copy; 2020 <a href="http://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" target="_blank">PIXINVENT</a> All rights reserved.</span><span class="right hide-on-small-only">Design and Developed by <a href="https://pixinvent.com/">PIXINVENT</a></span></div>
     </div>

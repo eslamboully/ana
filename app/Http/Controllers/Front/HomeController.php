@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Board;
+use App\Models\Comment;
+use App\Models\File;
 use App\Models\SmallBoard;
 use App\Models\VerySmallBoard;
 use Illuminate\Http\Request;
@@ -71,7 +73,7 @@ class HomeController extends Controller {
 
     public function smallBoardRemove(Request $request)
     {
-        $verysmallboard = SmallBoard::where('count_number',$request->get('count_number'))
+        $verysmallboard = SmallBoard::where('id',$request->get('id'))
             ->where('board_id',auth()->user()->personal_board()->id)->first();
         $verysmallboard->delete();
 
@@ -85,21 +87,42 @@ class HomeController extends Controller {
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
+    public function verySmallBoardComments(Request $request)
+    {
+        $very = VerySmallBoard::with(['comments','files'])->find($request->get('id'));
+
+        return response()->json(['data' => $very,'message' => null,'status' => 1]);
+    }
+
     public function verySmallBoardUpdate(Request $request)
     {
         $very = VerySmallBoard::find($request->get('id'));
-        $very->update(['title' => $request->get('title'),'dueDate' => $request->get('dueDate')]);
+        $very->update($request->only(['title','dueDate','border']));
+        if ($request->get('comment') !== null) {
+            Comment::create(['very_small_board_id' => $request->get('id'),'comment' => $request->get('comment')]);
+        }
+
+        if ($request->file('file')) {
+            $image = $request->file('file');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/home/files');
+            $image->move($destinationPath, $name);
+            File::create([
+                'very_small_board_id' => $request->get('id'),
+                'file' => $name
+            ]);
+        }
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardAdd(Request $request)
     {
-        VerySmallBoard::create([
+        $very = VerySmallBoard::create([
             'small_board_id' => $request->get('board_id'),
             'title' => $request->get('title')
         ]);
 
-        return response()->json(['data' => null,'message' => null,'status' => 1]);
+        return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardRemove(Request $request)

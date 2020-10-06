@@ -39,6 +39,9 @@ Route::group([], function () {
         // Personal VerySmall Board ( Update )
         Route::post('/very/small-board/Update','HomeController@verySmallBoardUpdate')->name('very.small.board.update');
 
+        // Personal VerySmall Board ( Comments )
+        Route::post('/very/small-board/Comments','HomeController@verySmallBoardComments')->name('very.small.board.comments');
+
         // Personal Small Board ( Add )
         Route::post('/small-board/Add','HomeController@smallBoardAdd')->name('small.board.add');
 
