@@ -28,7 +28,11 @@ class AdminSeeder extends Seeder
         ]);
 
         // Sync Roles
-        $permissions = ['create-project','read-project','update-project','delete-project'];
+        $permissions = [
+            'add-users-to-project','remove-users-to-project',
+            'assign-tasks','remove-tasks','modify-tasks'
+        ];
+
         foreach ($permissions as $permission)
         {
             Permission::create(['name' => $permission]);
@@ -53,6 +57,7 @@ class AdminSeeder extends Seeder
         ]);
 
         Board::create([
+            'name' => 'my board',
             'user_id' => 1,
             'isPersonalities' => 1
         ]);

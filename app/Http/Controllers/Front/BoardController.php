@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserInvitation;
 use App\Models\Board;
 use App\Models\Comment;
 use App\Models\File;
@@ -9,86 +10,74 @@ use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
-class HomeController extends Controller {
+class BoardController extends Controller {
 
-    public function login()
+    public function board($id,$name)
     {
-        if (!auth()->check()) {
-            return view('Front.login');
-        }
-        return redirect()->route('home');
+        $myBoard = Board::find($id);
+        return view('Front.board',['myBoard' => $myBoard]);
     }
 
-    public function login_post(Request $request)
+    public function boards()
     {
-        $arr = ['email' => $request->get('email'),'password' => $request->get('password')];
-        if (auth()->attempt($arr,$request->get('remember_me'))){
-            return redirect()->route('home');
-        }
-        Session::flash('message','Invalid Email or Password');
-        return redirect()->back();
+        return view('Front.boards');
     }
 
-    public function register()
+    public function store(Request $request)
     {
-        if (!auth()->check()) {
-            return view('Front.register');
-        }
-        return redirect()->route('home');
-    }
-
-    public function register_post(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required'
+        $request->validate([
+            'name' => 'required'
         ]);
-        $data['password'] = bcrypt($request->get('password'));
+        $user = auth()->user();
+        $board = Board::create(['name' => $request->get('name'),'user_id' => $user->id,'isPersonalities' => 0]);
 
-        $user = User::create($data);
+        $managerRole = Role::create(['name' => "manager-board-$board->id"]);
+        $monitorRole = Role::create(['name' => "monitor-board-$board->id"]);
+        $employeeRole = Role::create(['name' => "employee-board-$board->id"]);
 
-        Board::create([
-            'name' => 'my board',
-            'user_id' => $user->id,
-            'isPersonalities' => 1
-        ]);
+        $user->assignRole($managerRole);
 
-        if ($request->get('board_id'))
+        return redirect()->route('board.index',['id' => $board->id,'name' => str_replace(' ','-',$board->name)]);
+    }
+
+    public function sendInvitation(Request $request)
+    {
+        $board = Board::find($request->get('id'));
+        $data['board'] = $board;
+        $data['user']  = auth()->user()->id;
+        Mail::to($request->get('email'))->send(new UserInvitation($data));
+
+        return response()->json(['data' => null,'message' => null, 'status' => 1]);
+    }
+
+    public function acceptInvitation(Request $request)
+    {
+        $board = Board::find($request->get('board_id'));
+        if ($board)
         {
-            $board_id = $request->get('board_id');
-            $user->assignRole("employee-board-$board_id");
+            if (auth()->check())
+            {
+                // accept the invitation
+                auth()->user()->assignRole("employee-board-$board->id");
+            }
+            // register or login before accept invitation
+            return redirect()->route('register',['board_id' => $board->id]);
         }
-        auth()->loginUsingId($user->id);
-        return redirect()->route('home');
-    }
-
-    public function logout()
-    {
-        auth()->logout();
-        return redirect()->route('admin.login');
-    }
-
-    public function index()
-    {
-        $myBoard = Board::query()
-            ->where('user_id',auth()->user()->id)
-            ->where('isPersonalities',1)
-            ->first();
-        return view('Front/home',compact('myBoard'));
+        abort(404);
     }
 
     public function smallBoardAdd(Request $request)
     {
-        $results = SmallBoard::query()->where('board_id',auth()->user()->personal_board()->id)->get();
+        $results = SmallBoard::query()->where('board_id',$request->get('board_id'));
         $count_number = $results->count() == 0 ? 1 : $results->count() + 1;
 
         $small = SmallBoard::create([
-            'board_id' => auth()->user()->personal_board()->id,
+            'board_id' => $request->get('board_id'),
             'title' => $request->get('title'),
-            'bg-color' => 'cyan',
+            'bg-color' => $request->get('bg-color'),
             'count_number' => $count_number
         ]);
 
@@ -109,7 +98,7 @@ class HomeController extends Controller {
     public function smallBoardRemove(Request $request)
     {
         $verysmallboard = SmallBoard::where('id',$request->get('id'))
-            ->where('board_id',auth()->user()->personal_board()->id)->first();
+            ->where('board_id',$request->get('board_id'))->first();
         $verysmallboard->delete();
 
         return response()->json(['data' => null,'message' => null,'status' => 1]);
@@ -166,6 +155,40 @@ class HomeController extends Controller {
         $verysmallboard->delete();
 
         return response()->json(['data' => null,'message' => null,'status' => 1]);
+    }
+
+    public function usersPermissionsGet(Request $request)
+    {
+        $board_id = $request->get('id');
+
+        $users = User::with(['roles'])->role([
+            "manager-board-$board_id",
+            "monitor-board-$board_id",
+            "employee-board-$board_id"
+        ])->where('id','!=',auth()->user()->id)->get();
+
+
+        return response()->json(['data' => $users,'message' => null,'status' => 1]);
+    }
+
+    public function usersPermissionsUpdate(Request $request)
+    {
+        $board_id = $request->get('board_id');
+            foreach ($request->get('users') as $id => $permissions)
+            {
+                $permissionsForUsers = [];
+                $user = User::find($id);
+                $user->removeRole("manager-board-$board_id");
+                $user->removeRole("monitor-board-$board_id");
+                $user->removeRole("employee-board-$board_id");
+                foreach ($permissions as $permission=>$on)
+                {
+                    array_push($permissionsForUsers,$permission);
+                }
+                $user->assignRole($permissionsForUsers);
+            }
+
+        return response()->json(['data' => $user,'message' => null,'status' => 1]);
     }
 
     public function lang($lang)

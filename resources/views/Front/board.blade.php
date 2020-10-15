@@ -81,7 +81,7 @@
                         }
                     });
                     $.ajax({
-                        'url' : "{{ route('very.small.board.comments') }}",
+                        'url' : "{{ route('board.very.small.board.comments') }}",
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
                         success : function (data) {
@@ -125,7 +125,7 @@
                         e.preventDefault();
                         let text = e.target[0].value;
                         $.ajax({
-                            'url' : "{{ route('very.small.board.add') }}",
+                            'url' : "{{ route('board.very.small.board.add') }}",
                             'method' : "post",
                             'data' : {title: text,board_id: boardId,_token: '{{ csrf_token() }}'},
                             success : function (data) {
@@ -160,7 +160,7 @@
                     let id = el.dataset.eid;
 
                     $.ajax({
-                        'url' : "{{ route('very.small.board.change') }}",
+                        'url' : "{{ route('board.very.small.board.change') }}",
                         'method' : "post",
                         'data' : {small_board_id: small_board_id,id: id,_token: '{{ csrf_token() }}'},
                         fail : () => {
@@ -284,12 +284,11 @@
             //---------------------
             var addBoardDefault = document.getElementById("add-kanban");
             var i = 1;
-            addBoardDefault.addEventListener("click", function () {
-                let that = $(this);
+            addBoardDefault.addEventListener("click", function (e) {
                 $.ajax({
-                    'url' : "{{ route('small.board.add') }}",
+                    'url' : "{{ route('board.small.board.add') }}",
                     'method' : "post",
-                    'data' : {title: 'Default Title','bg-color': 'cyan',_token: '{{ csrf_token() }}'},
+                    'data' : {title: 'Default Title','board_id' : '{{ request()->route()->parameter('id') }}','bg-color': 'cyan',_token: '{{ csrf_token() }}'},
                     success : (data) => {
                         i = data.data.id;
                         KanbanExample.addBoards([
@@ -333,9 +332,9 @@
                     KanbanExample.removeBoard($id);
 
                     $.ajax({
-                        'url' : "{{ route('small.board.remove') }}",
+                        'url' : "{{ route('board.small.board.remove') }}",
                         'method' : "post",
-                        'data' : {id: $id,_token: '{{ csrf_token() }}'},
+                        'data' : {id: $id,board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
                         fail : () => {
                             alert('something is wrong');
                         }
@@ -380,7 +379,7 @@
             {{--    let file = $('input[name=attachment_file]').val();--}}
 
             {{--    $.ajax({--}}
-            {{--        'url' : "{{ route('very.small.board.update') }}",--}}
+            {{--        'url' : "{{ route('board.very.small.board.update') }}",--}}
             {{--        'method' : "post",--}}
             {{--        'data' : {id: id,file:file,border:labelColor,title: title,dueDate:dueDate,comment:comment,_token: '{{ csrf_token() }}'},--}}
             {{--        success : () => {--}}
@@ -427,7 +426,7 @@
                 formData.append('_token',"{{ csrf_token() }}");
 
                 $.ajax({
-                    'url' : "{{ route('very.small.board.update') }}",
+                    'url' : "{{ route('board.very.small.board.update') }}",
                     'method' : "post",
                     'data' : formData,
                     processData: false,
@@ -468,7 +467,7 @@
                     KanbanExample.removeElement(delete_item);
 
                     $.ajax({
-                        'url' : "{{ route('very.small.board.remove') }}",
+                        'url' : "{{ route('board.very.small.board.remove') }}",
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
                         fail : () => {
@@ -500,7 +499,7 @@
                             e.preventDefault();
                             let id = $(this).parent().parent().data('id');
                             $.ajax({
-                                'url' : "{{ route('small.board.change') }}",
+                                'url' : "{{ route('board.small.board.change') }}",
                                 'method' : "post",
                                 'data' : {id:id,title: $(this).text(),_token: '{{ csrf_token() }}'},
                                 fail : () => {

@@ -2,8 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Front/Emails/Invitation.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Front/board.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Front/boards.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Front/register.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Board.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Board.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_03_114524_create_boards_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_03_114524_create_boards_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +33,7 @@
     </execution>
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="5613" />
+    <option name="totalTimeSeconds" value="16376" />
     <option name="idleThresholdMs" value="2000" />
     <option name="autoCountIdleSeconds" value="2" />
   </component>
@@ -39,8 +54,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Blade" />
         <option value="JavaScript File" />
+        <option value="Blade" />
       </list>
     </option>
   </component>
@@ -165,19 +180,19 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/Front" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\ana\resources\views\Admin\Layouts" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\ana\resources\lang\en" />
       <recent name="C:\xampp\htdocs\ana\resources\views\Front" />
+      <recent name="C:\xampp\htdocs\ana\app\Http\Controllers\Front" />
+      <recent name="C:\xampp\htdocs\ana\resources\lang\en" />
       <recent name="C:\xampp\htdocs\ana\public\Front\app-assets\css" />
       <recent name="C:\xampp\htdocs\ana\public\Front\app-assets\js\scripts" />
-      <recent name="C:\xampp\htdocs\ana\app\Http\Middleware" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\ana\resources\views\Admin\Layouts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -211,7 +226,8 @@
       <workItem from="1601193859617" duration="34995000" />
       <workItem from="1601557780639" duration="5220000" />
       <workItem from="1601722942393" duration="35182000" />
-      <workItem from="1601978677308" duration="14015000" />
+      <workItem from="1601978677308" duration="37757000" />
+      <workItem from="1602598368884" duration="14441000" />
     </task>
     <servers />
   </component>

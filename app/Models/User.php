@@ -53,4 +53,26 @@ class User extends Authenticatable
         $board = Board::where(['user_id' => $this->id,'isPersonalities' => 1])->first();
         return $board;
     }
+
+    public function boards()
+    {
+        $boardsIds = [];
+        $roles = $this->roles()->get();
+        $boards = [];
+
+        foreach ($roles as $role)
+        {
+            $exlore = explode('-',$role->name);
+            if ($exlore[2]) {
+                array_push($boardsIds,$exlore[2]);
+            }
+            array_unique($boardsIds);
+        }
+        foreach ($boardsIds as $id)
+        {
+            $board = Board::find($id);
+            array_push($boards,$board);
+        }
+        return $boards;
+    }
 }

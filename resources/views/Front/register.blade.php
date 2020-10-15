@@ -36,22 +36,34 @@
                                 <h5 class="ml-4">Sign in</h5>
                             </div>
                         </div>
-                        @if(session()->has('message'))
+                        @if ($errors->any())
                             <div class="row margin">
-                                <p style="color: red">{{ session('message') }}</p>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="color: red">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
                         <div class="row margin">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix pt-2">person_outline</i>
-                                <input id="username" name="email" type="text">
-                                <label for="username" class="center-align">Username</label>
+                                <input name="board_id" type="hidden" value="{{ isset($_GET['board_id']) ? $_GET['board_id'] : null }}">
+                                <input id="name" name="name" type="text" required value="{{ old('name') }}">
+                                <label for="name" class="center-align">Name</label>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix pt-2">person_outline</i>
+                                <input id="username" name="email" type="email" required value="{{ old('email') }}">
+                                <label for="username" class="center-align">Email</label>
                             </div>
                         </div>
                         <div class="row margin">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix pt-2">lock_outline</i>
-                                <input id="password" name="password" type="password">
+                                <input id="password" name="password" type="password" required>
                                 <label for="password">Password</label>
                             </div>
                         </div>
@@ -72,10 +84,11 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6 m6 l6">
-                                <p class="margin medium-small"><a href="{{ route('register',['board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : 0 ]) }}">Register Now!</a></p>
-                            </div>
-                            <div class="input-field col s6 m6 l6">
-                                <p class="margin right-align medium-small"><a href="user-forgot-password.html">Forgot password ?</a></p>
+                                <p class="margin medium-small">
+                                    <a href="{{ route('login',['board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : null ]) }}">
+                                        Login
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </form>
