@@ -52,10 +52,31 @@ class HomeController extends Controller {
 
         $user = User::create($data);
 
-        Board::create([
+        $board = Board::create([
             'name' => 'my board',
             'user_id' => $user->id,
             'isPersonalities' => 1
+        ]);
+
+        SmallBoard::create([
+            'title' => 'Tasks List',
+            'board_id' => $board->id,
+            'bg-color' => 'blue',
+            'count_number' => 1
+        ]);
+
+        SmallBoard::create([
+            'title' => 'On Progress',
+            'board_id' => $board->id,
+            'bg-color' => 'red',
+            'count_number' => 2
+        ]);
+
+        SmallBoard::create([
+            'title' => 'Completed',
+            'board_id' => $board->id,
+            'bg-color' => 'cyan',
+            'count_number' => 3
         ]);
 
         if ($request->get('board_id'))
