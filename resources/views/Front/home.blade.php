@@ -8,13 +8,133 @@
             <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
                 <i class='material-icons left'>add</i> @lang('front.add_new_board')
             </button>
-            <a href="#modal3" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn users-permissions-button">
-                @lang('front.users')
-            </a>
+{{--            <a href="#modal3" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn users-permissions-button">--}}
+{{--                @lang('front.users')--}}
+{{--            </a>--}}
             <div id="kanban-app"></div>
         </div>
     </div>
 @endsection
+
+@push('main-board-settings')
+    <div id="main">
+        <div class="row">
+            <div class="content-wrapper-before blue-grey lighten-5"></div>
+            <div class="col s12">
+                <div class="container">
+                    <!-- Basic Kanban App -->
+                    <section id="kanban-wrapper" class="section">
+
+                    @yield('content')
+
+
+                    <!-- User new mail right area -->
+                        <div class="kanban-sidebar">
+                            <div class="card quill-wrapper">
+                                <div class="card-content pt-0">
+                                    <div class="card-header display-flex pb-2">
+                                        <h3 class="card-title">@lang('front.ques_detail')</h3>
+                                        <div class="close close-icon">
+                                            <i class="material-icons">close</i>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <!-- form start -->
+                                    <form class="edit-kanban-item mt-10 mb-10">
+                                        <div class="input-field">
+                                            <input type="hidden" class="item-id">
+                                            <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">
+                                            <label for="edit-item-title">@lang('front.title')</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">
+                                            <label for="edit-item-date">@lang('front.duedate')</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>@lang('front.label_color')</small>
+                                                    <select id="kanban-item-color" name="color" class="browser-default">
+                                                        <option class="blue" value="blue">Blue</option>
+                                                        <option class="red" value="red">Red</option>
+                                                        <option class="green" value="green">Green</option>
+                                                        <option class="cyan" value="cyan">Cyan</option>
+                                                        <option class="orange" value="orange">Orange </option>
+                                                        <option class="blue-grey" value="blue-grey">Blue-grey</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>@lang('front.assign_to')</small>
+                                                    <div class="display-flex">
+                                                        <div class="avatar ">
+                                                            <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle aside-user-photo" height="36" width="36" alt="avtar img holder">
+                                                        </div>
+                                                        <a href="#modal4" class="btn-floating btn-small pulse ml-10 btn modal-trigger assign-quest-user">
+                                                            <i class="material-icons">add</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="file-field input-field">
+                                            <div class="btn btn-file">
+                                                <span>@lang('front.upload_file')</span>
+                                                <input type="file" name="attachment_file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text">
+                                            </div>
+                                        </div>
+
+                                        <div class="file-field input-field">
+                                            <div class="file-path-wrapper spectacular_files" style="width: 100%;">
+
+                                            </div>
+                                        </div>
+                                        <!-- Compose mail Quill editor -->
+                                        <div class="input-field">
+                                            <span>@lang('front.comments')</span>
+                                            <div class="snow-container mt-2">
+                                                <div class="compose-editor"></div>
+                                                <div class="compose-quill-toolbar">
+                                                    {{--                                                    <span class="ql-formats mr-0">--}}
+                                                    {{--                                                        <button class="ql-bold"></button>--}}
+                                                    {{--                                                        <button class="ql-italic"></button>--}}
+                                                    {{--                                                        <button class="ql-underline"></button>--}}
+                                                    {{--                                                        <button class="ql-link"></button>--}}
+                                                    {{--                                                        <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>--}}
+                                                    {{--                                                    </span>--}}
+                                                </div>
+                                            </div>
+                                            <div class="snow-container mt-1">
+                                                <div class="compose-editor comments_paragraph"></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="card-action pl-0 pr-0">
+                                        <button class="btn-small blue waves-effect waves-light update-kanban-item">
+                                            <span>@lang('front.save')</span>
+                                        </button>
+                                        <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
+                                            <span>@lang('front.delete')</span>
+                                        </button>
+                                    </div>
+                                    <!-- form start end-->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--/ Sample Project kanban -->
+                @include('Front.Layouts.aside')
+                <!-- END RIGHT SIDEBAR NAV -->
+                </div>
+                <div class="content-overlay"></div>
+            </div>
+        </div>
+    </div>
+@endpush
 
 @push('js')
     <script>

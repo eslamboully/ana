@@ -30,6 +30,12 @@ Route::group([], function () {
     Route::group(['middleware' => 'auth'],function () {
         // Home Page
         Route::get('/','HomeController@index')->name('home');
+        // Profile
+        Route::get('/profile','HomeController@profile')->name('profile');
+        Route::post('/profile','HomeController@profilePost')->name('profile.post');
+        // Messages
+        Route::post('/board/send-message','HomeController@boardMessageSend')->name('board.message.send');
+        Route::post('/board/response-messages','HomeController@boardResponseMessages')->name('board.response.messages');
         // Personal Very Small Board ( Add )
         Route::post('/very-small-board/add','HomeController@verySmallBoardAdd')->name('very.small.board.add');
         // Personal Very Small Board ( Remove )
@@ -70,6 +76,8 @@ Route::group([], function () {
         // Boards Small Board ( Remove )
         Route::post('board/small-board/remove','BoardController@smallBoardRemove')->name('board.small.board.remove');
         Route::post('board/send-invitation','BoardController@sendInvitation')->name('board.send_invitation');
+        Route::post('board/assign-user','BoardController@assignUser')->name('board.assign_user');
+        Route::post('board/assign-user-next','BoardController@assignUserNext')->name('board.assign_user_next');
 
     });
 

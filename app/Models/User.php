@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'status'
+        'status',
+        'photo'
     ];
 
     /**
@@ -73,6 +74,7 @@ class User extends Authenticatable
             $board = Board::find($id);
             array_push($boards,$board);
         }
+
         return $boards;
     }
 }

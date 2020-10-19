@@ -65,7 +65,7 @@
                     <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                     <li class="hide-on-large-only"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search </i></a></li>
                     <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge orange accent-3">5</small></i></a></li>
-                    <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" alt="avatar"><i></i></span></a></li>
+                    <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img style="height: 28px;width: 28px;" src="{{ url('uploads/users/'.auth()->user()->photo) }}" alt="avatar"><i></i></span></a></li>
                     <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
                 </ul>
                 <!-- translation-button-->
@@ -97,12 +97,12 @@
                 </ul>
                 <!-- profile-dropdown-->
                 <ul class="dropdown-content" id="profile-dropdown">
-                    <li><a class="grey-text text-darken-1" href="user-profile-page.html"><i class="material-icons">person_outline</i> Profile</a></li>
-                    <li><a class="grey-text text-darken-1" href="app-chat.html"><i class="material-icons">chat_bubble_outline</i> Chat</a></li>
-                    <li><a class="grey-text text-darken-1" href="page-faq.html"><i class="material-icons">help_outline</i> Help</a></li>
-                    <li class="divider"></li>
-                    <li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i class="material-icons">lock_outline</i> Lock</a></li>
-                    <li><a class="grey-text text-darken-1" href="{{ route('logout') }}"><i class="material-icons">keyboard_tab</i> Logout</a></li>
+                    <li><a class="grey-text text-darken-1" href="{{ route('profile') }}"><i class="material-icons">person_outline</i> @lang('front.profile')</a></li>
+{{--                    <li><a class="grey-text text-darken-1" href="app-chat.html"><i class="material-icons">chat_bubble_outline</i> Chat</a></li>--}}
+{{--                    <li><a class="grey-text text-darken-1" href="page-faq.html"><i class="material-icons">help_outline</i> Help</a></li>--}}
+{{--                    <li class="divider"></li>--}}
+{{--                    <li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i class="material-icons">lock_outline</i> Lock</a></li>--}}
+                    <li><a class="grey-text text-darken-1" href="{{ route('logout') }}"><i class="material-icons">keyboard_tab</i> @lang('front.logout')</a></li>
                 </ul>
             </div>
             <nav class="display-none search-sm">
@@ -307,124 +307,9 @@
 <!-- END: SideNav-->
 
 <!-- BEGIN: Page Main-->
-<div id="main">
-    <div class="row">
-        <div class="content-wrapper-before blue-grey lighten-5"></div>
-        <div class="col s12">
-            <div class="container">
-                <!-- Basic Kanban App -->
-                <section id="kanban-wrapper" class="section">
-
-                            @yield('content')
-
-
-                    <!-- User new mail right area -->
-                    <div class="kanban-sidebar">
-                        <div class="card quill-wrapper">
-                            <div class="card-content pt-0">
-                                <div class="card-header display-flex pb-2">
-                                    <h3 class="card-title">@lang('front.ques_detail')</h3>
-                                    <div class="close close-icon">
-                                        <i class="material-icons">close</i>
-                                    </div>
-                                </div>
-                                <div class="divider"></div>
-                                <!-- form start -->
-                                <form class="edit-kanban-item mt-10 mb-10">
-                                    <div class="input-field">
-                                        <input type="hidden" class="item-id">
-                                        <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">
-                                        <label for="edit-item-title">@lang('front.title')</label>
-                                    </div>
-                                    <div class="input-field">
-                                        <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">
-                                        <label for="edit-item-date">@lang('front.duedate')</label>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col s6">
-                                            <div class="input-field mt-0">
-                                                <small>@lang('front.label_color')</small>
-                                                <select id="kanban-item-color" name="color" class="browser-default">
-                                                    <option class="blue" value="blue">Blue</option>
-                                                    <option class="red" value="red">Red</option>
-                                                    <option class="green" value="green">Green</option>
-                                                    <option class="cyan" value="cyan">Cyan</option>
-                                                    <option class="orange" value="orange">Orange </option>
-                                                    <option class="blue-grey" value="blue-grey">Blue-grey</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col s6">
-                                            <div class="input-field mt-0">
-                                                <small>@lang('front.members')</small>
-                                                <div class="display-flex">
-                                                    <div class="avatar ">
-                                                        <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle" height="36" width="36" alt="avtar img holder">
-                                                    </div>
-                                                    <a class="btn-floating btn-small pulse ml-10">
-                                                        <i class="material-icons">add</i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="file-field input-field">
-                                        <div class="btn btn-file">
-                                            <span>@lang('front.upload_file')</span>
-                                            <input type="file" name="attachment_file">
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text">
-                                        </div>
-                                    </div>
-
-                                    <div class="file-field input-field">
-                                        <div class="file-path-wrapper spectacular_files" style="width: 100%;">
-
-                                        </div>
-                                    </div>
-                                    <!-- Compose mail Quill editor -->
-                                    <div class="input-field">
-                                        <span>@lang('front.comments')</span>
-                                        <div class="snow-container mt-2">
-                                            <div class="compose-editor"></div>
-                                            <div class="compose-quill-toolbar">
-{{--                                                    <span class="ql-formats mr-0">--}}
-{{--                                                        <button class="ql-bold"></button>--}}
-{{--                                                        <button class="ql-italic"></button>--}}
-{{--                                                        <button class="ql-underline"></button>--}}
-{{--                                                        <button class="ql-link"></button>--}}
-{{--                                                        <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>--}}
-{{--                                                    </span>--}}
-                                            </div>
-                                        </div>
-                                        <div class="snow-container mt-1">
-                                            <div class="compose-editor comments_paragraph"></div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="card-action pl-0 pr-0">
-                                    <button class="btn-small blue waves-effect waves-light update-kanban-item">
-                                        <span>@lang('front.save')</span>
-                                    </button>
-                                    <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
-                                        <span>@lang('front.delete')</span>
-                                    </button>
-                                </div>
-                                <!-- form start end-->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!--/ Sample Project kanban -->
-                @include('Front.Layouts.aside')
-                <!-- END RIGHT SIDEBAR NAV -->
-            </div>
-            <div class="content-overlay"></div>
-        </div>
-    </div>
-</div>
+@stack('main-board-settings')
 <!-- END: Page Main-->
+
 <!-- Modal Structure -->
 <div id="modal3" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -452,6 +337,7 @@
     </div>
 </div>
 
+@stack('modals')
 <!-- BEGIN: Footer-->
 
 <footer class="page-footer footer footer-static footer-dark gradient-shadow navbar-border navbar-shadow" style="background-color: #ffc107 !important;">
@@ -557,6 +443,112 @@
     });
 </script>
 
+<script>
+    function sendChatMessage() {
+        var message = $(".search").val();
+        if (message != "") {
+            var html =
+                '<li class="collection-item display-flex avatar justify-content-end pl-5 pb-0" data-target="slide-out-chat"><div class="user-content speech-bubble-right">' +
+                '<p class="medium-small">' +
+                message +
+                "</p>" +
+                "</div></li>";
+            $("#right-sidebar-nav #slide-out-chat .chat-body .collection").append(html);
+            $(".search").val("");
+            var charScroll = $("#right-sidebar-nav #slide-out-chat .chat-body .collection");
+            if (charScroll.length > 0) {
+                charScroll[0].scrollTop = charScroll[0].scrollHeight;
+            }
+
+            let board_id = $('input[name=board_id]').val();
+
+            $.ajax({
+                'url' : "{{ route('board.message.send') }}",
+                'method' : "post",
+                'data' : {message: message,board_id : board_id,user_id: '{{ auth()->user()->id }}',_token: '{{ csrf_token() }}'},
+                success : function () {
+
+                },
+                fail : () => {
+                    alert('something is wrong');
+                }
+            });
+        }
+    }
+
+    $(document).on('click','.message_board_id',function (){
+        $('input[name=board_id]').val($(this).data('id'));
+
+        let board_id = $('input[name=board_id]').val();
+
+        $.ajax({
+            method: 'post',
+            url: '{{ route('board.response.messages') }}',
+            data: {board_id,_token:'{{ csrf_token() }}'},
+            success : function (data) {
+                $('.conversion-title').html(data.board.name);
+                $('.chat-messages-div').html("");
+                data.data.forEach(function(message){
+                    if (message.user_id == '{{ auth()->user()->id }}') {
+                        $('.chat-messages-div').append(`
+                            <li class="collection-item display-flex avatar justify-content-end pl-5 pb-0" data-target="slide-out-chat">
+                                <div class="user-content speech-bubble-right">
+                                    <p class="medium-small">${message.message}</p>
+                                </div>
+                            </li>
+                        `);
+                    } else {
+                        $('.chat-messages-div').append(`
+                            <li class="collection-item display-flex avatar pl-5 pb-0" data-target="slide-out-chat">
+                                                    <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("Front") }}' }/app-assets/images/avatar/avatar-7.png" alt="avatar" />
+                                                    </span>
+                                <div class="user-content speech-bubble">
+                                    <p class="medium-small">${message.message}</p>
+                                </div>
+                            </li>
+                        `);
+                    }
+
+                });
+            }
+        });
+
+    });
+</script>
+
+{{-- Pusher RealTime --}}
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    let pusher = new Pusher('c94ca2fab6f7c2428792', {
+        cluster: 'eu'
+    });
+
+    let channel = pusher.subscribe('send-message-channel');
+    channel.bind('send-message-event', function(data) {
+        if (data.message.user_id != '{{ auth()->user()->id }}') {
+            $('.chat-messages-div').append(`
+                <li class="collection-item display-flex avatar pl-5 pb-0" data-target="slide-out-chat">
+                                        <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("Front") }}' }/app-assets/images/avatar/avatar-7.png" alt="avatar" />
+                                        </span>
+                    <div class="user-content speech-bubble">
+                        <p class="medium-small">${data.message.message}</p>
+                    </div>
+                </li>
+            `);
+
+            let charScroll = $("#right-sidebar-nav #slide-out-chat .chat-body .collection");
+            if (charScroll.length > 0) {
+                charScroll[0].scrollTop = charScroll[0].scrollHeight;
+            }
+        }
+    });
+</script>
+
 </body>
 
 </html>
+)

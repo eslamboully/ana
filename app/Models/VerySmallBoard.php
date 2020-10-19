@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VerySmallBoard extends Model
 {
     use HasFactory;
-    protected $fillable = ['small_board_id','title','border','dueDate','comment','users'];
+    protected $fillable = ['small_board_id','title','border','dueDate','comment','users','user_id'];
 
     public function comments()
     {
@@ -18,5 +18,10 @@ class VerySmallBoard extends Model
     public function files()
     {
         return $this->hasMany(File::class,'very_small_board_id','id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }

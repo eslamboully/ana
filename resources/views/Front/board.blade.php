@@ -8,9 +8,15 @@
             <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
                 <i class='material-icons left'>add</i> @lang('front.add_new_board')
             </button>
-            <a href="#modal3" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn users-permissions-button">
-                @lang('front.users')
-            </a>
+            @if(auth()->user()->hasRole("manager-board-".request()->route()->parameter('id')))
+                <a href="#modal3" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn users-permissions-button">
+                    @lang('front.users')
+                </a>
+            @else
+                <a href="#" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" disabled class="btn waves-effect waves-light mb-1 btn add-kanban-btn">
+                    @lang('front.users')
+                </a>
+            @endif
             <div id="kanban-app"></div>
         </div>
     </div>
@@ -32,18 +38,20 @@
                     headerBg: "{{ $small['bg-color'] }}",
                     item: [
                             @foreach($small->verySmallBoard as $very)
-                        {
-                            id: "{{ $very->id }}",
-                            title: "{{ $very->title }}",
-                            border: "{{ $very->border }}",
-                            dueDate: "{{ $very->dueDate }}",
-                            board: "{{ $very->board_id }}",
-                            comment: {{ count($very->comments) }},
-                            attachment: {{ count($very->files) }},
-                            {{--users: [--}}
-                            {{--    "{{ url('Front') }}/app-assets/images/avatar/avatar-10.png"--}}
-                            {{--]--}}
-                        },
+                                {
+                                    id: "{{ $very->id }}",
+                                    title: "{{ $very->title }}",
+                                    border: "{{ $very->border }}",
+                                    dueDate: "{{ $very->dueDate }}",
+                                    board: "{{ $very->board_id }}",
+                                    comment: {{ count($very->comments) }},
+                                    attachment: {{ count($very->files) }},
+                                    @if($very->user !== null)
+                                    users: [
+                                        "{{ url('uploads/users/'.$very->user->photo) }}"
+                                    ]
+                                    @endif
+                                },
                         @endforeach
                     ]
                 },
@@ -85,14 +93,22 @@
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
                         success : function (data) {
+
                             // files
                             $(".spectacular_files").html("");
                             data.data.files.forEach((file,index) => {
                                 $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.file') }} ${index+1}</a>`);
                             });
+                            // user photo
+                            if (data.data.user) {
+                                $('.aside-user-photo').attr("src",'{{ url('uploads/users/') }}/'+data.data.user.photo);
+                            }
+                            console.log(data.data.comments);
+
                             // comments
                             $(".comments_paragraph").html("");
                             data.data.comments.forEach((comment) => {
+                                console.log(comment);
                                 $(".comments_paragraph").append(`<p>${comment.comment}</p>`);
                             });
                         },
@@ -129,12 +145,16 @@
                             'method' : "post",
                             'data' : {title: text,board_id: boardId,_token: '{{ csrf_token() }}'},
                             success : function (data) {
-
                                 KanbanExample.addElement(boardId, {
                                     title: e.target[0].value,
                                     id: data.data.id,
                                     border: "red",
                                     dueDate: "00/00/0000",
+                                    comment: 0,
+                                    attachment: 0,
+                                    users: [
+                                        "{{ url('uploads/users/x.png')}}"
+                                    ]
                                 });
                                 formItem.parentNode.removeChild(formItem);
                             },
@@ -154,6 +174,7 @@
                 },
 
                 dragendEl: function (el) {
+                    $('input[name=to_refresh_realtime]').val("{{ auth()->user()->id }}");
                     // when an item stops dragging
                     let small_board_id = el.parentElement.parentElement.dataset.id;
 
@@ -163,6 +184,9 @@
                         'url' : "{{ route('board.very.small.board.change') }}",
                         'method' : "post",
                         'data' : {small_board_id: small_board_id,id: id,_token: '{{ csrf_token() }}'},
+                        success : () => {
+
+                        },
                         fail : () => {
                             alert('something is wrong');
                         }
@@ -369,46 +393,6 @@
                 $(".kanban-sidebar").removeClass("show");
             });
 
-            // Update Kanban Item
-            {{--$(document).on("click",".update-kanban-item",function (e) {--}}
-            {{--    let title = $('#edit-item-title').val();--}}
-            {{--    let dueDate = $('#edit-item-date').val();--}}
-            {{--    let id = $('.item-id').val();--}}
-            {{--    let labelColor = $('select[name=color]').val();--}}
-            {{--    let comment = $('.ql-editor > p').text();--}}
-            {{--    let file = $('input[name=attachment_file]').val();--}}
-
-            {{--    $.ajax({--}}
-            {{--        'url' : "{{ route('board.very.small.board.update') }}",--}}
-            {{--        'method' : "post",--}}
-            {{--        'data' : {id: id,file:file,border:labelColor,title: title,dueDate:dueDate,comment:comment,_token: '{{ csrf_token() }}'},--}}
-            {{--        success : () => {--}}
-
-            {{--            let element = $(".kanban-item[data-eid='" + id + "']");--}}
-            {{--            // duedate first--}}
-            {{--            element.children().children().eq(0).text(dueDate);--}}
-            {{--            element.attr('data-duedate',dueDate);--}}
-            {{--            // Color Second--}}
-            {{--            element.attr('data-border',labelColor);--}}
-            {{--            let arr = ['blue','red','green','cyan','orange','blue-grey'];--}}
-            {{--            arr.forEach((one) => {--}}
-            {{--                if (element.children().children().eq(0).hasClass(one)) {--}}
-            {{--                    element.children().children().eq(0).removeClass(one);--}}
-            {{--                }--}}
-            {{--            });--}}
-            {{--            element.children().children().eq(0).addClass(labelColor).css("color",labelColor);--}}
-
-            {{--            let cache = element.children();--}}
-            {{--            element.text(title);--}}
-            {{--            element.append(cache);--}}
-            {{--        },--}}
-            {{--        fail : () => {--}}
-            {{--            alert('something is wrong');--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
-
-
             $(document).on("click",".update-kanban-item",function (e) {
                 let title = $('#edit-item-title').val();
                 let dueDate = $('#edit-item-date').val();
@@ -431,7 +415,7 @@
                     'data' : formData,
                     processData: false,
                     contentType: false,
-                    success : () => {
+                    success : (data) => {
                         $('input[name=attachment_file]').val('');
                         let element = $(".kanban-item[data-eid='" + id + "']");
                         // duedate first
@@ -446,8 +430,40 @@
                                 element.children().children().eq(0).removeClass(one);
                             }
                         });
+                        element.html('');
+                        element.append(`
+                            ${title}
+                            <div class="kanban-footer mt-3">
+                                <div class="kanban-due-date center mb-5 lighten-5 ">
+                                    <span class="-text center"> ${dueDate}</span>
+                                </div>
+                                <div class="kanban-footer-left left display-flex pt-1">
+                                    <div class="kanban-comment display-flex">
+                                        <i class="material-icons font-size-small">chat_bubble_outline </i>
+                                        <span class="font-size-small">${data.data.comments.length}</span>
+                                    </div>
+                                    <div class="kanban-attachment display-flex">
+                                        <i class="font-size-small material-icons">attach_file</i>
+                                        <span class="font-size-small">${data.data.files.length}</span>
+                                    </div>
+                                </div>
+                                <div class="kanban-footer-right right">
+                                    <div class="kanban-users">  </div>
+                                </div>
+                            </div>
+                        `);
 
                         element.children().children().eq(0).addClass(labelColor).css("color",labelColor);
+                        element.children().children().eq(2).html('');
+                        if (data.data.user){
+                            element.children().children().eq(2).append(`
+                                <div class="kanban-users">
+                                    <img class="circle" src="{{ url('uploads/users') }}/${data.data.user.photo}" alt="Avatar" height="24" width="24">
+                                </div>
+                            `);
+                        }
+
+
                         let cache = element.children();
                         element.text(title);
                         element.append(cache);
@@ -540,4 +556,221 @@
         });
 
     </script>
+
+    @if(
+    auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
+    || auth()->user()->hasRole('monitor-board-'.request()->route()->parameter('id'))
+    )
+        <div id="modal4" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>@lang('front.users')</h4>
+                <table class="table">
+                    <tr>
+                        <td>@lang('front.users')</td>
+                        <td>@lang('front.add')</td>
+                    </tr>
+                    @csrf
+                    <tbody class="users-list-roles">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script>
+            $(document).on('click','.assign-quest-user',function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'post',
+                    url: '{{ route('board.assign_user') }}',
+                    data : {board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
+                    success : function (data) {
+                        $('.users-list-roles').html('');
+                        data.data.forEach((user,index) => {
+                            $('.users-list-roles').append(`
+                        <tr>
+                            <td>${user.email}</td>
+                            <td>
+                                <p class="mb-1">
+                                    <label>
+                                        <button type="button" data-id="${user.id}" class="filled-in btn modal-action modal-close waves-effect waves-red btn-flat assign-r" ><i class="material-icons">add</i></button>
+                                        <span></span>
+                                    </label>
+                                </p>
+                            </td>
+                        </tr>
+                    `);
+                        });
+                    }
+                });
+            });
+
+        </script>
+        <script>
+            $(document).on('click','.assign-r',function (e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                let very_small_board_id = $('.item-id').val();
+                $.ajax({
+                    method: "post",
+                    url: "{{ route('board.assign_user_next') }}",
+                    data: {id:id,_token:"{{ csrf_token() }}",very_small_board_id:very_small_board_id},
+                    success : function () {
+                        alert('user added successfully');
+
+                    }
+                });
+            });
+        </script>
+    @else
+        <div id="modal4" class="modal">
+            <div class="modal-content">
+                <h3 style="text-align: center">@lang('front.dont_have_permission')</h3>
+            </div>
+        </div>
+    @endif
+
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        let pusher2 = new Pusher('c94ca2fab6f7c2428792', {
+            cluster: 'eu'
+        });
+
+        let channel2 = pusher2.subscribe('update-board-channel');
+        channel2.bind('update-board-event', function(data) {
+            {{--$('#kanban-app').load('{{ url('') }}' +  ' #kanban-app');--}}
+                if(data.board != "{{ auth()->user()->id }}"){
+                    window.location.reload();
+                }
+        });
+    </script>
+@endpush
+
+@push('main-board-settings')
+    <input type="hidden" name="to_refresh_realtime">
+    <div id="main">
+        <div class="row">
+            <div class="content-wrapper-before blue-grey lighten-5"></div>
+            <div class="col s12">
+                <div class="container">
+                    <!-- Basic Kanban App -->
+                    <section id="kanban-wrapper" class="section">
+
+                    @yield('content')
+
+                    <!-- User new mail right area -->
+                        <div class="kanban-sidebar">
+                            <div class="card quill-wrapper">
+                                <div class="card-content pt-0">
+                                    <div class="card-header display-flex pb-2">
+                                        <h3 class="card-title">@lang('front.ques_detail')</h3>
+                                        <div class="close close-icon">
+                                            <i class="material-icons">close</i>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <!-- form start -->
+                                    <form class="edit-kanban-item mt-10 mb-10">
+                                        <div class="input-field">
+                                            <input type="hidden" class="item-id">
+                                            <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">
+                                            <label for="edit-item-title">@lang('front.title')</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">
+                                            <label for="edit-item-date">@lang('front.duedate')</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>@lang('front.label_color')</small>
+                                                    <select id="kanban-item-color" name="color" class="browser-default">
+                                                        <option class="blue" value="blue">Blue</option>
+                                                        <option class="red" value="red">Red</option>
+                                                        <option class="green" value="green">Green</option>
+                                                        <option class="cyan" value="cyan">Cyan</option>
+                                                        <option class="orange" value="orange">Orange </option>
+                                                        <option class="blue-grey" value="blue-grey">Blue-grey</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col s6">
+                                                <div class="input-field mt-0">
+                                                    <small>@lang('front.assign_to')</small>
+                                                    <div class="display-flex">
+                                                        <div class="avatar ">
+                                                            <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle aside-user-photo" height="36" width="36" alt="avtar img holder">
+                                                        </div>
+                                                        <a href="#modal4" class="btn-floating btn-small pulse ml-10 btn modal-trigger assign-quest-user">
+                                                            <i class="material-icons">add</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="file-field input-field">
+                                            <div class="btn btn-file">
+                                                <span>@lang('front.upload_file')</span>
+                                                <input type="file" name="attachment_file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text">
+                                            </div>
+                                        </div>
+
+                                        <div class="file-field input-field">
+                                            <div class="file-path-wrapper spectacular_files" style="width: 100%;">
+
+                                            </div>
+                                        </div>
+                                        <!-- Compose mail Quill editor -->
+                                        <div class="input-field">
+                                            <span>@lang('front.comments')</span>
+                                            <div class="snow-container mt-2">
+                                                <div class="compose-editor"></div>
+                                                <div class="compose-quill-toolbar">
+                                                </div>
+                                            </div>
+                                            <div class="snow-container mt-1">
+                                                <div class="compose-editor comments_paragraph"></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="card-action pl-0 pr-0">
+                                        <button class="btn-small blue waves-effect waves-light update-kanban-item">
+                                            <span>@lang('front.save')</span>
+                                        </button>
+                                        @if(
+                                        auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
+                                        || auth()->user()->hasRole('monitor-board-'.request()->route()->parameter('id'))
+                                        )
+                                        <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">
+                                            <span>@lang('front.delete')</span>
+                                        </button>
+                                        @else
+                                            <a href="#modal4" class="btn-small btn waves-light modal-trigger mr-1">
+                                                <span>@lang('front.delete')</span>
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <!-- form start end-->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--/ Sample Project kanban -->
+                @include('Front.Layouts.aside')
+                <!-- END RIGHT SIDEBAR NAV -->
+                </div>
+                <div class="content-overlay"></div>
+            </div>
+        </div>
+    </div>
+@endpush
+
+@push('modals')
+
 @endpush

@@ -4,7 +4,7 @@
     </head>
     <body>
         <div>
-            <p>you are invited to {{ $data['board']['name'] }} board from {{ $data['user']['email'] }}</p>
+            <p>you are invited to {{ $data['board']['name'] }} board from {{ auth()->user()->email }}</p>
             <form action="{{ route('board.accept_invitation') }}" method="post">
                 @csrf
                 <a href="{{ route('board.accept_invitation',['board_id' => $data['board']['id']]) }}" target="_blank">Yes, Accept</a>

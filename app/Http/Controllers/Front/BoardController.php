@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Front;
 
+use App\Events\SendMessage;
+use App\Events\UpdateBoard;
 use App\Http\Controllers\Controller;
 use App\Mail\UserInvitation;
 use App\Models\Board;
@@ -32,7 +34,13 @@ class BoardController extends Controller {
             'name' => 'required'
         ]);
         $user = auth()->user();
+        // Create board
         $board = Board::create(['name' => $request->get('name'),'user_id' => $user->id,'isPersonalities' => 0]);
+
+        // Create Small Board
+        SmallBoard::create(['title' => 'Tasks List','board_id' => $board->id,'bg-color' => 'blue','count_number' => 1]);
+        SmallBoard::create(['title' => 'On Progress','board_id' => $board->id,'bg-color' => 'red','count_number' => 2]);
+        SmallBoard::create(['title' => 'Completed','board_id' => $board->id,'bg-color' => 'cyan','count_number' => 3]);
 
         $managerRole = Role::create(['name' => "manager-board-$board->id"]);
         $monitorRole = Role::create(['name' => "monitor-board-$board->id"]);
@@ -62,6 +70,7 @@ class BoardController extends Controller {
             {
                 // accept the invitation
                 auth()->user()->assignRole("employee-board-$board->id");
+                return redirect()->route('home');
             }
             // register or login before accept invitation
             return redirect()->route('register',['board_id' => $board->id]);
@@ -108,19 +117,20 @@ class BoardController extends Controller {
     {
         $very = VerySmallBoard::find($request->get('id'));
         $very->update(['small_board_id' => $request->get('small_board_id')]);
+        event(new UpdateBoard(auth()->user()->id));
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardComments(Request $request)
     {
-        $very = VerySmallBoard::with(['comments','files'])->find($request->get('id'));
+        $very = VerySmallBoard::with(['comments','files','user'])->find($request->get('id'));
 
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardUpdate(Request $request)
     {
-        $very = VerySmallBoard::find($request->get('id'));
+        $very = VerySmallBoard::with(['user','files','comments'])->find($request->get('id'));
         $very->update($request->only(['title','dueDate','border']));
         if ($request->get('comment') !== null) {
             Comment::create(['very_small_board_id' => $request->get('id'),'comment' => $request->get('comment')]);
@@ -141,9 +151,18 @@ class BoardController extends Controller {
 
     public function verySmallBoardAdd(Request $request)
     {
+        $smallBoard = SmallBoard::find($request->get('board_id'));
+        if (!auth()->user()->hasRole("manager-board-$smallBoard->board_id")
+            || !auth()->user()->hasRole("manager-board-$smallBoard->board_id")
+        ) {
+            $userId = true;
+        } else {
+            $userId = false;
+        }
         $very = VerySmallBoard::create([
             'small_board_id' => $request->get('board_id'),
-            'title' => $request->get('title')
+            'title' => $request->get('title'),
+            'user_id' => $userId ? auth()->user()->id : null
         ]);
 
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
@@ -189,6 +208,28 @@ class BoardController extends Controller {
             }
 
         return response()->json(['data' => $user,'message' => null,'status' => 1]);
+    }
+
+    public function assignUser(Request $request)
+    {
+        $board_id = $request->get('board_id');
+
+        $users = User::with(['roles'])->role([
+            "manager-board-$board_id",
+            "monitor-board-$board_id",
+            "employee-board-$board_id"
+        ])->get();
+
+        return response()->json(['data' => $users, 'message' => null,'status' => 1]);
+    }
+
+    public function assignUserNext(Request $request)
+    {
+        $very_small_board = VerySmallBoard::find($request->get('very_small_board_id'));
+        $very_small_board->update(['user_id' => $request->get('id')]);
+
+        $user = User::find($request->get('id'));
+        return response()->json(['data' => url('uploads/users/'.$user->photo),'message' => null,'status' => 1]);
     }
 
     public function lang($lang)

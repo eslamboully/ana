@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Front;
 
+use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Board;
 use App\Models\Comment;
 use App\Models\File;
+use App\Models\Message;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
@@ -68,7 +70,7 @@ class HomeController extends Controller {
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('admin.login');
+        return redirect()->route('login');
     }
 
     public function index()
@@ -78,6 +80,39 @@ class HomeController extends Controller {
             ->where('isPersonalities',1)
             ->first();
         return view('Front/home',compact('myBoard'));
+    }
+
+    public function profile() {
+        return view('Front.profile');
+    }
+
+    public function profilePost(Request $request) {
+        $data = $request->validate([
+            'name' => 'sometimes',
+            'email' => 'sometimes',
+            'password' => 'sometimes',
+            'photo' => 'sometimes'
+        ]);
+
+        if ($request->get('password')) {
+            $data['password'] = bcrypt($request->get('password'));
+        }
+
+        if ($request->file('photo')) {
+            $image = $request->file('photo');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/users');
+            $image->move($destinationPath, $name);
+            $data['photo'] = $name;
+        }
+
+        $data = array_filter($data);
+
+        auth()->user()->update($data);
+
+        Session::flash('success',__('front.update_success'));
+
+        return redirect()->back();
     }
 
     public function smallBoardAdd(Request $request)
@@ -166,6 +201,28 @@ class HomeController extends Controller {
         $verysmallboard->delete();
 
         return response()->json(['data' => null,'message' => null,'status' => 1]);
+    }
+
+    public function boardMessageSend(Request $request)
+    {
+
+        $data =  Message::create([
+            'board_id' => $request->get('board_id'),
+            'message' => $request->get('message'),
+            'user_id' => $request->get('user_id'),
+        ]);
+
+        event(new SendMessage($data));
+        return response()->json(['data' => $data,'message' => null,'status' => 1]);
+    }
+
+    public function boardResponseMessages(Request $request)
+    {
+
+        $board = Board::find($request->get('board_id'));
+        $data = Message::where('board_id',$request->get('board_id'))->get();
+
+        return response()->json(['data' => $data,'board' => $board,'message' => null,'status' => 1]);
     }
 
     public function lang($lang)
