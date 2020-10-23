@@ -23,6 +23,7 @@ class CreateVerySmallBoardsTable extends Migration
 
             $table->string('title');
             $table->string('border')->nullable();
+            $table->string('startDate')->nullable();
             $table->string('dueDate')->nullable();
 
 //            $table->unsignedBigInteger('user_id')->nullable();

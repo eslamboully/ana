@@ -122,21 +122,14 @@
             <div class="nav-wrapper">
                 <ul class="left hide-on-med-and-down" id="ul-horizontal-nav" data-menu="menu-navigation">
                     <li>
-                        <a class="dropdown-menu" href="Javascript:void(0)" data-target="DashboardDropdown">
+                        <a class="waves-effect waves-light modal-trigger" href="{{ route('home') }}">
                             <i class="material-icons">dashboard</i>
                             <span>
-                                <span class="dropdown-title" data-i18n="Dashboard">
-                                    @lang('front.dashboard')
+                                <span class="dropdown-title" data-i18n="Apps">
+                                    @lang('front.my')
                                 </span>
-                                <i class="material-icons right">keyboard_arrow_down</i>
                             </span>
                         </a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="DashboardDropdown">
-                            <li data-menu=""><a href="{{ route('home') }}"><span data-i18n="Modern">@lang('front.my')</span></a>
-                            </li>
-                            <li data-menu=""><a href="#"><span data-i18n="eCommerce">@lang('front.latest_ques')</span></a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a class="dropdown-menu" href="Javascript:void(0)" data-target="TemplatesDropdown">
@@ -185,10 +178,12 @@
         @csrf
         <div class="modal-content">
             <h4>@lang('front.name_of_board')</h4>
-            <input type="text" name="name" required class="form-control" placeholder="@lang('front.project_name')">
+            <input style="width: 40%" type="text" name="name" required class="form-control" placeholder="@lang('front.project_name')">
+            <input style="width: 20%" type="text" name="startDate" required class="form-control datepicker" value="{{ \Carbon\Carbon::now()->format('d/m/Y') }}" placeholder="@lang('front.startdate')">
+            <input style="width: 20%" type="text" name="endDate" required class="form-control datepicker" value="{{ \Carbon\Carbon::now()->addDays(3)->format('d/m/Y') }}" placeholder="@lang('front.endDate')">
         </div>
         <div class="modal-footer">
-            <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">@lang('front.agree')</button>
+            <button type="submit" style="float: right" class="modal-action modal-close waves-effect waves-green btn-flat">@lang('front.agree')</button>
         </div>
     </form>
 </div>

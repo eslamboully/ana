@@ -53,7 +53,7 @@ class HomeController extends Controller {
         $user = User::create($data);
 
         $board = Board::create([
-            'name' => 'my board',
+            'name' => 'Personal Board',
             'user_id' => $user->id,
             'isPersonalities' => 1
         ]);

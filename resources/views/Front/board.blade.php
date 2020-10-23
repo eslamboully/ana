@@ -3,7 +3,28 @@
 @section('content')
     <div class="kanban-overlay"></div>
     <div class="row">
-        <div class="col s12">
+        <div class="pt-1 pb-0" id="breadcrumbs-wrapper">
+            <!-- Search for small screen-->
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <h6 class="breadcrumbs-title"><span>{{ $myBoard->name }}</span></h6>
+                        <p style="font-size: 12px;">@lang('front.start_from'): {{ $myBoard->startDate }}  @lang('front.end_to'): {{ $myBoard->endDate }}</p>
+                    </div>
+                    <div class="col s12 m6 l6 right-align-md">
+                        <ol class="breadcrumbs mb-0">
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('front.my')</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="{{ route('board.boards.all') }}">@lang('front.all_boards')</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ $myBoard->name }}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12" style="margin-top: -50px">
             <!-- New kanban board add button -->
             <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
                 <i class='material-icons left'>add</i> @lang('front.add_new_board')
@@ -42,7 +63,9 @@
                                     id: "{{ $very->id }}",
                                     title: "{{ $very->title }}",
                                     border: "{{ $very->border }}",
-                                    dueDate: "{{ $very->dueDate }}",
+                                    @if($very->dueDate != "00/00/0000" && $very->dueDate != null)
+                                        dueDate: "{{ $very->dueDate }}",
+                                    @endif
                                     board: "{{ $very->board_id }}",
                                     comment: {{ count($very->comments) }},
                                     attachment: {{ count($very->files) }},
@@ -100,16 +123,12 @@
                             data.data.files.forEach((file,index) => {
                                 $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.file') }} ${index+1}</a>`);
                             });
-                            // user photo
-                            if (data.data.user) {
-                                $('.aside-user-photo').attr("src",'{{ url('uploads/users/') }}/'+data.data.user.photo);
-                            }
-
-
+                            // user start-date
+                            $(".edit-start-item-date").val(data.data.startDate);
+                            $(".edit-item-date").val(data.data.dueDate);
                             // comments
                             $(".comments_paragraph").html("");
                             data.data.comments.forEach((comment) => {
-
                                 $(".comments_paragraph").append(`<p>${comment.comment}</p>`);
                             });
                         },
@@ -397,6 +416,7 @@
             $(document).on("click",".update-kanban-item",function (e) {
                 let title = $('#edit-item-title').val();
                 let dueDate = $('#edit-item-date').val();
+                let startDate = $('#edit-start-item-date').val();
                 let id = $('.item-id').val();
                 let labelColor = $('select[name=color]').val();
                 let comment = $('.ql-editor > p').text();
@@ -407,6 +427,7 @@
                 formData.append('border', labelColor);
                 formData.append('id', id);
                 formData.append('dueDate', dueDate);
+                formData.append('startDate', startDate);
                 formData.append('title', title);
                 formData.append('_token',"{{ csrf_token() }}");
 
@@ -435,7 +456,7 @@
                         element.append(`
                             ${title}
                             <div class="kanban-footer mt-3">
-                                <div class="kanban-due-date center mb-5 lighten-5 ">
+                                <div class="kanban-due-date center mb-5 lighten-5 dueDateIsExistOrNot-${data.data.id}">
                                     <span class="-text center"> ${dueDate}</span>
                                 </div>
                                 <div class="kanban-footer-left left display-flex pt-1">
@@ -454,25 +475,19 @@
                             </div>
                         `);
 
+                        if (data.data.dueDate == "00/00/0000" || data.data.dueDate == null) {
+                            $(`.dueDateIsExistOrNot-${data.data.id}`).css('display','none');
+                        }
+
                         element.children().children().eq(0).addClass(labelColor).css("color",labelColor);
                         element.children().children().eq(2).children().html('');
                         if (data.data.users.length > 0){
-                            {{--element.children().children().eq(2).append(`--}}
-                            {{--    <div class="kanban-users">--}}
-                            {{--        ${--}}
-                            {{--            data.data.users.forEach(function (user) {--}}
-                            {{--                '<img class="circle" src="{{ url('uploads/users') }}/' + user.photo + '" alt="Avatar" height="24" width="24">--}}
-                            {{--            })--}}
-                            {{--        }--}}
-                            {{--    </div>--}}
-                            {{--`);--}}
                             data.data.users.forEach(function (user) {
                                 $(`.element-${data.data.id}`).append(`
                                 <img class="circle" src="{{ url('uploads/users') }}/${user.photo}" alt="Avatar" height="24" width="24">
                                 `);
                             });
                         }
-
 
                         let cache = element.children();
                         element.text(title);
@@ -704,7 +719,11 @@
                                             <label for="edit-item-title">@lang('front.title')</label>
                                         </div>
                                         <div class="input-field">
-                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="1/1/2020">
+                                            <input type="text" class="edit-kanban-start-item-date datepicker" id="edit-start-item-date" value="{{ now()->format('d/m/Y') }}">
+                                            <label for="edit-start-item-date">@lang('front.startdate')</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="{{ now()->format('d/m/y') }}">
                                             <label for="edit-item-date">@lang('front.duedate')</label>
                                         </div>
                                         <div class="row">

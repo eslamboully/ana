@@ -7,7 +7,7 @@ return [
     'search' => ' بحث ',
     'search_desc' => ' استكشف قصاصة ',
     'dashboard' => 'الرئيسية',
-    'my' => 'مهماتي الشخصية',
+    'my' => 'لوحتي الشخصية',
     'latest_ques' => 'اخر زيارة',
     'permissions' => 'صلاحياتي',
     'settings' => 'الاعدادات',
@@ -45,5 +45,9 @@ return [
     'profile' => 'ملفي',
     'messages' => 'رسائل المشروع',
     'logout' => 'خروج',
+    'startdate' => 'تاريخ البداية',
+    'endDate' => 'تاريخ النهاية',
+    'start_from' => 'بداية من',
+    'end_to' => 'حتي',
     'update_success' => 'تم التحديث بنجاح',
 ];

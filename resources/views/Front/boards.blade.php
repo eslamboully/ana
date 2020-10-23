@@ -52,11 +52,10 @@
                                         'gradient-45deg-purple-deep-orange',
                                         'gradient-45deg-purple-deep-purple'
                                         ];
-                                    $colorsRand = array_rand($colors,1);
                                 @endphp
                                 @foreach(auth()->user()->boards() as $board)
                                     <div class="col s12 m6 l3 card-width">
-                                        <div class="card row {{ $colors[$colorsRand] }} gradient-shadow white-text padding-4 mt-5">
+                                        <div class="card row {{ $colors[array_rand($colors)] }} gradient-shadow white-text padding-4 mt-5">
                                             <div class="col s7 m7">
                                                 <i class="material-icons background-round mt-5 mb-5">attach_money</i>
                                                 <p>

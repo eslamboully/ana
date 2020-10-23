@@ -57,7 +57,7 @@ class AdminSeeder extends Seeder
         ]);
 
         Board::create([
-            'name' => 'my board',
+            'name' => 'Personal Board',
             'user_id' => 1,
             'isPersonalities' => 1
         ]);

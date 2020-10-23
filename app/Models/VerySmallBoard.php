@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VerySmallBoard extends Model
 {
     use HasFactory;
-    protected $fillable = ['small_board_id','title','border','dueDate','comment','users'];
+    protected $fillable = ['small_board_id','title','border','startDate','dueDate','comment','users'];
 
     public function comments()
     {

@@ -36,7 +36,13 @@ class BoardController extends Controller {
         ]);
         $user = auth()->user();
         // Create board
-        $board = Board::create(['name' => $request->get('name'),'user_id' => $user->id,'isPersonalities' => 0]);
+        $board = Board::create([
+            'name' => $request->get('name'),
+            'user_id' => $user->id,
+            'isPersonalities' => 0,
+            'startDate' => $request->get('startDate'),
+            'endDate' => $request->get('endDate'),
+        ]);
 
         // Create Small Board
         SmallBoard::create(['title' => 'Tasks List','board_id' => $board->id,'bg-color' => 'blue','count_number' => 1]);
@@ -134,7 +140,7 @@ class BoardController extends Controller {
     public function verySmallBoardUpdate(Request $request)
     {
         $very = VerySmallBoard::with(['files','comments','users'])->find($request->get('id'));
-        $very->update($request->only(['title','dueDate','border']));
+        $very->update($request->only(['title','startDate','dueDate','border']));
         if ($request->get('comment') !== null) {
             Comment::create(['very_small_board_id' => $request->get('id'),'comment' => $request->get('comment')]);
         }

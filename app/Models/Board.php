@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','isPersonalities','name'];
+    protected $fillable = ['user_id','isPersonalities','name','startDate','endDate'];
 
     public function smallBoards()
     {
