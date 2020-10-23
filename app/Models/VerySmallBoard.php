@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VerySmallBoard extends Model
 {
     use HasFactory;
-    protected $fillable = ['small_board_id','title','border','dueDate','comment','users','user_id'];
+    protected $fillable = ['small_board_id','title','border','dueDate','comment','users'];
 
     public function comments()
     {
@@ -20,8 +20,8 @@ class VerySmallBoard extends Model
         return $this->hasMany(File::class,'very_small_board_id','id');
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsToMany(User::class,'very_small_board_user','very_small_board_id','user_id');
     }
 }

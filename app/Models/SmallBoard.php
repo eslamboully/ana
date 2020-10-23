@@ -28,4 +28,11 @@ class SmallBoard extends Model
     {
         return $this->hasMany(VerySmallBoard::class);
     }
+
+//    public function employeeVerySmallBoard()
+//    {
+//        $this->verySmallBoard()->where('users',function () {
+//
+//        });
+//    }
 }

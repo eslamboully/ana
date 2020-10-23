@@ -46,10 +46,12 @@
                                     board: "{{ $very->board_id }}",
                                     comment: {{ count($very->comments) }},
                                     attachment: {{ count($very->files) }},
-                                    @if($very->user !== null)
-                                    users: [
-                                        "{{ url('uploads/users/'.$very->user->photo) }}"
-                                    ]
+                                    @if(!empty($very->users))
+                                        users: [
+                                            @foreach($very->users as $user)
+                                                "{{ url('uploads/users/'.$user->photo) }}"
+                                            @endforeach
+                                        ]
                                     @endif
                                 },
                         @endforeach
@@ -93,7 +95,6 @@
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
                         success : function (data) {
-
                             // files
                             $(".spectacular_files").html("");
                             data.data.files.forEach((file,index) => {
@@ -103,12 +104,12 @@
                             if (data.data.user) {
                                 $('.aside-user-photo').attr("src",'{{ url('uploads/users/') }}/'+data.data.user.photo);
                             }
-                            console.log(data.data.comments);
+
 
                             // comments
                             $(".comments_paragraph").html("");
                             data.data.comments.forEach((comment) => {
-                                console.log(comment);
+
                                 $(".comments_paragraph").append(`<p>${comment.comment}</p>`);
                             });
                         },
@@ -448,19 +449,28 @@
                                     </div>
                                 </div>
                                 <div class="kanban-footer-right right">
-                                    <div class="kanban-users">  </div>
+                                    <div class="kanban-users element-${data.data.id}">  </div>
                                 </div>
                             </div>
                         `);
 
                         element.children().children().eq(0).addClass(labelColor).css("color",labelColor);
-                        element.children().children().eq(2).html('');
-                        if (data.data.user){
-                            element.children().children().eq(2).append(`
-                                <div class="kanban-users">
-                                    <img class="circle" src="{{ url('uploads/users') }}/${data.data.user.photo}" alt="Avatar" height="24" width="24">
-                                </div>
-                            `);
+                        element.children().children().eq(2).children().html('');
+                        if (data.data.users.length > 0){
+                            {{--element.children().children().eq(2).append(`--}}
+                            {{--    <div class="kanban-users">--}}
+                            {{--        ${--}}
+                            {{--            data.data.users.forEach(function (user) {--}}
+                            {{--                '<img class="circle" src="{{ url('uploads/users') }}/' + user.photo + '" alt="Avatar" height="24" width="24">--}}
+                            {{--            })--}}
+                            {{--        }--}}
+                            {{--    </div>--}}
+                            {{--`);--}}
+                            data.data.users.forEach(function (user) {
+                                $(`.element-${data.data.id}`).append(`
+                                <img class="circle" src="{{ url('uploads/users') }}/${user.photo}" alt="Avatar" height="24" width="24">
+                                `);
+                            });
                         }
 
 
@@ -579,20 +589,30 @@
         <script>
             $(document).on('click','.assign-quest-user',function (e) {
                 e.preventDefault();
+                let very_small_board_id = $('.item-id').val();
                 $.ajax({
                     method: 'post',
                     url: '{{ route('board.assign_user') }}',
-                    data : {board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
+                    data : {very_small_board_id:very_small_board_id,board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
                     success : function (data) {
                         $('.users-list-roles').html('');
-                        data.data.forEach((user,index) => {
+                        data.data.users.forEach((user,index) => {
                             $('.users-list-roles').append(`
                         <tr>
                             <td>${user.email}</td>
                             <td>
                                 <p class="mb-1">
                                     <label>
-                                        <button type="button" data-id="${user.id}" class="filled-in btn modal-action modal-close waves-effect waves-red btn-flat assign-r" ><i class="material-icons">add</i></button>
+                                        <button type="button"
+                                            data-id="${user.id}"
+                                                style="${data.data.very_small_board
+                                                    .users.some( u => u.id == user.id)
+                                                    ? 'background-color: #ff9100 !important;' : ''
+                                                }"
+                                            class="filled-in btn modal-action waves-effect
+                                                waves-red btn-flat assign-r"
+                                            ><i class="material-icons">done</i>
+                                        </button>
                                         <span></span>
                                     </label>
                                 </p>
@@ -610,15 +630,19 @@
                 e.preventDefault();
                 let id = $(this).data('id');
                 let very_small_board_id = $('.item-id').val();
+                let that = $(this);
                 $.ajax({
                     method: "post",
                     url: "{{ route('board.assign_user_next') }}",
                     data: {id:id,_token:"{{ csrf_token() }}",very_small_board_id:very_small_board_id},
-                    success : function () {
-                        alert('user added successfully');
-
+                    success : (data) => {
+                        if (data.data == 1) {
+                            that.css({backgroundColor: '#ff9100'});
+                        } else {
+                            that.css("background-color", "");
+                        }
                     }
-                });
+                })
             });
         </script>
     @else
@@ -680,7 +704,7 @@
                                             <label for="edit-item-title">@lang('front.title')</label>
                                         </div>
                                         <div class="input-field">
-                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">
+                                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="1/1/2020">
                                             <label for="edit-item-date">@lang('front.duedate')</label>
                                         </div>
                                         <div class="row">
@@ -701,9 +725,9 @@
                                                 <div class="input-field mt-0">
                                                     <small>@lang('front.assign_to')</small>
                                                     <div class="display-flex">
-                                                        <div class="avatar ">
-                                                            <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle aside-user-photo" height="36" width="36" alt="avtar img holder">
-                                                        </div>
+{{--                                                        <div class="avatar ">--}}
+{{--                                                            <img src="{{ url('Front') }}/app-assets/images/avatar/avatar-18.png" class="circle aside-user-photo" height="36" width="36" alt="avtar img holder">--}}
+{{--                                                        </div>--}}
                                                         <a href="#modal4" class="btn-floating btn-small pulse ml-10 btn modal-trigger assign-quest-user">
                                                             <i class="material-icons">add</i>
                                                         </a>

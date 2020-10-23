@@ -77,4 +77,24 @@ class User extends Authenticatable
 
         return $boards;
     }
+
+    public function haveBoard($id)
+    {
+        $boardsIds = [];
+        $roles = $this->roles()->get();
+
+        foreach ($roles as $role)
+        {
+            $exlore = explode('-',$role->name);
+            if ($exlore[2]) {
+                array_push($boardsIds,$exlore[2]);
+            }
+            array_unique($boardsIds);
+        }
+
+        if (in_array($id,$boardsIds)) {
+            return true;
+        }
+        return false;
+    }
 }

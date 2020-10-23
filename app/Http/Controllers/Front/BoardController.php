@@ -12,6 +12,7 @@ use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
@@ -69,7 +70,9 @@ class BoardController extends Controller {
             if (auth()->check())
             {
                 // accept the invitation
-                auth()->user()->assignRole("employee-board-$board->id");
+                if (!auth()->user()->haveBoard($board->id)) {
+                    auth()->user()->assignRole("employee-board-$board->id");
+                }
                 return redirect()->route('home');
             }
             // register or login before accept invitation
@@ -123,14 +126,14 @@ class BoardController extends Controller {
 
     public function verySmallBoardComments(Request $request)
     {
-        $very = VerySmallBoard::with(['comments','files','user'])->find($request->get('id'));
+        $very = VerySmallBoard::with(['comments','files'])->find($request->get('id'));
 
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardUpdate(Request $request)
     {
-        $very = VerySmallBoard::with(['user','files','comments'])->find($request->get('id'));
+        $very = VerySmallBoard::with(['files','comments','users'])->find($request->get('id'));
         $very->update($request->only(['title','dueDate','border']));
         if ($request->get('comment') !== null) {
             Comment::create(['very_small_board_id' => $request->get('id'),'comment' => $request->get('comment')]);
@@ -213,23 +216,40 @@ class BoardController extends Controller {
     public function assignUser(Request $request)
     {
         $board_id = $request->get('board_id');
-
+        $very_small_board = VerySmallBoard::with(['users'])->find($request->get('very_small_board_id'));
         $users = User::with(['roles'])->role([
             "manager-board-$board_id",
             "monitor-board-$board_id",
             "employee-board-$board_id"
         ])->get();
 
-        return response()->json(['data' => $users, 'message' => null,'status' => 1]);
+        return response()->json(['data' => ['users' => $users,'very_small_board' => $very_small_board], 'message' => null,'status' => 1]);
     }
 
     public function assignUserNext(Request $request)
     {
         $very_small_board = VerySmallBoard::find($request->get('very_small_board_id'));
-        $very_small_board->update(['user_id' => $request->get('id')]);
 
-        $user = User::find($request->get('id'));
-        return response()->json(['data' => url('uploads/users/'.$user->photo),'message' => null,'status' => 1]);
+        $bool = 0;
+
+        $very_small_board_is_contains = DB::table('very_small_board_user')
+            ->where([
+                'very_small_board_id' => $very_small_board->id,
+                'user_id' => $request->get('id'),
+            ]);
+
+        if ($very_small_board_is_contains->first()) {
+            $very_small_board_is_contains->delete();
+            $bool = 0;
+        } else {
+            DB::table('very_small_board_user')->insert([
+                'very_small_board_id' => $very_small_board->id,
+                'user_id' => $request->get('id'),
+            ]);
+            $bool = 1;
+        }
+
+        return response()->json(['data' => $bool,'message' => null,'status' => 1]);
     }
 
     public function lang($lang)

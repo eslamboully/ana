@@ -25,11 +25,11 @@ class CreateVerySmallBoardsTable extends Migration
             $table->string('border')->nullable();
             $table->string('dueDate')->nullable();
 
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+//            $table->unsignedBigInteger('user_id')->nullable();
+//            $table->foreign('user_id')
+//                ->references('id')
+//                ->on('users')
+//                ->onDelete('cascade');
 
             $table->timestamps();
         });
