@@ -46,7 +46,7 @@ class HomeController extends Controller {
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required'
+            'password' => 'required|confirmed',
         ]);
         $data['password'] = bcrypt($request->get('password'));
 
@@ -112,7 +112,12 @@ class HomeController extends Controller {
             'name' => 'sometimes',
             'email' => 'sometimes',
             'password' => 'sometimes',
-            'photo' => 'sometimes'
+            'photo' => 'sometimes',
+            'phone' => 'sometimes',
+            'country' => 'sometimes',
+            'address' => 'sometimes',
+            'dateOfBirth' => 'sometimes',
+            'job' => 'sometimes',
         ]);
 
         if ($request->get('password')) {

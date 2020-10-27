@@ -21,6 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(1);
             $table->string('photo')->default('default.png');
+            $table->string('phone')->nullable();
+            $table->string('country')->nullable();
+            $table->string('job')->nullable();
+            $table->string('dateOfBirth')->nullable();
+            $table->string('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

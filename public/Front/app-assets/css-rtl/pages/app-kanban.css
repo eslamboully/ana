@@ -82,7 +82,7 @@
 #kanban-wrapper .kanban-container .kanban-board .kanban-drag .kanban-item
 {
     overflow: hidden;
-
+    text-align: center;
     border-radius: 4px;
 }
 

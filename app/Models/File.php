@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     use HasFactory;
-    protected $fillable = ['file','very_small_board_id'];
+    protected $fillable = ['file','board_id','very_small_board_id'];
+
+    public function verySmallBoard()
+    {
+        return $this->belongsTo(VerySmallBoard::class,'very_small_board_id','id');
+    }
 }

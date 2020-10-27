@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 use App\Events\SendMessage;
 use App\Events\UpdateBoard;
 use App\Http\Controllers\Controller;
+use App\Mail\AddMissionToUser;
 use App\Mail\UserInvitation;
 use App\Models\Board;
 use App\Models\Comment;
@@ -105,7 +106,8 @@ class BoardController extends Controller {
     public function smallBoardChange(Request $request)
     {
         $data = $request->validate([
-            'title' => 'sometimes'
+            'title' => 'sometimes',
+            'bg-color' => 'sometimes'
         ]);
 
         $results = SmallBoard::find($request->get('id'))->update($data);
@@ -132,17 +134,47 @@ class BoardController extends Controller {
 
     public function verySmallBoardComments(Request $request)
     {
-        $very = VerySmallBoard::with(['comments','files'])->find($request->get('id'));
+        $boardFiles = File::with(['verySmallBoard'])
+            ->where('board_id',$request->get('id'))
+            ->orderBy('very_small_board_id','asc')
+            ->get();
+        $boardComments = Comment::with(['board','verySmallBoard','user'])
+            ->where('board_id',$request->get('id'))
+            ->orderBy('very_small_board_id','asc')
+            ->get();
+        return response()->json(['data' => ['comments'=> $boardComments,'files' => $boardFiles],'message' => null,'status' => 1]);
+    }
 
-        return response()->json(['data' => $very,'message' => null,'status' => 1]);
+    public function verySmallBoardInfo(Request $request)
+    {
+        $verySmallBoard = VerySmallBoard::find($request->get('id'));
+        return response()->json(['data' => $verySmallBoard,'message' => null,'status' => 1]);
     }
 
     public function verySmallBoardUpdate(Request $request)
     {
-        $very = VerySmallBoard::with(['files','comments','users'])->find($request->get('id'));
-        $very->update($request->only(['title','startDate','dueDate','border']));
+        $very  = VerySmallBoard::with(['files','comments','users'])->find($request->get('id'));
+
+        if ($very) {
+            $very->update($request->only(['title','startDate','dueDate','duration','border']));
+        }
+
         if ($request->get('comment') !== null) {
-            Comment::create(['very_small_board_id' => $request->get('id'),'comment' => $request->get('comment')]);
+            if ($request->get('isPublic') == 0) {
+                Comment::create([
+                    'user_id' => auth()->user()->id,
+                    'board_id' => $request->get('board_id'),
+                    'very_small_board_id' => null,
+                    'comment' => $request->get('comment')
+                ]);
+            } else {
+                Comment::create([
+                    'user_id' => auth()->user()->id,
+                    'board_id' => $request->get('board_id'),
+                    'very_small_board_id' => $request->get('id'),
+                    'comment' => $request->get('comment')
+                ]);
+            }
         }
 
         if ($request->file('file')) {
@@ -150,12 +182,29 @@ class BoardController extends Controller {
             $name = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/home/files');
             $image->move($destinationPath, $name);
-            File::create([
-                'very_small_board_id' => $request->get('id'),
-                'file' => $name
-            ]);
+            if ($request->get('isPublic') == 0) {
+                File::create([
+                    'board_id' => $request->get('board_id'),
+                    'very_small_board_id' => null,
+                    'file' => $name
+                ]);
+            } else {
+                File::create([
+                    'board_id' => $request->get('board_id'),
+                    'very_small_board_id' => $request->get('id'),
+                    'file' => $name
+                ]);
+            }
         }
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
+    }
+
+    public function verySmallBoardFiles(Request $request)
+    {
+        $board = Board::find($request->get('id'));
+        $very = $board->verySmallBoard();
+
+        return response()->json(['data' => $very,'message' => null, 'status' => 1]);
     }
 
     public function verySmallBoardAdd(Request $request)
@@ -173,6 +222,10 @@ class BoardController extends Controller {
             'title' => $request->get('title'),
             'user_id' => $userId ? auth()->user()->id : null
         ]);
+
+        if ($userId) {
+
+        }
 
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
@@ -202,21 +255,17 @@ class BoardController extends Controller {
     public function usersPermissionsUpdate(Request $request)
     {
         $board_id = $request->get('board_id');
-            foreach ($request->get('users') as $id => $permissions)
+            foreach ($request->get('usersIds') as $id)
             {
-                $permissionsForUsers = [];
                 $user = User::find($id);
                 $user->removeRole("manager-board-$board_id");
                 $user->removeRole("monitor-board-$board_id");
                 $user->removeRole("employee-board-$board_id");
-                foreach ($permissions as $permission=>$on)
-                {
-                    array_push($permissionsForUsers,$permission);
-                }
-                $user->assignRole($permissionsForUsers);
+
+                $user->assignRole($request->get("permission-user-$id"));
             }
 
-        return response()->json(['data' => $user,'message' => null,'status' => 1]);
+        return response()->json(['data' => null,'message' => null,'status' => 1]);
     }
 
     public function assignUser(Request $request)
@@ -252,6 +301,13 @@ class BoardController extends Controller {
                 'very_small_board_id' => $very_small_board->id,
                 'user_id' => $request->get('id'),
             ]);
+
+            $board = Board::find($very_small_board->small_board->board_id);
+            $data['board'] = $board;
+            $data['user']  = auth()->user()->id;
+            $user = User::find($request->get('id'));
+            Mail::to($user->email)->send(new AddMissionToUser($data));
+
             $bool = 1;
         }
 

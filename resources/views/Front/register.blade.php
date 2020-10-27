@@ -33,7 +33,7 @@
                         @csrf
                         <div class="row">
                             <div class="input-field col s12">
-                                <h5 class="ml-4">Sign in</h5>
+                                <h5 class="ml-4">Register Now</h5>
                             </div>
                         </div>
                         @if ($errors->any())
@@ -67,14 +67,11 @@
                                 <label for="password">Password</label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col s12 m12 l12 ml-2 mt-1">
-                                <p>
-                                    <label>
-                                        <input type="checkbox" name="remember_me" />
-                                        <span>Remember Me</span>
-                                    </label>
-                                </p>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix pt-2">lock_outline</i>
+                                <input id="password" name="password_confirmation" type="password" required>
+                                <label for="password">Re Password</label>
                             </div>
                         </div>
                         <div class="row">
@@ -86,7 +83,7 @@
                             <div class="input-field col s6 m6 l6">
                                 <p class="margin medium-small">
                                     <a href="{{ route('login',['board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : null ]) }}">
-                                        Login
+                                        Register
                                     </a>
                                 </p>
                             </div>

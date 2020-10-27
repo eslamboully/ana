@@ -17,10 +17,22 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->string('comment');
 
-            $table->unsignedBigInteger('very_small_board_id');
+            $table->unsignedBigInteger('very_small_board_id')->nullable();
             $table->foreign('very_small_board_id')
                 ->references('id')
                 ->on('very_small_boards')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('board_id')->nullable();
+            $table->foreign('board_id')
+                ->references('id')
+                ->on('boards')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->timestamps();

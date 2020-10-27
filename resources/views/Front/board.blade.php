@@ -38,12 +38,19 @@
                     @lang('front.users')
                 </a>
             @endif
+            <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #5e35b1" class="btn waves-effect waves-light mb-1 collection-item right-sidebar-chat-item sidenav-trigger add-kanban-btn message_board_id" data-id="{{ request()->route()->parameter('id') }}" data-target="slide-out-chat">
+                @lang('front.messages')
+            </button>
+            <a href="#modal-files" style="font-family: 'Cairo', sans-serif !important;background-color: #4e342e" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn show-board-files">
+                @lang('front.files')
+            </a>
             <div id="kanban-app"></div>
         </div>
     </div>
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         $(document).ready(function () {
             var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data,
@@ -64,17 +71,17 @@
                                     title: "{{ $very->title }}",
                                     border: "{{ $very->border }}",
                                     @if($very->dueDate != "00/00/0000" && $very->dueDate != null)
-                                        dueDate: "{{ $very->dueDate }}",
+                                    dueDate: "{{ $very->dueDate }}",
                                     @endif
                                     board: "{{ $very->board_id }}",
                                     comment: {{ count($very->comments) }},
                                     attachment: {{ count($very->files) }},
                                     @if(!empty($very->users))
-                                        users: [
-                                            @foreach($very->users as $user)
-                                                "{{ url('uploads/users/'.$user->photo) }}"
-                                            @endforeach
-                                        ]
+                                    users: [
+                                        @foreach($very->users as $user)
+                                            "{{ url('uploads/users/'.$user->photo) }}",
+                                        @endforeach
+                                    ]
                                     @endif
                                 },
                         @endforeach
@@ -114,23 +121,24 @@
                         }
                     });
                     $.ajax({
-                        'url' : "{{ route('board.very.small.board.comments') }}",
+                        'url' : "{{ route('board.very.small.board.info') }}",
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
                         success : function (data) {
                             // files
-                            $(".spectacular_files").html("");
-                            data.data.files.forEach((file,index) => {
-                                $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.file') }} ${index+1}</a>`);
-                            });
+                            // $(".spectacular_files").html("");
+                            // data.data.files.forEach((file,index) => {
+                            //     $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.file') }} ${index+1}</a>`);
+                            // });
                             // user start-date
                             $(".edit-start-item-date").val(data.data.startDate);
                             $(".edit-item-date").val(data.data.dueDate);
-                            // comments
-                            $(".comments_paragraph").html("");
-                            data.data.comments.forEach((comment) => {
-                                $(".comments_paragraph").append(`<p>${comment.comment}</p>`);
-                            });
+                            $(".edit-item-duration").val(data.data.duration);
+                            // // comments
+                            // $(".comments_paragraph").html("");
+                            // data.data.comments.forEach((comment) => {
+                            //     $(".comments_paragraph").append(`<p>${comment.comment}</p>`);
+                            // });
                         },
                         fail : () => {
                             alert('something is wrong');
@@ -348,7 +356,7 @@
                             var kanbanNewBoardData = '<div class="dropdown">' +
                                 '<a class="dropdown-trigger" href="#" data-target="kan' + i + '" > <i class="material-icons white-text">more_vert</i></a>' +
                                 '<ul id="kan' + i + '" class="dropdown-content">' +
-                                '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Copy Link</span></a></li>' +
+                                '<li><a href="#!" class="change_board_color"><i class="material-icons">link</i><span class="menu-item">Color</span></a></li>' +
                                 '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
                                 '</ul></div>';
                             var kanbanNewDropdown = $(kanbanNewBoard).find("header");
@@ -372,18 +380,37 @@
                 var $id = $(this)
                     .closest(".kanban-board")
                     .attr("data-id");
-                addEventListener("click", function () {
-                    KanbanExample.removeBoard($id);
-
-                    $.ajax({
-                        'url' : "{{ route('board.small.board.remove') }}",
-                        'method' : "post",
-                        'data' : {id: $id,board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
-                        fail : () => {
-                            alert('something is wrong');
+                // addEventListener("click", function () {
+                    Swal.fire({
+                        title: '{{ __('front.are_you_sure') }}',
+                        text: "{{ __('front.You_wont_be_able_to_revert_it') }}",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '{{ __('front.yes_delete') }}',
+                        cancelButtonText: '{{ __('front.cancel') }}'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            KanbanExample.removeBoard($id);
+                            $.ajax({
+                                'url' : "{{ route('board.small.board.remove') }}",
+                                'method' : "post",
+                                'data' : {id: $id,board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
+                                success : () => {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        '{{ __('front.delete_success') }}.',
+                                        'success'
+                                    )
+                                },
+                                fail : () => {
+                                    alert('something is wrong');
+                                }
+                            });
                         }
-                    });
-                });
+                    })
+                // });
             });
 
             // Kanban board dropdown
@@ -396,8 +423,8 @@
                 kanban_dropdown.innerHTML =
                     '<a class="dropdown-trigger" href="#" data-target="" > <i class="material-icons white-text">more_vert</i></a>' +
                     '<ul id="" class="dropdown-content">' +
-                    '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Copy Link</span></a></li>' +
-                    '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
+                    '<li><a href="#!" class="change_board_color"><i class="material-icons">link</i><span class="menu-item">Color</span></a></li>' +
+                    '<li class="kanban-delete"><a href="#!" class="delete_small_board"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
                     '</ul>';
                 if (!$(".kanban-board-header div").hasClass("dropdown")) {
                     $(".kanban-board-header").append(kanban_dropdown);
@@ -417,17 +444,16 @@
                 let title = $('#edit-item-title').val();
                 let dueDate = $('#edit-item-date').val();
                 let startDate = $('#edit-start-item-date').val();
+                let duration = $('#edit-item-duration').val();
                 let id = $('.item-id').val();
                 let labelColor = $('select[name=color]').val();
-                let comment = $('.ql-editor > p').text();
 
                 let formData = new FormData();
-                formData.append('file', $('input[name=attachment_file]')[0].files[0]);
-                formData.append('comment', comment);
                 formData.append('border', labelColor);
                 formData.append('id', id);
                 formData.append('dueDate', dueDate);
                 formData.append('startDate', startDate);
+                formData.append('duration', duration);
                 formData.append('title', title);
                 formData.append('_token',"{{ csrf_token() }}");
 
@@ -499,6 +525,52 @@
                 });
             });
 
+            // Change Board Color
+            // -------------------
+            $(document).on('click','.change_board_color',async function (e){
+                e.preventDefault();
+                var $id = $(this)
+                    .closest(".kanban-board")
+                    .attr("data-id");
+
+                const { value: fruit } = await Swal.fire({
+                    title: '{{ __('front.change_color') }}',
+                    input: 'select',
+                    inputOptions: {
+                        blue: 'blue',
+                        red: 'red',
+                        green: 'green',
+                        cyan: 'cyan',
+                        orange: 'orange',
+                        blueGrey: 'blue-grey'
+                    },
+                    inputPlaceholder: '{{ __('front.color') }}',
+                    showCancelButton: true,
+                    // inputValidator: (value) => {
+                    //
+                    // }
+                })
+
+                if (fruit) {
+                    $.ajax({
+                        url: "{{ route('board.small.board.change') }}",
+                        method: "post",
+                        data: {'_token': '{{ csrf_token() }}','id':$id,'bg-color':fruit},
+                        success : function() {
+                            // append new color
+                            let element = $(".kanban-board[data-id='" + $id + "']").find(".kanban-board-header");
+                            let arr = ['blue','red','green','cyan','orange','blue-grey'];
+                            arr.forEach((one) => {
+                                if (element.hasClass(one)) {
+                                    element.removeClass(one);
+                                    element.addClass(fruit);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
             // Delete Kanban Item
             // -------------------
             $(document).on("click", ".delete-kanban-item", function () {
@@ -507,7 +579,7 @@
                 addEventListener("click", function () {
                     KanbanExample.removeElement(delete_item);
 
-                    $.ajax({
+                $.ajax({
                         'url' : "{{ route('board.very.small.board.remove') }}",
                         'method' : "post",
                         'data' : {id: kanban_curr_item_id,_token: '{{ csrf_token() }}'},
@@ -582,6 +654,98 @@
 
     </script>
 
+    <script>
+        $(document).on('click','.show-board-files',function (){
+            let id = '{{ request()->route()->parameter('id') }}';
+
+            $.ajax({
+                'url' : "{{ route('board.very.small.board.comments') }}",
+                'method' : "post",
+                'data' : {id: id,_token: '{{ csrf_token() }}'},
+                success : function (data) {
+                    // files
+                    $(".spectacular_files").html("");
+                    data.data.files.forEach((file,index) => {
+                        if (file.very_small_board_id == null) {
+                            $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.public_file') }} ${index+1}</a><br/>`);
+                        } else {
+                            $(".spectacular_files").append(`<a target="blank" href="/uploads/home/files/${file.file}">{{ __('front.private_file') }} ${file.very_small_board.title} ${index+1}</a><br/>`);
+                        }
+                    });
+                    // comments
+                    $(".comments_paragraph").html("");
+                    $(".ql-editor").html("");
+                    data.data.comments.forEach((comment) => {
+                        $(".comments_paragraph").append(
+                            `<p>${comment.comment} <span style="font-size: 9px">${ comment.very_small_board !== null ? comment.very_small_board.title : '{{ __('front.public_comment') }}' }</span></p>
+                            <p style="text-align: left;font-size: 14px;">${comment.user.name}</p>`
+                        );
+                    });
+                },
+                fail : () => {
+                    alert('something is wrong');
+                }
+            });
+        });
+        $(document).on('click','.upload-files-board',function (e) {
+            e.preventDefault();
+            let comment = $('.ql-editor > p').text();
+            let id = $('.is-public').val();
+            let isPublic = $('.is-public').val();
+            let board_id = '{{ request()->route()->parameter('id') }}';
+            let formData = new FormData();
+            formData.append('file', $('input[name=attachment_file]')[0].files[0]);
+            formData.append('comment', comment);
+            formData.append('_token',"{{ csrf_token() }}");
+            formData.append('board_id', board_id);
+            formData.append('id', id);
+            formData.append('isPublic',isPublic);
+            $.ajax({
+                'url' : "{{ route('board.very.small.board.update') }}",
+                'method' : "post",
+                'data' : formData,
+                processData: false,
+                contentType: false,
+                success : (data) => {
+                    $('input[name=attachment_file]').val("");
+                    $('.ql-editor > p').val("");
+                    Swal.fire(
+                        "{{ __('front.good_job') }}",
+                        "{{ __('front.success_upload') }}",
+                        "success"
+                    );
+                },
+                fail : () => {
+                    alert('something is wrong');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).on('click','.show-board-files',function (e) {
+            e.preventDefault();
+            let id = '{{ request()->route()->parameter('id') }}';
+
+            $.ajax({
+                'url' : "{{ route('board.very.small.board.files') }}",
+                'method' : "post",
+                'data' : {id:id,_token:'{{ csrf_token() }}'},
+                success : (data) => {
+                    $('.is-public').html(`<option value="0">@lang('front.for_all')</option>`);
+                    data.data.forEach(function (very_small_board) {
+                        $('.is-public').append(`
+                            <option value="${very_small_board.id}">${very_small_board.title}</option>
+                        `);
+                    });
+                },
+                fail : () => {
+                    alert('something is wrong');
+                }
+            });
+        });
+    </script>
+
     @if(
     auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
     || auth()->user()->hasRole('monitor-board-'.request()->route()->parameter('id'))
@@ -646,6 +810,9 @@
                 let id = $(this).data('id');
                 let very_small_board_id = $('.item-id').val();
                 let that = $(this);
+
+                Swal.showLoading();
+
                 $.ajax({
                     method: "post",
                     url: "{{ route('board.assign_user_next') }}",
@@ -656,6 +823,8 @@
                         } else {
                             that.css("background-color", "");
                         }
+                        Swal.hideLoading();
+                        Swal.clickConfirm();
                     }
                 })
             });
@@ -667,6 +836,48 @@
             </div>
         </div>
     @endif
+
+    <div id="modal-files" class="modal">
+        <div class="modal-content">
+            <h5 style="text-align: center">@lang('front.files')</h5>
+{{--            <form action="" method="post" enctype="multipart/form-data">--}}
+                <div class="file-field input-field">
+                    <div class="btn btn-file">
+                        <span>@lang('front.upload_file')</span>
+                        <input type="file" name="attachment_file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                <div class="input-field">
+                    <select class="browser-default form-control is-public">
+
+                    </select>
+                </div>
+
+                <div class="file-field input-field">
+                    <div class="file-path-wrapper spectacular_files" style="width: 100%;">
+
+                    </div>
+                </div>
+                <!-- Compose mail Quill editor -->
+                <div class="input-field">
+                    <span>@lang('front.comments')</span>
+                    <div class="snow-container mt-2">
+                        <div class="compose-editor"></div>
+                        <div class="compose-quill-toolbar">
+                        </div>
+                    </div>
+                    <div class="snow-container mt-1">
+                        <div class="compose-editor comments_paragraph"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark modal-close upload-files-board">upload</button>
+                <button type="button" style="background-color: grey" class="btn btn-default modal-close">close</button>
+{{--            </form>--}}
+        </div>
+    </div>
 
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
@@ -726,6 +937,10 @@
                                             <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="{{ now()->format('d/m/y') }}">
                                             <label for="edit-item-date">@lang('front.duedate')</label>
                                         </div>
+                                        <div class="input-field">
+                                            <input type="number" class="edit-item-duration validate" id="edit-item-duration" placeholder="Duration Mission Per Days">
+                                            <label for="edit-item-duration">@lang('front.duration')</label>
+                                        </div>
                                         <div class="row">
                                             <div class="col s6">
                                                 <div class="input-field mt-0">
@@ -752,33 +967,6 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="file-field input-field">
-                                            <div class="btn btn-file">
-                                                <span>@lang('front.upload_file')</span>
-                                                <input type="file" name="attachment_file">
-                                            </div>
-                                            <div class="file-path-wrapper">
-                                                <input class="file-path validate" type="text">
-                                            </div>
-                                        </div>
-
-                                        <div class="file-field input-field">
-                                            <div class="file-path-wrapper spectacular_files" style="width: 100%;">
-
-                                            </div>
-                                        </div>
-                                        <!-- Compose mail Quill editor -->
-                                        <div class="input-field">
-                                            <span>@lang('front.comments')</span>
-                                            <div class="snow-container mt-2">
-                                                <div class="compose-editor"></div>
-                                                <div class="compose-quill-toolbar">
-                                                </div>
-                                            </div>
-                                            <div class="snow-container mt-1">
-                                                <div class="compose-editor comments_paragraph"></div>
                                             </div>
                                         </div>
                                     </form>

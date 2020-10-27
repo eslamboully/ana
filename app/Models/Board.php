@@ -15,6 +15,23 @@ class Board extends Model
         return $this->hasMany(SmallBoard::class);
     }
 
+    public function verySmallBoard()
+    {
+        $smallBoards = $this->smallBoards;
+        $verySmallBoards = [];
+        foreach ($smallBoards as $smallBoard) {
+            if (!empty($smallBoard->verySmallBoard))
+            {
+                foreach ($smallBoard->verySmallBoard as $verySmallBoard)
+                {
+                    array_push($verySmallBoards,$verySmallBoard);
+                }
+            }
+        }
+
+        return $verySmallBoards;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -23,5 +40,10 @@ class Board extends Model
     public function messages()
     {
         return $this->hasMany(Message::class,'board_id','id');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class,'board_id','id');
     }
 }

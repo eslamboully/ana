@@ -69,6 +69,10 @@ Route::group([], function () {
         Route::post('board/very/small-board/Update','BoardController@verySmallBoardUpdate')->name('board.very.small.board.update');
         // Boards VerySmall Board ( Comments )
         Route::post('board/very/small-board/Comments','BoardController@verySmallBoardComments')->name('board.very.small.board.comments');
+        // Boards VerySmall Board ( Information )
+        Route::post('board/very/small-board/Info','BoardController@verySmallBoardInfo')->name('board.very.small.board.info');
+        // Boards VerySmall Board ( Files )
+        Route::post('board/very-small-board/Files','BoardController@verySmallBoardFiles')->name('board.very.small.board.files');
         // Boards Small Board ( Add )
         Route::post('board/small-board/Add','BoardController@smallBoardAdd')->name('board.small.board.add');
         // Boards Small Board ( Change )

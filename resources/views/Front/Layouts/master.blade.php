@@ -337,7 +337,7 @@
 
 <footer class="page-footer footer footer-static footer-dark gradient-shadow navbar-border navbar-shadow" style="background-color: #ffc107 !important;">
     <div class="footer-copyright">
-        <div class="container"><span>&copy; 2020 <a href="http://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" target="_blank">PIXINVENT</a> All rights reserved.</span><span class="right hide-on-small-only">Design and Developed by <a href="https://pixinvent.com/">PIXINVENT</a></span></div>
+        <div class="container"><span>@lang('front.first_reserved_footer')</span><span class="right hide-on-small-only">@lang('front.last_reserved_footer')</span></div>
     </div>
 </footer>
 
@@ -372,13 +372,20 @@
         let id    = $("input[name=id]").val();
         let email = $("input[name=email]").val();
 
+        Swal.showLoading();
         $.ajax({
             method: "post",
             url: "{{ route('board.send_invitation') }}",
             data : {id:id,email:email,_token: '{{ csrf_token() }}'},
             success : (data) => {
                 $("input[name=email]").val('');
-                alert('sent successfully');
+                Swal.hideLoading();
+                Swal.clickConfirm();
+                Swal.fire(
+                    "{{ __('front.good_job') }}",
+                    "{{ __('front.success_invitation') }}",
+                    "success"
+                );
             }
         });
     });
@@ -400,7 +407,8 @@
                             <td>
                                 <p class="mb-1">
                                     <label>
-                                        <input type="checkbox" class="filled-in" name="users[${user.id}][${"manager-board-"+id}]" ${user.roles.some(e => e.name === "manager-board-"+id) ? 'checked' : ''} />
+                                        <input type="hidden" name="usersIds[]" value="${user.id}">
+                                        <input type="radio" class="filled-in" name="permission-user-${user.id}" value="${"manager-board-"+id}" ${user.roles.some(e => e.name === "manager-board-"+id) ? 'checked' : ''} />
                                         <span></span>
                                     </label>
                                 </p>
@@ -408,7 +416,7 @@
                             <td>
                                 <p class="mb-1">
                                     <label>
-                                        <input type="checkbox" class="filled-in" name="users[${user.id}][${"monitor-board-"+id}]" ${user.roles.some(e => e.name === "monitor-board-"+id) ? 'checked' : ''} />
+                                        <input type="radio" class="filled-in" name="permission-user-${user.id}" value="${"monitor-board-"+id}" ${user.roles.some(e => e.name === "monitor-board-"+id) ? 'checked' : ''} />
                                         <span></span>
                                     </label>
                                 </p>
@@ -416,7 +424,7 @@
                             <td>
                                 <p class="mb-1">
                                     <label>
-                                        <input type="checkbox" class="filled-in" name="users[${user.id}][${"employee-board-"+id}]" ${user.roles.some(e => e.name === "employee-board-"+id) ? 'checked' : ''} />
+                                        <input type="radio" class="filled-in" name="permission-user-${user.id}" value="${"employee-board-"+id}" ${user.roles.some(e => e.name === "employee-board-"+id) ? 'checked' : ''} />
                                         <span></span>
                                     </label>
                                 </p>
@@ -543,6 +551,9 @@
     });
 </script>
 
+<script>
+
+</script>
 </body>
 
 </html>

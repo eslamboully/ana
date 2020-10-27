@@ -22,7 +22,12 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'photo'
+        'photo',
+        'country',
+        'phone',
+        'job',
+        'dateOfBirth',
+        'address'
     ];
 
     /**
@@ -96,5 +101,10 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function very_small_boards()
+    {
+        return $this->belongsToMany(VerySmallBoard::class,'very_small_board_user','very_small_board_id','user_id');
     }
 }
