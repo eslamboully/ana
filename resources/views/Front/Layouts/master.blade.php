@@ -64,7 +64,7 @@
                     <li class="dropdown-language"><a class="waves-effect waves-block waves-light translation-button" href="javascript:void(0);" data-target="translation-dropdown"><span class="flag-icon flag-icon-gb"></span></a></li>
                     <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li>
                     <li class="hide-on-large-only"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search </i></a></li>
-                    <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge orange accent-3">5</small></i></a></li>
+{{--                    <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="notifications-dropdown"><i class="material-icons">notifications_none<small class="notification-badge orange accent-3">5</small></i></a></li>--}}
                     <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img style="height: 28px;width: 28px;" src="{{ url('uploads/users/'.auth()->user()->photo) }}" alt="avatar"><i></i></span></a></li>
                     <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
                 </ul>
@@ -74,27 +74,27 @@
                     <li class="dropdown-item"><a class="grey-text text-darken-1" href="{{ route('lang','ar') }}" data-language="ar"><i class="flag-icon flag-icon-au"></i> @lang('front.arabic')</a></li>
                 </ul>
                 <!-- notifications-dropdown-->
-                <ul class="dropdown-content" id="notifications-dropdown">
-                    <li>
-                        <h6>NOTIFICATIONS<span class="new badge">5</span></h6>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span> A new order has been placed!</a>
-                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
-                    </li>
-                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle red small">stars</span> Completed the task</a>
-                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
-                    </li>
-                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle teal small">settings</span> Settings updated</a>
-                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
-                    </li>
-                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">today</span> Director meeting started</a>
-                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
-                    </li>
-                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">trending_up</span> Generate monthly report</a>
-                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
-                    </li>
-                </ul>
+{{--                <ul class="dropdown-content" id="notifications-dropdown">--}}
+{{--                    <li>--}}
+{{--                        <h6>NOTIFICATIONS<span class="new badge">5</span></h6>--}}
+{{--                    </li>--}}
+{{--                    <li class="divider"></li>--}}
+{{--                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span> A new order has been placed!</a>--}}
+{{--                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle red small">stars</span> Completed the task</a>--}}
+{{--                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle teal small">settings</span> Settings updated</a>--}}
+{{--                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle deep-orange small">today</span> Director meeting started</a>--}}
+{{--                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="black-text" href="#!"><span class="material-icons icon-bg-circle amber small">trending_up</span> Generate monthly report</a>--}}
+{{--                        <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
                 <!-- profile-dropdown-->
                 <ul class="dropdown-content" id="profile-dropdown">
                     <li><a class="grey-text text-darken-1" href="{{ route('profile') }}"><i class="material-icons">person_outline</i> @lang('front.profile')</a></li>
@@ -146,14 +146,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AppsDropdown"><i class="material-icons">mail_outline</i><span><span class="dropdown-title" data-i18n="Apps">@lang('front.settings')</span><i class="material-icons right">keyboard_arrow_down</i></span></a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="AppsDropdown">
-                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.settings')</span></a>
-                            </li>
-                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.others')</span></a>
-                            </li>
-                        </ul>
-                    </li>
+{{--                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AppsDropdown"><i class="material-icons">mail_outline</i><span><span class="dropdown-title" data-i18n="Apps">@lang('front.settings')</span><i class="material-icons right">keyboard_arrow_down</i></span></a>--}}
+{{--                        <ul class="dropdown-content dropdown-horizontal-list" id="AppsDropdown">--}}
+{{--                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.settings')</span></a>--}}
+{{--                            </li>--}}
+{{--                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.others')</span></a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
                     <li>
                         <a class="waves-effect waves-light modal-trigger" href="#modal1">
                             <i class="material-icons">add_shopping_cart</i>
@@ -358,6 +358,8 @@
 <script src="{{ url('Front') }}/app-assets/js/scripts/form-select2.js"></script>
 {{--<script src="{{ url('Front') }}//app-assets/js/scripts/form-elements.js"></script>--}}
 <!-- END THEME  JS-->
+
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 @stack('js')
 
 <script>
@@ -503,7 +505,7 @@
                     } else {
                         $('.chat-messages-div').append(`
                             <li class="collection-item display-flex avatar pl-5 pb-0" data-target="slide-out-chat">
-                                                    <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("Front") }}' }/app-assets/images/avatar/avatar-7.png" alt="avatar" />
+                                                    <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("/uploads/users") }}'+'/'+message.user.photo }" alt="avatar" />
                                                     </span>
                                 <div class="user-content speech-bubble">
                                     <p class="medium-small">${message.message}</p>
@@ -532,13 +534,13 @@
 
     let channel = pusher.subscribe('send-message-channel');
     channel.bind('send-message-event', function(data) {
-        if (data.message.user_id != '{{ auth()->user()->id }}') {
+        if (data.message.data.user_id != '{{ auth()->user()->id }}') {
             $('.chat-messages-div').append(`
                 <li class="collection-item display-flex avatar pl-5 pb-0" data-target="slide-out-chat">
-                                        <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("Front") }}' }/app-assets/images/avatar/avatar-7.png" alt="avatar" />
+                                        <span class="avatar-status avatar-online avatar-50"><img src="${ '{{ url("/uploads/users") }}'+'/'+data.message.user.photo }" alt="avatar" />
                                         </span>
                     <div class="user-content speech-bubble">
-                        <p class="medium-small">${data.message.message}</p>
+                        <p class="medium-small">${data.message.data.message}</p>
                     </div>
                 </li>
             `);

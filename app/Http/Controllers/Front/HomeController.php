@@ -238,7 +238,8 @@ class HomeController extends Controller {
             'user_id' => $request->get('user_id'),
         ]);
 
-        event(new SendMessage($data));
+        $user = User::find($data->user_id);
+        event(new SendMessage(['data' =>$data,'user' => $user]));
         return response()->json(['data' => $data,'message' => null,'status' => 1]);
     }
 
@@ -246,7 +247,7 @@ class HomeController extends Controller {
     {
 
         $board = Board::find($request->get('board_id'));
-        $data = Message::where('board_id',$request->get('board_id'))->get();
+        $data = Message::with(['user'])->where('board_id',$request->get('board_id'))->get();
 
         return response()->json(['data' => $data,'board' => $board,'message' => null,'status' => 1]);
     }

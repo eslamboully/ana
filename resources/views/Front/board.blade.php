@@ -26,14 +26,17 @@
         </div>
         <div class="col s12" style="margin-top: -50px">
             <!-- New kanban board add button -->
-            <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
-                <i class='material-icons left'>add</i> @lang('front.add_new_board')
-            </button>
             @if(auth()->user()->hasRole("manager-board-".request()->route()->parameter('id')))
+                <button type="button" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
+                    <i class='material-icons left'>add</i> @lang('front.add_new_board')
+                </button>
                 <a href="#modal3" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn users-permissions-button">
                     @lang('front.users')
                 </a>
             @else
+                <a href="#" style="font-family: 'Cairo', sans-serif !important;background-color: #ffc107" class="btn waves-effect waves-light mb-1 add-kanban-btn disabled" id="add-kanban">
+                    <i class='material-icons left'>add</i> @lang('front.add_new_board')
+                </a>
                 <a href="#" style="font-family: 'Cairo', sans-serif !important;background-color: #0b2e13" disabled class="btn waves-effect waves-light mb-1 btn add-kanban-btn">
                     @lang('front.users')
                 </a>
@@ -91,7 +94,7 @@
             ];
 
             // Kanban Board
-            var KanbanExample = new jKanban({
+            let KanbanExample = new jKanban({
                 element: "#kanban-app", // selector of the kanban container
                 buttonContent: "+ {{ __('front.add_new_item') }}", // text or html content of the board button
                 widthBoard: '300px',
@@ -392,17 +395,25 @@
                         cancelButtonText: '{{ __('front.cancel') }}'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            KanbanExample.removeBoard($id);
                             $.ajax({
                                 'url' : "{{ route('board.small.board.remove') }}",
                                 'method' : "post",
                                 'data' : {id: $id,board_id: '{{ request()->route()->parameter('id') }}',_token: '{{ csrf_token() }}'},
-                                success : () => {
-                                    Swal.fire(
-                                        'Deleted!',
-                                        '{{ __('front.delete_success') }}.',
-                                        'success'
-                                    )
+                                success : (data) => {
+                                    if (data.status == 1) {
+                                        KanbanExample.removeBoard($id);
+                                        Swal.fire(
+                                            'Deleted!',
+                                            '{{ __('front.delete_success') }}.',
+                                            'success'
+                                        )
+                                    } else {
+                                        Swal.fire(
+                                            'Permission Denied',
+                                            'Error',
+                                            'error'
+                                        )
+                                    }
                                 },
                                 fail : () => {
                                     alert('something is wrong');
@@ -589,6 +600,160 @@
                     });
                 });
             });
+
+            // Enable pusher logging - don't include this in production
+            // start drag element kanban
+                Pusher.logToConsole = true;
+                let pusher2 = new Pusher('c94ca2fab6f7c2428792', {
+                    cluster: 'eu'
+                });
+                let channel2 = pusher2.subscribe('update-board-channel');
+                channel2.bind('update-board-event', function(data) {
+                    if(data.all.user.id != '{{ auth()->user()->id }}'){
+                        $(".kanban-item[data-eid='" + data.all.board.id + "']").remove();
+
+                        KanbanExample.addElement(data.all.board.small_board_id, {
+                            title: data.all.board.title,
+                            id: data.all.board.id,
+                            border: data.all.board.border,
+                            dueDate: data.all.board.dueDate,
+                            comment: data.all.board.comments.length,
+                            attachment: data.all.board.files.length
+                        });
+
+                        let element = $(".kanban-item[data-eid='" + data.all.board.id + "']");
+
+                        element.html('');
+                        element.append(`
+                                ${data.all.board.title}
+                                <div class="kanban-footer mt-3">
+                                    <div class="kanban-due-date center mb-5 lighten-5 ${data.all.board.border} dueDateIsExistOrNot-${data.all.board.id}">
+                                        <span class="${data.all.board.border}-text center"> ${data.all.board.dueDate}</span>
+                                    </div>
+                                    <div class="kanban-footer-left left display-flex pt-1">
+                                        <div class="kanban-comment display-flex">
+                                            <i class="material-icons font-size-small">chat_bubble_outline </i>
+                                            <span class="font-size-small">${data.all.board.comments.length}</span>
+                                        </div>
+                                        <div class="kanban-attachment display-flex">
+                                            <i class="font-size-small material-icons">attach_file</i>
+                                            <span class="font-size-small">${data.all.board.files.length}</span>
+                                        </div>
+                                    </div>
+                                    <div class="kanban-footer-right right">
+                                        <div class="kanban-users element-${data.all.board.id}">  </div>
+                                    </div>
+                                </div>
+                            `);
+
+                        if (data.all.board.dueDate == "00/00/0000" || data.all.board.dueDate == null) {
+                            $(`.dueDateIsExistOrNot-${data.all.board.id}`).css('display','none');
+                        }
+
+                        element.children().children().eq(0).addClass(data.all.board.border).css("color",data.all.board.border);
+                        element.children().children().eq(2).children().html('');
+                        if (data.all.board.users.length > 0){
+                            data.all.board.users.forEach(function (user) {
+                                $(`.element-${data.all.board.id}`).append(`
+                                    <img class="circle" src="{{ url('uploads/users') }}/${user.photo}" alt="Avatar" height="24" width="24">
+                                    `);
+                            });
+                        }
+
+                        let cache = element.children();
+                        element.text(data.all.board.title);
+                        element.append(cache);
+                    }
+                });
+            // end drag element kanban
+
+
+            // start delete element kanban
+                let pusher3 = new Pusher('c94ca2fab6f7c2428792', {
+                    cluster: 'eu'
+                });
+                let channel3 = pusher3.subscribe('delete-board-channel');
+                channel3.bind('delete-board-event', function(data) {
+                    if(data.all.user_id != '{{ auth()->user()->id }}') {
+                        $(".kanban-item[data-eid='" + data.all.board_id + "']").remove();
+                    }
+                });
+            // end delete element kanban
+            //
+            // start update old element kanban
+                let pusher4 = new Pusher('c94ca2fab6f7c2428792', {
+                    cluster: 'eu'
+                });
+                let channel4 = pusher4.subscribe('update-old-board-channel');
+                channel4.bind('update-old-board-event', function(data) {
+                    if(data.all.user.id != '{{ auth()->user()->id }}') {
+                        let element = $(".kanban-item[data-eid='" + data.all.board.id + "']");
+
+                        element.html('');
+                        element.data('border',data.all.board.border);
+                        element.append(`
+                                ${data.all.board.title}
+                                <div class="kanban-footer mt-3">
+                                    <div class="kanban-due-date center mb-5 lighten-5 ${data.all.board.border} dueDateIsExistOrNot-${data.all.board.id}">
+                                        <span class="${data.all.board.border}-text center"> ${data.all.board.dueDate}</span>
+                                    </div>
+                                    <div class="kanban-footer-left left display-flex pt-1">
+                                        <div class="kanban-comment display-flex">
+                                            <i class="material-icons font-size-small">chat_bubble_outline </i>
+                                            <span class="font-size-small">${data.all.board.comments.length}</span>
+                                        </div>
+                                        <div class="kanban-attachment display-flex">
+                                            <i class="font-size-small material-icons">attach_file</i>
+                                            <span class="font-size-small">${data.all.board.files.length}</span>
+                                        </div>
+                                    </div>
+                                    <div class="kanban-footer-right right">
+                                        <div class="kanban-users element-${data.all.board.id}">  </div>
+                                    </div>
+                                </div>
+                            `);
+
+                        if (data.all.board.dueDate == "00/00/0000" || data.all.board.dueDate == null) {
+                            $(`.dueDateIsExistOrNot-${data.all.board.id}`).css('display','none');
+                        }
+
+                        element.children().children().eq(0).addClass(data.all.board.border).css("color",data.all.board.border);
+                        element.children().children().eq(2).children().html('');
+                        if (data.all.board.users.length > 0){
+                            data.all.board.users.forEach(function (user) {
+                                $(`.element-${data.all.board.id}`).append(`
+                                    <img class="circle" src="{{ url('uploads/users') }}/${user.photo}" alt="Avatar" height="24" width="24">
+                                    `);
+                            });
+                        }
+
+                        let cache = element.children();
+                        element.text(data.all.board.title);
+                        element.append(cache);
+                    }
+                });
+            // end update old element kanban
+            //
+
+            // start add element kanban
+            let pusher5 = new Pusher('c94ca2fab6f7c2428792', {
+                cluster: 'eu'
+            });
+            let channel5 = pusher5.subscribe('add-board-channel');
+            channel5.bind('add-board-event', function(data) {
+                if(data.all.user.id != '{{ auth()->user()->id }}') {
+                    KanbanExample.addElement(data.all.board.small_board_id, {
+                        title: data.all.board.title,
+                        id: data.all.board.id,
+                        border: data.all.board.border,
+                        dueDate: data.all.board.dueDate,
+                        comment: 0,
+                        attachment: 0,
+                    });
+                }
+            });
+            // end add element kanban
+
 
             // Kanban Quill Editor
             // -------------------
@@ -842,13 +1007,19 @@
             <h5 style="text-align: center">@lang('front.files')</h5>
 {{--            <form action="" method="post" enctype="multipart/form-data">--}}
                 <div class="file-field input-field">
-                    <div class="btn btn-file">
-                        <span>@lang('front.upload_file')</span>
-                        <input type="file" name="attachment_file">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                    </div>
+                    @if(
+                        auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
+                        ||
+                        auth()->user()->hasRole('monitor-board-'.request()->route()->parameter('id'))
+                    )
+                        <div class="btn btn-file">
+                            <span>@lang('front.upload_file')</span>
+                            <input type="file" name="attachment_file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    @endif
                 </div>
                 <div class="input-field">
                     <select class="browser-default form-control is-public">
@@ -879,24 +1050,6 @@
         </div>
     </div>
 
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-    <script>
-
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        let pusher2 = new Pusher('c94ca2fab6f7c2428792', {
-            cluster: 'eu'
-        });
-
-        let channel2 = pusher2.subscribe('update-board-channel');
-        channel2.bind('update-board-event', function(data) {
-            {{--$('#kanban-app').load('{{ url('') }}' +  ' #kanban-app');--}}
-                if(data.board != "{{ auth()->user()->id }}"){
-                    window.location.reload();
-                }
-        });
-    </script>
 @endpush
 
 @push('main-board-settings')

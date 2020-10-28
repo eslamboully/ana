@@ -23,27 +23,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/Front/Emails/AddMission.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Events/AddBoard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Events/DeleteBoard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Events/UpdateOldBoard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Events/UpdateBoard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Events/UpdateBoard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Board.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Board.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/File.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/VerySmallBoard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VerySmallBoard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_03_114956_create_very_small_boards_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_03_114956_create_very_small_boards_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_06_111149_create_comments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_06_111149_create_comments_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_06_141359_create_files_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_06_141359_create_files_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Front/app-assets/css-rtl/pages/app-kanban.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Front/app-assets/css-rtl/pages/app-kanban.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Front/app-assets/css/pages/app-kanban.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Front/app-assets/css/pages/app-kanban.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/aside.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/aside.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Front/board.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/board.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Front/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,14 +199,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/Front/Emails" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Events" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/views/Front/Emails" />
       <recent name="$PROJECT_DIR$/app/Events" />
+      <recent name="$PROJECT_DIR$/resources/views/Front/Emails" />
       <recent name="$PROJECT_DIR$/resources/views/Front" />
       <recent name="C:\xampp\htdocs\ana\resources\views\Front" />
       <recent name="C:\xampp\htdocs\ana\app\Http\Controllers\Front" />
@@ -252,7 +241,7 @@
       <workItem from="1603378138351" duration="28250000" />
       <workItem from="1603552203785" duration="17513000" />
       <workItem from="1603639047077" duration="23594000" />
-      <workItem from="1603816260129" duration="12142000" />
+      <workItem from="1603816260129" duration="29798000" />
     </task>
     <servers />
   </component>
@@ -288,9 +277,9 @@
       <screen x="0" y="34" width="1366" height="734" />
     </state>
     <state x="293" y="34" width="770" height="734" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.34.1366.734@0.34.1366.734" timestamp="1603558067553" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1603825572927">
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1603897239738">
       <screen x="0" y="34" width="1366" height="734" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1603825572927" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1603897239738" />
   </component>
 </project>

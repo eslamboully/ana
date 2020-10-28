@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateBoard implements ShouldBroadcast
+class UpdateOldBoard implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,11 +23,11 @@ class UpdateBoard implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['update-board-channel'];
+        return ['update-old-board-channel'];
     }
 
     public function broadcastAs()
     {
-        return 'update-board-event';
+        return 'update-old-board-event';
     }
 }

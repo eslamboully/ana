@@ -277,7 +277,7 @@
         <li class="center-align chat-footer">
             <form class="col s12" onsubmit="sendChatMessage()" action="javascript:void(0);">
                 <div class="input-field">
-                    <input id="icon_prefix" type="text" class="search" />
+                    <input id="icon_prefix" type="text" class="search" autocomplete="off" />
                     <label for="icon_prefix">Type here..</label>
                     <a onclick="sendChatMessage()"><i class="material-icons prefix">send</i></a>
                 </div>

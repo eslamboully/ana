@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers\Front;
 
+use App\Events\AddBoard;
+use App\Events\DeleteBoard;
 use App\Events\SendMessage;
 use App\Events\UpdateBoard;
+use App\Events\UpdateOldBoard;
 use App\Http\Controllers\Controller;
 use App\Mail\AddMissionToUser;
 use App\Mail\UserInvitation;
@@ -119,16 +122,25 @@ class BoardController extends Controller {
     {
         $verysmallboard = SmallBoard::where('id',$request->get('id'))
             ->where('board_id',$request->get('board_id'))->first();
-        $verysmallboard->delete();
 
-        return response()->json(['data' => null,'message' => null,'status' => 1]);
+        if (
+            auth()->user()->hasRole('manager-board-'.$request->get('board_id'))
+            ||
+            auth()->user()->hasRole('monitor-board-'.$request->get('board_id'))
+        ) {
+            $verysmallboard->delete();
+            return response()->json(['data' => null,'message' => null,'status' => 1]);
+        }
+        return response()->json(['data' => null,'message' => null,'status' => 0]);
     }
 
     public function verySmallBoardChange(Request $request)
     {
-        $very = VerySmallBoard::find($request->get('id'));
+        $very = VerySmallBoard::with(['files','comments','users'])->find($request->get('id'));
+
         $very->update(['small_board_id' => $request->get('small_board_id')]);
-        event(new UpdateBoard(auth()->user()->id));
+        event(new UpdateBoard(['board' => $very , 'user' => auth()->user()]));
+
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
@@ -158,6 +170,8 @@ class BoardController extends Controller {
         if ($very) {
             $very->update($request->only(['title','startDate','dueDate','duration','border']));
         }
+
+        event(new UpdateOldBoard(['board' => $very,'user' => auth()->user()]));
 
         if ($request->get('comment') !== null) {
             if ($request->get('isPublic') == 0) {
@@ -219,14 +233,17 @@ class BoardController extends Controller {
         }
         $very = VerySmallBoard::create([
             'small_board_id' => $request->get('board_id'),
-            'title' => $request->get('title'),
-            'user_id' => $userId ? auth()->user()->id : null
+            'title' => $request->get('title')
         ]);
 
         if ($userId) {
-
+            DB::table('very_small_board_user')->insert([
+                'very_small_board_id' => $very->id,
+                'user_id' => auth()->user()->id,
+            ]);
         }
 
+        event(new AddBoard(['board' => $very,'user' => auth()->user()]));
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
@@ -235,6 +252,8 @@ class BoardController extends Controller {
         $verysmallboard = VerySmallBoard::find($request->get('id'));
         $verysmallboard->delete();
 
+
+        event(new DeleteBoard(['board_id' => $request->get('id'),'user_id' => auth()->user()->id]));
         return response()->json(['data' => null,'message' => null,'status' => 1]);
     }
 
