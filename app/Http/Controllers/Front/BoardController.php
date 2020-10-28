@@ -12,6 +12,8 @@ use App\Mail\UserInvitation;
 use App\Models\Board;
 use App\Models\Comment;
 use App\Models\File;
+use App\Models\Log;
+use App\Models\Package;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
@@ -22,6 +24,7 @@ use Spatie\Permission\Models\Role;
 
 class BoardController extends Controller {
 
+    protected $langs = ['ar' => 'Arabic','en' => 'English'];
     public function board($id,$name)
     {
         $myBoard = Board::find($id);
@@ -59,6 +62,15 @@ class BoardController extends Controller {
 
         $user->assignRole($managerRole);
 
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.add_board_log',['user' => auth()->user()->name],$index);
+        }
+        $package->board_id = $board->id;
+        $package->save();
+
         return redirect()->route('board.index',['id' => $board->id,'name' => str_replace(' ','-',$board->name)]);
     }
 
@@ -69,6 +81,14 @@ class BoardController extends Controller {
         $data['user']  = auth()->user()->id;
         Mail::to($request->get('email'))->send(new UserInvitation($data));
 
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.invitation_board_log',['user' => auth()->user()->name],$index);
+        }
+        $package->board_id = $board->id;
+        $package->save();
         return response()->json(['data' => null,'message' => null, 'status' => 1]);
     }
 
@@ -82,6 +102,15 @@ class BoardController extends Controller {
                 // accept the invitation
                 if (!auth()->user()->haveBoard($board->id)) {
                     auth()->user()->assignRole("employee-board-$board->id");
+
+                    $package = new Log();
+
+                    // Save With Database Language Not Dimsav Locales
+                    foreach ($this->langs as $index=>$lang) {
+                        $package->translateOrNew($index)->title = __('front.accept_invitation_board_log',['user' => auth()->user()->name],$index);
+                    }
+                    $package->board_id = $board->id;
+                    $package->save();
                 }
                 return redirect()->route('home');
             }
@@ -102,6 +131,15 @@ class BoardController extends Controller {
             'bg-color' => $request->get('bg-color'),
             'count_number' => $count_number
         ]);
+
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.add_small_board_log',['user' => auth()->user()->name],$index);
+        }
+        $package->board_id = $request->get('board_id');
+        $package->save();
 
         return response()->json(['data' => $small,'message' => null,'status' => 1]);
     }
@@ -128,6 +166,14 @@ class BoardController extends Controller {
             ||
             auth()->user()->hasRole('monitor-board-'.$request->get('board_id'))
         ) {
+            $package = new Log();
+
+            // Save With Database Language Not Dimsav Locales
+            foreach ($this->langs as $index=>$lang) {
+                $package->translateOrNew($index)->title = __('front.remove_small_board_log',['user' => auth()->user()->name,'smallboard' => $verysmallboard->title],$index);
+            }
+            $package->board_id = $request->get('board_id');
+            $package->save();
             $verysmallboard->delete();
             return response()->json(['data' => null,'message' => null,'status' => 1]);
         }
@@ -141,6 +187,15 @@ class BoardController extends Controller {
         $very->update(['small_board_id' => $request->get('small_board_id')]);
         event(new UpdateBoard(['board' => $very , 'user' => auth()->user()]));
 
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.change_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $very->title],$index);
+        }
+        $smallBoard = SmallBoard::find($very->small_board_id);
+        $package->board_id = $smallBoard->board_id;
+        $package->save();
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
@@ -210,6 +265,16 @@ class BoardController extends Controller {
                 ]);
             }
         }
+
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.update_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $very->title],$index);
+        }
+        $smallBoard = SmallBoard::find($very->small_board_id);
+        $package->board_id = $smallBoard->board_id;
+        $package->save();
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
@@ -243,6 +308,15 @@ class BoardController extends Controller {
             ]);
         }
 
+        $package = new Log();
+
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.add_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $very->title],$index);
+        }
+        $package->board_id = $smallBoard->board_id;
+        $package->save();
+
         event(new AddBoard(['board' => $very,'user' => auth()->user()]));
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
@@ -250,6 +324,16 @@ class BoardController extends Controller {
     public function verySmallBoardRemove(Request $request)
     {
         $verysmallboard = VerySmallBoard::find($request->get('id'));
+
+        $package = new Log();
+        // Save With Database Language Not Dimsav Locales
+        foreach ($this->langs as $index=>$lang) {
+            $package->translateOrNew($index)->title = __('front.remove_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $verysmallboard->title],$index);
+        }
+        $smallBoard = SmallBoard::find($verysmallboard->small_board_id);
+        $package->board_id = $smallBoard->board_id;
+        $package->save();
+
         $verysmallboard->delete();
 
 
@@ -333,6 +417,12 @@ class BoardController extends Controller {
         return response()->json(['data' => $bool,'message' => null,'status' => 1]);
     }
 
+    public function boardLogs(Request $request)
+    {
+        $logs = Log::with(['translations'])->where('board_id',$request->get('board_id'))->get();
+        return response()->json(['data' => $logs,'message' => null, 'status' => 1]);
+    }
+
     public function lang($lang)
     {
         if (session()->has('lang')) {
@@ -343,5 +433,16 @@ class BoardController extends Controller {
         }
 
         return redirect()->back();
+    }
+
+    public function langs_rules()
+    {
+        $rules = [];
+
+        foreach ($this->langs as $index=>$lang) {
+            $rules[$index . '.*'] = 'required';
+        }
+
+        return $rules;
     }
 }

@@ -47,6 +47,9 @@
             <a href="#modal-files" style="font-family: 'Cairo', sans-serif !important;background-color: #4e342e" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn show-board-files">
                 @lang('front.files')
             </a>
+            <a href="#modal-logs" style="font-family: 'Cairo', sans-serif !important;background-color: brown" class="btn waves-effect waves-light mb-1 btn modal-trigger add-kanban-btn show-board-logs">
+                @lang('front.logs')
+            </a>
             <div id="kanban-app"></div>
         </div>
     </div>
@@ -909,6 +912,22 @@
                 }
             });
         });
+
+        $('.show-board-logs').on('click',function (e) {
+            e.preventDefault();
+            let board_id = '{{ request()->route()->parameter('id') }}';
+            $.ajax({
+                url: '{{ route('board.logs') }}',
+                method: 'post',
+                data: {board_id: board_id,_token: '{{ csrf_token() }}'},
+                success: function (data) {
+                    data.data.forEach( function (log) {
+                        $('.board-list-logs').html("");
+                        $('.board-list-logs').append(`<tr><td>${log.title}</td></tr>`);
+                    });
+                }
+            });
+        });
     </script>
 
     @if(
@@ -1050,6 +1069,20 @@
         </div>
     </div>
 
+    <div id="modal-logs" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>@lang('front.logs')</h4>
+            <table class="table">
+                <tr>
+                    <td>@lang('front.logs')</td>
+                </tr>
+                @csrf
+                <tbody class="board-list-logs">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endpush
 
 @push('main-board-settings')

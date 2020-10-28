@@ -83,6 +83,8 @@ Route::group([], function () {
         Route::post('board/assign-user','BoardController@assignUser')->name('board.assign_user');
         Route::post('board/assign-user-next','BoardController@assignUserNext')->name('board.assign_user_next');
 
+        // Boards Logs
+        Route::post('board/logs','BoardController@boardLogs')->name('board.logs');
     });
 
 
