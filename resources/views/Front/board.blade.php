@@ -72,25 +72,52 @@
                     headerBg: "{{ $small['bg-color'] }}",
                     item: [
                             @foreach($small->verySmallBoard as $very)
-                                {
-                                    id: "{{ $very->id }}",
-                                    title: "{{ $very->title }}",
-                                    border: "{{ $very->border }}",
-                                    @if($very->dueDate != "00/00/0000" && $very->dueDate != null)
-                                    dueDate: "{{ $very->dueDate }}",
+                                @if(
+                                    auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
+                                    ||
+                                    auth()->user()->hasRole('monitor-board-'.request()->route()->parameter('id'))
+                                )
+                                    {
+                                        id: "{{ $very->id }}",
+                                        title: "{{ $very->title }}",
+                                        border: "{{ $very->border }}",
+                                        @if($very->dueDate != "00/00/0000" && $very->dueDate != null)
+                                        dueDate: "{{ $very->dueDate }}",
+                                        @endif
+                                        board: "{{ $very->board_id }}",
+                                        comment: {{ count($very->comments) }},
+                                        attachment: {{ count($very->files) }},
+                                        @if(!empty($very->users))
+                                        users: [
+                                            @foreach($very->users as $user)
+                                                "{{ url('uploads/users/'.$user->photo) }}",
+                                            @endforeach
+                                        ]
+                                        @endif
+                                    },
+                                @else
+                                    @if($very->belongToThisUser(auth()->user()->id))
+                                    {
+                                        id: "{{ $very->id }}",
+                                        title: "{{ $very->title }}",
+                                        border: "{{ $very->border }}",
+                                        @if($very->dueDate != "00/00/0000" && $very->dueDate != null)
+                                        dueDate: "{{ $very->dueDate }}",
+                                        @endif
+                                        board: "{{ $very->board_id }}",
+                                        comment: {{ count($very->comments) }},
+                                        attachment: {{ count($very->files) }},
+                                        @if(!empty($very->users))
+                                        users: [
+                                            @foreach($very->users as $user)
+                                                "{{ url('uploads/users/'.$user->photo) }}",
+                                            @endforeach
+                                        ]
+                                        @endif
+                                    },
                                     @endif
-                                    board: "{{ $very->board_id }}",
-                                    comment: {{ count($very->comments) }},
-                                    attachment: {{ count($very->files) }},
-                                    @if(!empty($very->users))
-                                    users: [
-                                        @foreach($very->users as $user)
-                                            "{{ url('uploads/users/'.$user->photo) }}",
-                                        @endforeach
-                                    ]
-                                    @endif
-                                },
-                        @endforeach
+                                @endif
+                            @endforeach
                     ]
                 },
                 @endforeach
@@ -855,6 +882,19 @@
                 }
             });
         });
+        $(document).on('click','.auth-google-drive',function (){
+            var clientId = "889503114493-tv2vmjjc6egtqhoucem2g26a77gkcbfb.apps.googleusercontent.com";
+            var redirect_uri = "{{ route('home') }}";
+            var scope = "https://www.googleapis.com/auth/drive";
+            var url = "{{ route('home') }}";
+            signIn(clientId,redirect_uri,scope,url);
+            function signIn(clientId,redirect_uri,scope,url){
+                url = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri="+redirect_uri
+                    +"&prompt=consent&response_type=code&client_id="+clientId+"&scope="+scope
+                    +"&access_type=offline";
+                window.location = url;
+            }
+        });
         $(document).on('click','.upload-files-board',function (e) {
             e.preventDefault();
             let comment = $('.ql-editor > p').text();
@@ -1025,7 +1065,8 @@
         <div class="modal-content">
             <h5 style="text-align: center">@lang('front.files')</h5>
 {{--            <form action="" method="post" enctype="multipart/form-data">--}}
-                <div class="file-field input-field">
+{{--            <input type="button" class="btn btn-success auth-google-drive">--}}
+            <div class="file-field input-field">
                     @if(
                         auth()->user()->hasRole('manager-board-'.request()->route()->parameter('id'))
                         ||

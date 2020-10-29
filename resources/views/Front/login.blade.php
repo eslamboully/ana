@@ -72,7 +72,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6 m6 l6">
-                                <p class="margin medium-small"><a href="{{ route('register',['board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : 0 ]) }}">Register Now!</a></p>
+                                <p class="margin medium-small"><a href="{{ route('register',['token' =>isset($_GET['token']) ? $_GET['token'] : 0 ,'board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : 0 ]) }}">Register Now!</a></p>
                             </div>
                             <div class="input-field col s6 m6 l6">
                                 <p class="margin right-align medium-small"><a href="user-forgot-password.html">Forgot password ?</a></p>
