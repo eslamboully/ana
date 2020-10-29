@@ -80,4 +80,5 @@ return [
     'add_very_small_board_log' => 'تم اضافة مهمة جديدة :verysmallboard بواسطة :user',
     'remove_very_small_board_log' => 'تم حذف المهمة :verysmallboard بواسطة :user',
     'logs' => 'سجل العمل',
+    'accountant' => 'محاسب',
 ];

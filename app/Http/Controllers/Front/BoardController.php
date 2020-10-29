@@ -56,6 +56,7 @@ class BoardController extends Controller {
         SmallBoard::create(['title' => 'On Progress','board_id' => $board->id,'bg-color' => 'red','count_number' => 2]);
         SmallBoard::create(['title' => 'Completed','board_id' => $board->id,'bg-color' => 'cyan','count_number' => 3]);
 
+        $managerRole = Role::create(['name' => "accountant-board-$board->id"]);
         $managerRole = Role::create(['name' => "manager-board-$board->id"]);
         $monitorRole = Role::create(['name' => "monitor-board-$board->id"]);
         $employeeRole = Role::create(['name' => "employee-board-$board->id"]);
@@ -346,6 +347,7 @@ class BoardController extends Controller {
         $board_id = $request->get('id');
 
         $users = User::with(['roles'])->role([
+            "accountant-board-$board_id",
             "manager-board-$board_id",
             "monitor-board-$board_id",
             "employee-board-$board_id"
@@ -361,6 +363,7 @@ class BoardController extends Controller {
             foreach ($request->get('usersIds') as $id)
             {
                 $user = User::find($id);
+                $user->removeRole("accountant-board-$board_id");
                 $user->removeRole("manager-board-$board_id");
                 $user->removeRole("monitor-board-$board_id");
                 $user->removeRole("employee-board-$board_id");

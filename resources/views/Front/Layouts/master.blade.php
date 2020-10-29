@@ -316,6 +316,7 @@
             <table class="table">
                 <tr>
                     <td>@lang('front.users')</td>
+                    <td>@lang('front.accountant')</td>
                     <td>@lang('front.manager')</td>
                     <td>@lang('front.monitor')</td>
                     <td>@lang('front.employee')</td>
@@ -406,6 +407,15 @@
                     $('.users-permissions-list').append(`
                         <tr>
                             <td>${user.email}</td>
+                            <td>
+                                <p class="mb-1">
+                                    <label>
+                                        <input type="hidden" name="usersIds[]" value="${user.id}">
+                                        <input type="radio" class="filled-in" name="permission-user-${user.id}" value="${"accountant-board-"+id}" ${user.roles.some(e => e.name === "accountant-board-"+id) ? 'checked' : ''} />
+                                        <span></span>
+                                    </label>
+                                </p>
+                            </td>
                             <td>
                                 <p class="mb-1">
                                     <label>
