@@ -24,8 +24,7 @@
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Front/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/front.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +191,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../iceadminv3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -237,6 +236,7 @@
       <workItem from="1603816260129" duration="30398000" />
       <workItem from="1603919385426" duration="18332000" />
       <workItem from="1604059087038" duration="142000" />
+      <workItem from="1604063651504" duration="940000" />
     </task>
     <servers />
   </component>
@@ -276,9 +276,9 @@
       <screen x="0" y="34" width="1366" height="734" />
     </state>
     <state x="293" y="34" width="770" height="734" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.34.1366.734@0.34.1366.734" timestamp="1603558067553" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604055636282">
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604063687471">
       <screen x="0" y="34" width="1366" height="734" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1604055636282" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1604063687471" />
   </component>
 </project>
