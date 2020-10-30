@@ -83,7 +83,7 @@
                             <div class="input-field col s6 m6 l6">
                                 <p class="margin medium-small">
                                     <a href="{{ route('login',['token' =>isset($_GET['token']) ? $_GET['token'] : 0,'board_id' => isset($_GET['board_id']) ? $_GET['board_id'] : null ]) }}">
-                                        Register
+                                        Login
                                     </a>
                                 </p>
                             </div>

@@ -116,7 +116,7 @@ class BoardController extends Controller {
                 return redirect()->route('home');
             }
             // register or login before accept invitation
-            return redirect()->route('register',['board_id' => $board->id]);
+            return redirect()->route('register',['token'=>'dsa334?rew32GFHR7fw@!#GSADOSAKO#$@32dssfw43543JGH??FSDfsdsdfrewrewdw$%5&^*&346346547456#$%GFsdtreetyttjtTYJ&^%nhg','board_id' => $board->id]);
         }
         abort(404);
     }
