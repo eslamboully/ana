@@ -52,9 +52,9 @@ class BoardController extends Controller {
         ]);
 
         // Create Small Board
-        SmallBoard::create(['title' => 'Tasks List','board_id' => $board->id,'bg-color' => 'blue','count_number' => 1]);
-        SmallBoard::create(['title' => 'On Progress','board_id' => $board->id,'bg-color' => 'red','count_number' => 2]);
-        SmallBoard::create(['title' => 'Completed','board_id' => $board->id,'bg-color' => 'cyan','count_number' => 3]);
+        SmallBoard::create(['title' => 'قائمة المهام','board_id' => $board->id,'bg-color' => 'blue','count_number' => 1]);
+        SmallBoard::create(['title' => 'قيد التنفيذ','board_id' => $board->id,'bg-color' => 'red','count_number' => 2]);
+        SmallBoard::create(['title' => 'منتهي','board_id' => $board->id,'bg-color' => 'cyan','count_number' => 3]);
 
         $managerRole = Role::create(['name' => "accountant-board-$board->id"]);
         $managerRole = Role::create(['name' => "manager-board-$board->id"]);
