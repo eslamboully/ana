@@ -11,6 +11,11 @@
                             <i class="material-icons mr-1">person_outline</i><span style="box-sizing: revert">@lang('front.account')</span>
                         </a>
                     </li>
+                    <li class="tab">
+                        <a class="display-flex align-items-center" id="subscription-tab" href="#subscription" style="display: flex">
+                            <i class="material-icons mr-1">monetization_on</i><span style="box-sizing: revert">@lang('front.subscription')</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="divider mb-3"></div>
                 <div class="row">
@@ -310,6 +315,7 @@
                             </div>
                         </form>
                     </div>
+                    <div class="col s12" id="subscription"></div>
                 </div>
                 <!-- </div> -->
             </div>

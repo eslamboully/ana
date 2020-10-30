@@ -37,6 +37,9 @@
             body, h1, h2, h3, h4, h5, h6, a, li, label, input, span, button th, td, p ,tr{
                 font-family: 'Cairo', sans-serif !important;
             }
+            .edit-margin-cancel-button {
+                margin: 7px;
+            }
         </style>
     @endif
 
@@ -53,7 +56,7 @@
             <div class="nav-wrapper">
                 <ul class="left">
                     <li>
-                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="index.html"><img src="{{ url('Front') }}/cpanel.png" style="width: 100px;height: 33px;" alt="materialize logo"><span class="logo-text hide-on-med-and-down"></span></a></h1>
+                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ route('home') }}"><img src="{{ url('Front') }}/cpanel.png" style="width: 100px;height: 33px;" alt="materialize logo"><span class="logo-text hide-on-med-and-down"></span></a></h1>
                     </li>
                 </ul>
                 <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons" style="font-family: 'Cairo', sans-serif !important;"> @lang('front.search')</i>
@@ -155,14 +158,25 @@
 {{--                        </ul>--}}
 {{--                    </li>--}}
                     <li>
-                        <a class="waves-effect waves-light modal-trigger" href="#modal1">
-                            <i class="material-icons">add_shopping_cart</i>
-                            <span>
+                        @if(auth()->user()->hasPackage())
+                            <a class="waves-effect waves-light modal-trigger" href="#modal1">
+                                <i class="material-icons">add_shopping_cart</i>
+                                <span>
                                 <span class="dropdown-title" data-i18n="Apps">
                                     @lang('front.add_new_work')
                                 </span>
                             </span>
-                        </a>
+                            </a>
+                        @else
+                            <a class="waves-effect waves-light subscribe_now" href="#">
+                                <i class="material-icons">add_shopping_cart</i>
+                                <span>
+                                <span class="dropdown-title" data-i18n="Apps">
+                                    @lang('front.add_new_work')
+                                </span>
+                            </span>
+                            </a>
+                        @endif
                     </li>
                 </ul>
             </div>
@@ -562,9 +576,33 @@
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
+    $(document).on('click','.subscribe_now',function (e) {
+        e.preventDefault();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger edit-margin-cancel-button'
+            },
+            buttonsStyling: false
+        });
 
+        swalWithBootstrapButtons.fire({
+            title: '{{ __('front.subscribe_sorry') }}',
+            text: '{{ __('front.subscribe_sorry_desc') }}',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: '{{ __('front.no_subscribe') }}',
+            confirmButtonText: '{{ __('front.yes_subscribe') }}',
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '{{ route('profile') }}';
+            }
+        });
+    });
 </script>
 </body>
 

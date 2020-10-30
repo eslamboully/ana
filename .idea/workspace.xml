@@ -23,14 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ana.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ana.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/BoardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_30_214533_user_package.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_30_214533_user_package.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/front.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Front/board.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/board.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +45,7 @@
     </execution>
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="17024" />
+    <option name="totalTimeSeconds" value="3022" />
     <option name="idleThresholdMs" value="2000" />
     <option name="autoCountIdleSeconds" value="2" />
   </component>
@@ -258,7 +258,7 @@
       <workItem from="1603919385426" duration="18332000" />
       <workItem from="1604059087038" duration="142000" />
       <workItem from="1604063651504" duration="2087000" />
-      <workItem from="1604089748397" duration="3767000" />
+      <workItem from="1604089748397" duration="8210000" />
     </task>
     <servers />
   </component>

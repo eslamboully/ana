@@ -81,4 +81,9 @@ return [
     'remove_very_small_board_log' => 'تم حذف المهمة :verysmallboard بواسطة :user',
     'logs' => 'سجل العمل',
     'accountant' => 'محاسب',
+    'subscribe_sorry' => 'للأسف انتهي الاشتراك',
+    'subscribe_sorry_desc' => 'يمكنك تجديد الاشتراك او تحديث الباقة من هنا',
+    'yes_subscribe' => 'تجديد',
+    'no_subscribe' => 'اغلاق',
+    'subscription' => 'الاشراك',
 ];

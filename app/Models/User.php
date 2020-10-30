@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -106,5 +108,25 @@ class User extends Authenticatable
     public function very_small_boards()
     {
         return $this->belongsToMany(VerySmallBoard::class,'very_small_board_user','very_small_board_id','user_id');
+    }
+
+    public function packages()
+    {
+        return $this->belongsToMany(Package::class,'user_package','user_id','package_id');
+    }
+
+    public function hasPackage()
+    {
+        $lastPackage = $this->packages()->get()->last();
+        if($lastPackage) {
+            $expirationCondition = DB::table('user_package')
+                ->where('user_id',$this->id)
+                ->where('package_id',$lastPackage->id)
+                ->get()->last();
+            if (Carbon::parse($expirationCondition->end_at) > Carbon::now()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
