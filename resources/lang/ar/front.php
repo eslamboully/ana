@@ -9,7 +9,7 @@ return [
     'dashboard' => 'الرئيسية',
     'my' => 'لوحتي الشخصية',
     'latest_ques' => 'اخر زيارة',
-    'permissions' => 'صلاحياتي',
+    'permissions' => 'لوحة التحكم',
     'settings' => 'الاعدادات',
     'others' => 'اخري',
     'all_boards' => 'جميع الاعمال',
@@ -61,7 +61,7 @@ return [
     'dateOfBirth' => 'تاريخ الميلاد',
     'country' => 'البلد',
     'first_reserved_footer' => 'جميع الحقوق محفوظة لشركة غزال 2020 &copy;',
-    'last_reserved_footer' => 'صنع بالحب بواسطة غزال للحلول البرمجية',
+    'last_reserved_footer' => 'صنع بحب بواسطة غزال للتجارة والخدمات الإلكترونية',
     'delete_success' => 'تم المسح بنجاح',
     'change_color' => 'اختر اللون المفضل',
     'color' => 'اختر لون اللوحة',
@@ -81,6 +81,7 @@ return [
     'remove_very_small_board_log' => 'تم حذف المهمة :verysmallboard بواسطة :user',
     'logs' => 'سجل العمل',
     'accountant' => 'محاسب',
+<<<<<<< HEAD
     'lang' => 'en',
     'language' => 'English',
     'login_menu' => 'التسجيل / الدخول للنظام',
@@ -106,4 +107,11 @@ return [
     'panels' => ' اللوحات',
     'panels_desc' => 'اجعل من السهل على فريقك التركيز على المهام الحالية. حدد كل مرحلة من مراحل العمل لمعرفة ما هو مهم وأين تتعطل الأشياء.',
 
+=======
+    'subscribe_sorry' => 'للأسف انتهي الاشتراك',
+    'subscribe_sorry_desc' => 'يمكنك تجديد الاشتراك او تحديث الباقة من هنا',
+    'yes_subscribe' => 'تجديد',
+    'no_subscribe' => 'اغلاق',
+    'subscription' => 'الاشراك',
+>>>>>>> ddb27bd38a9197b869fb3ff19d1e389a0940db2a
 ];

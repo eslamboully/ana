@@ -12,14 +12,14 @@
                         <p style="font-size: 12px;">@lang('front.start_from'): {{ $myBoard->startDate }}  @lang('front.end_to'): {{ $myBoard->endDate }}</p>
                     </div>
                     <div class="col s12 m6 l6 right-align-md">
-                        <ol class="breadcrumbs mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('front.my')</a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="{{ route('board.boards.all') }}">@lang('front.all_boards')</a>
-                            </li>
-                            <li class="breadcrumb-item active">{{ $myBoard->name }}
-                            </li>
-                        </ol>
+{{--                        <ol class="breadcrumbs mb-0">--}}
+{{--                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('front.my')</a>--}}
+{{--                            </li>--}}
+{{--                            <li class="breadcrumb-item"><a href="{{ route('board.boards.all') }}">@lang('front.all_boards')</a>--}}
+{{--                            </li>--}}
+{{--                            <li class="breadcrumb-item active">{{ $myBoard->name }}--}}
+{{--                            </li>--}}
+{{--                        </ol>--}}
                     </div>
                 </div>
             </div>
@@ -961,8 +961,8 @@
                 method: 'post',
                 data: {board_id: board_id,_token: '{{ csrf_token() }}'},
                 success: function (data) {
+                    $('.board-list-logs').html("");
                     data.data.forEach( function (log) {
-                        $('.board-list-logs').html("");
                         $('.board-list-logs').append(`<tr><td>${log.title}</td></tr>`);
                     });
                 }

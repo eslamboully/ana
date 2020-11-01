@@ -9,7 +9,7 @@ return [
     'dashboard' => 'Dashboard',
     'my' => 'Personal Page',
     'latest_ques' => 'Latest Visits',
-    'permissions' => 'Personal Permissions',
+    'permissions' => 'Control Panel',
     'settings' => 'Settings',
     'others' => 'Others',
     'all_boards' => 'All Boards',

@@ -7,10 +7,13 @@ use App\Models\Board;
 use App\Models\Comment;
 use App\Models\File;
 use App\Models\Message;
+use App\Models\Package;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller {
@@ -63,24 +66,33 @@ class HomeController extends Controller {
         ]);
 
         SmallBoard::create([
-            'title' => 'Tasks List',
+            'title' => 'قائمة المهام',
             'board_id' => $board->id,
             'bg-color' => 'blue',
             'count_number' => 1
         ]);
 
         SmallBoard::create([
-            'title' => 'On Progress',
+            'title' => 'قيد التنفيذ',
             'board_id' => $board->id,
             'bg-color' => 'red',
             'count_number' => 2
         ]);
 
         SmallBoard::create([
-            'title' => 'Completed',
+            'title' => 'منتهي',
             'board_id' => $board->id,
             'bg-color' => 'cyan',
             'count_number' => 3
+        ]);
+
+        // Insert Free Package 1 Year
+        $package = Package::query()->first();
+        DB::table('user_package')->insert([
+            'user_id' => $user->id,
+            'package_id' => $package->id,
+            'start_at' => Carbon::now()->format('d-m-Y'),
+            'end_at' => Carbon::now()->addYear()->format('d-m-Y'),
         ]);
 
         if ($request->get('board_id'))

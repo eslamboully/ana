@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Board;
+use App\Models\Package;
+use App\Models\PackageTranslation;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
@@ -83,11 +85,25 @@ class AdminSeeder extends Seeder
             'count_number' => 3
         ]);
 
-        VerySmallBoard::create([
-            'small_board_id' => 1,
-            'title' => 'fix first bug',
-            'border' => 'red',
-            'dueDate' => 'MARCH 1, 2019',
+        // Packages
+        $package = Package::create([
+            'manager_num' => 10,
+            'monitor_num' => 20,
+            'employee_num' => 30,
+            'trial_days' => 7,
+            'end_days' => 7,
+            'days' => 365,
+            'price' => 0,
+        ]);
+        PackageTranslation::create([
+            'title' => 'الباقة البرونزية',
+            'locale' => 'ar',
+            'package_id' => $package->id
+        ]);
+        PackageTranslation::create([
+            'title' => 'Bronze Package',
+            'locale' => 'en',
+            'package_id' => $package->id
         ]);
     }
 }

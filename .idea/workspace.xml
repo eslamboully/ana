@@ -120,10 +120,20 @@
       <change afterPath="$PROJECT_DIR$/resources/views/Front/site.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/front.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_30_214533_user_package.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_30_214533_user_package.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/Layouts/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Front/profile.blade.php" afterDir="false" />
+>>>>>>> ddb27bd38a9197b869fb3ff19d1e389a0940db2a
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,10 +141,12 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="16376" />
+    <option name="totalTimeSeconds" value="3022" />
     <option name="idleThresholdMs" value="2000" />
     <option name="autoCountIdleSeconds" value="2" />
   </component>
@@ -305,13 +317,25 @@
       <recent name="$PROJECT_DIR$/resources/views/Front/Emails" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -335,25 +359,30 @@
       <workItem from="1603919385426" duration="18332000" />
       <workItem from="1604059087038" duration="142000" />
       <workItem from="1604063651504" duration="2087000" />
+<<<<<<< HEAD
       <workItem from="1604153935499" duration="22000" />
       <workItem from="1604223454841" duration="3986000" />
+=======
+      <workItem from="1604089748397" duration="8210000" />
+>>>>>>> ddb27bd38a9197b869fb3ff19d1e389a0940db2a
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="396" y="198" width="563" height="412" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602778326891">
