@@ -81,4 +81,6 @@ return [
     'remove_very_small_board_log' => 'The task has been deleted :verysmallboard by :user',
     'logs' => 'logs',
     'accountant' => 'Accountant',
+    'lang' => 'ar',
+    'language' => 'العربية',
 ];

@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller {
 
+    public function site()
+    {
+        return view('Front.site');
+    }
     public function login()
     {
         if (!auth()->check()) {

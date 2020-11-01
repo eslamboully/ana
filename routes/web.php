@@ -26,10 +26,13 @@ Route::group([], function () {
     // User Change Lang
     Route::get('/lang/{lang}','HomeController@lang')->name('lang');
 
+    Route::get('/','HomeController@site')->name('site');
+
+
     // User Home
     Route::group(['middleware' => 'auth'],function () {
         // Home Page
-        Route::get('/','HomeController@index')->name('home');
+        Route::get('/home','HomeController@index')->name('home');
         // Profile
         Route::get('/profile','HomeController@profile')->name('profile');
         Route::post('/profile','HomeController@profilePost')->name('profile.post');

@@ -23,7 +23,106 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="498cdde4-a9f9-4dbd-add3-6db65fa159c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/LineIcons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/animate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/default.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/magnific-popup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/slick.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/css/style.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/LineIcons.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/LineIcons.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/LineIcons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/LineIcons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/about-shape-1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/about-shape-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/about1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/about2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/about3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/banner-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/blog-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/blog-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/blog-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/brand-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/brand-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/brand-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/brand-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/brand-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/dots.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/foot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/footer-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/google.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/header-hero.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/logo-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/logo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/services-shape-1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/services-shape-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/services-shape-3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/services-shape.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/images/textimonial-shape.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/ajax-contact.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/jquery.counterup.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/jquery.easing.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/jquery.magnific-popup.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/particles.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/plugins.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/popper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/scrolling-nav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/slick.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/vendor/jquery-1.12.4.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/vendor/modernizr-3.7.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/waypoints.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Front/assets/js/wow.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/about-shape-1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/about-shape-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/about1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/about2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/about3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/banner-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/blog-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/blog-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/blog-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brand-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brand-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brand-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brand-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brand-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/dots.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/foot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/footer-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/google.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/header-hero.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/logo-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/logo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/services-shape-1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/services-shape-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/services-shape-3.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/services-shape.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/textimonial-shape.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Front/site.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/front.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/front.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/front.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,20 +289,20 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Events" />
-      <recent name="$PROJECT_DIR$/resources/views/Front/Emails" />
-      <recent name="$PROJECT_DIR$/resources/views/Front" />
-      <recent name="C:\xampp\htdocs\ana\resources\views\Front" />
-      <recent name="C:\xampp\htdocs\ana\app\Http\Controllers\Front" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\ana\resources\views\Admin\Layouts" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/assets" />
+      <recent name="$PROJECT_DIR$/public/assets/images" />
+      <recent name="$PROJECT_DIR$/public/Front" />
+      <recent name="$PROJECT_DIR$/app/Events" />
+      <recent name="$PROJECT_DIR$/resources/views/Front/Emails" />
     </key>
   </component>
   <component name="RunManager">
@@ -236,6 +335,8 @@
       <workItem from="1603919385426" duration="18332000" />
       <workItem from="1604059087038" duration="142000" />
       <workItem from="1604063651504" duration="2087000" />
+      <workItem from="1604153935499" duration="22000" />
+      <workItem from="1604223454841" duration="3986000" />
     </task>
     <servers />
   </component>
@@ -263,10 +364,10 @@
       <screen x="0" y="34" width="1366" height="734" />
     </state>
     <state x="416" y="159" width="524" height="490" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.34.1366.734@0.34.1366.734" timestamp="1603920368943" />
-    <state x="466" y="159" width="424" height="490" key="FileChooserDialogImpl" timestamp="1604059227070">
+    <state x="466" y="159" width="424" height="490" key="FileChooserDialogImpl" timestamp="1604153954750">
       <screen x="0" y="34" width="1366" height="734" />
     </state>
-    <state x="466" y="159" width="424" height="490" key="FileChooserDialogImpl/0.34.1366.734@0.34.1366.734" timestamp="1604059227070" />
+    <state x="466" y="159" width="424" height="490" key="FileChooserDialogImpl/0.34.1366.734@0.34.1366.734" timestamp="1604153954750" />
     <state x="100" y="134" width="1166" height="534" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603830714589">
       <screen x="0" y="34" width="1366" height="734" />
     </state>
@@ -275,9 +376,13 @@
       <screen x="0" y="34" width="1366" height="734" />
     </state>
     <state x="293" y="34" width="770" height="734" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.34.1366.734@0.34.1366.734" timestamp="1603558067553" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604063687471">
+    <state x="347" y="176" key="run.anything.popup" timestamp="1604261346876">
       <screen x="0" y="34" width="1366" height="734" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1604063687471" />
+    <state x="347" y="176" key="run.anything.popup/0.34.1366.734@0.34.1366.734" timestamp="1604261346876" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1604261474918">
+      <screen x="0" y="34" width="1366" height="734" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.34.1366.734@0.34.1366.734" timestamp="1604261474918" />
   </component>
 </project>
