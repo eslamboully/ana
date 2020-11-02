@@ -9,7 +9,9 @@ use App\Models\PackageTranslation;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -51,12 +53,13 @@ class AdminSeeder extends Seeder
 
 
         // User
-        User::create([
-            'name' => 'Abdelrahman Osama',
+        $user = User::create([
+            'name' => 'Test Account',
             'email' => 'user@user.com',
             'password' => bcrypt('user'),
             'status' => 1
         ]);
+
 
         Board::create([
             'name' => 'Personal Board',
@@ -104,6 +107,15 @@ class AdminSeeder extends Seeder
             'title' => 'Bronze Package',
             'locale' => 'en',
             'package_id' => $package->id
+        ]);
+
+        // Insert Free Package 1 Year
+        $package = Package::query()->first();
+        DB::table('user_package')->insert([
+            'user_id' => $user->id,
+            'package_id' => $package->id,
+            'start_at' => Carbon::now()->format('d-m-Y'),
+            'end_at' => Carbon::now()->addYear()->format('d-m-Y'),
         ]);
     }
 }

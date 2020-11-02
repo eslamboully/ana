@@ -115,7 +115,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Package::class,'user_package','user_id','package_id');
     }
 
-    public function hasPackage()
+        public function hasPackage()
     {
         $lastPackage = $this->packages()->get()->last();
         if($lastPackage) {

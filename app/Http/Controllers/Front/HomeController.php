@@ -116,6 +116,7 @@ class HomeController extends Controller {
             ->where('user_id',auth()->user()->id)
             ->where('isPersonalities',1)
             ->first();
+
         return view('Front/home',compact('myBoard'));
     }
 

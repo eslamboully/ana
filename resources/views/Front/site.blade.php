@@ -304,10 +304,10 @@
                 <div class="about-content mt-50 wow fadeInLeftBig" data-wow-duration="1s" data-wow-delay="0.5s">
                     <div class="section-title">
                         <div class="line"></div>
-                        <h3 class="title"><span>مصنوع من أجل</span> الشركات الحالمة</h3>
+                        <h3 class="title"><span>@lang('front.created_fro')</span> @lang('front.company_dreams')</h3>
                     </div> <!-- section title -->
-                    <p class="text">من الأشياء الصغيرة إلى الصورة الكبيرة ، تنظم لوحة التجكم العمل بحيث تكون الفرق واضحة فيما يجب القيام به ، ولماذا هو مهم ، وكيفية إنجازه.</p>
-                    <a href="#" class="main-btn">جربه مجانا</a>
+                    <p class="text">@lang('front.company_dreams_desc')</p>
+                    <a href="#" class="main-btn">@lang('front.try_free')</a>
                 </div> <!-- about content -->
             </div>
             <div class="col-lg-6">
@@ -347,32 +347,32 @@
                     <div class="counter-content">
                         <div class="section-title">
                             <div class="line"></div>
-                            <h3 class="title">حقائق مدهشة <span> عن لوحة التحكم</span></h3>
+                            <h3 class="title">حقائق مدهشة <span>@lang('front.about_cpanel')</span></h3>
                         </div> <!-- section title -->
-                        <p class="text">نظام صممته وابتكرته شركة غزال للتجارة والخدمات الإلكترونية ليكون أول نظام مجاني يوفر لك جميع الأدوات اللازمة للنجاح في عملك.</p>
+                        <p class="text">@lang('front.about_cpanel_desc')</p>
                     </div> <!-- counter content -->
                     <div class="row no-gutters">
                         <div class="col-4">
                             <div class="single-counter counter-color-1 d-flex align-items-center justify-content-center">
                                 <div class="counter-items text-center">
-                                    <span class="count"><span class="counter">1440</span>ساعات</span>
-                                    <p class="text">برمجة</p>
+                                    <span class="count"><span class="counter">1440</span>@lang('front.hours')</span>
+                                    <p class="text">@lang('front.progs')</p>
                                 </div>
                             </div> <!-- single counter -->
                         </div>
                         <div class="col-4">
                             <div class="single-counter counter-color-2 d-flex align-items-center justify-content-center">
                                 <div class="counter-items text-center">
-                                    <span class="count"><span class="counter">167</span>ساعات</span>
-                                    <p class="text">تحليل</p>
+                                    <span class="count"><span class="counter">167</span>@lang('front.hours')</span>
+                                    <p class="text">@lang('front.progs')</p>
                                 </div>
                             </div> <!-- single counter -->
                         </div>
                         <div class="col-4">
                             <div class="single-counter counter-color-3 d-flex align-items-center justify-content-center">
                                 <div class="counter-items text-center">
-                                    <span class="count"><span class="counter">90</span>ساعات</span>
-                                    <p class="text">إختبار</p>
+                                    <span class="count"><span class="counter">90</span>@lang('front.hours')</span>
+                                    <p class="text">@lang('front.test')</p>
                                 </div>
                             </div> <!-- single counter -->
                         </div>
@@ -392,14 +392,14 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="subscribe-content mt-45">
-                        <h2 class="subscribe-title">إشترك بالنشرة الإخبارية <span>أحصل على آخر الأخبار</span></h2>
+                        <h2 class="subscribe-title">@lang('front.subscribe_desc') <span>@lang('front.subscribe_desc_two')</span></h2>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="subscribe-form mt-50">
                         <form action="#">
                             <input type="text" placeholder="Enter eamil">
-                            <button class="main-btn">إشترك</button>
+                            <button class="main-btn">@lang('front.subscribe')</button>
                         </form>
                     </div>
                 </div>
@@ -412,7 +412,7 @@
                         <a class="logo" href="#">
                             <img src="{{ url('Front')}}/assets/images/foot.png" alt="logo">
                         </a>
-                        <p class="text">نظام صممته وابتكرته شركة غزال للتجارة والخدمات الإلكترونية ليكون أول نظام مجاني يوفر لك جميع الأدوات اللازمة للنجاح في عملك.</p>
+                        <p class="text">@lang('front.desc_footer')</p>
                         <!-- <ul class="social">
                             <li><a href="#"><i class="lni-facebook-filled"></i></a></li>
                             <li><a href="#"><i class="lni-twitter-filled"></i></a></li>
@@ -425,26 +425,26 @@
                     <div class="footer-link d-flex mt-50 justify-content-md-between">
                         <div class="link-wrapper wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
                             <div class="footer-title">
-                                <h4 class="title">روابط سريعة</h4>
+                                <h4 class="title">@lang('front.footer_fast_links')</h4>
                             </div>
                             <ul class="link">
-                                <li><a href="#">الرئيسية</a></li>
-                                <li><a href="#">المميزات</a></li>
-                                <li><a href="#">عن النظام</a></li>
-                                <li><a href="#">لماذا ننصحك به</a></li>
-                                <li><a href="#">تسجيل الدخول</a></li>
+                                <li><a href="#">@lang('front.dashboard')</a></li>
+                                <li><a href="#">@lang('front.features')</a></li>
+                                <li><a href="#">@lang('front.about_system')</a></li>
+                                <li><a href="#">@lang('front.why_dd')</a></li>
+                                <li><a href="#">@lang('front.login')</a></li>
                             </ul>
                         </div> <!-- footer wrapper -->
                         <div class="link-wrapper wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
                             <div class="footer-title">
-                                <h4 class="title">شركة غزال</h4>
+                                <h4 class="title">@lang('front.ghazal')</h4>
                             </div>
                             <ul class="link">
-                                <li><a href="#">الأنظمة</a></li>
-                                <li><a href="#">ننصحك بها</a></li>
-                                <li><a href="#">ماذا نستطيع أن نفعل</a></li>
-                                <li><a href="#">خدمة المتعاملين</a></li>
-                                <li><a href="#">تواصل معنا</a></li>
+                                <li><a href="#">@lang('front.systems')</a></li>
+                                <li><a href="#">@lang('front.advice_for_you')</a></li>
+                                <li><a href="#">@lang('front.how_cat')</a></li>
+                                <li><a href="#">@lang('front.service_f')</a></li>
+                                <li><a href="#">@lang('front.contact_us')</a></li>
                             </ul>
                         </div> <!-- footer wrapper -->
                     </div> <!-- footer link -->
@@ -452,13 +452,13 @@
                 <div class="col-lg-3 col-md-5 col-sm-5">
                     <div class="footer-contact mt-50 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
                         <div class="footer-title">
-                            <h4 class="title">تواصل معنا</h4>
+                            <h4 class="title">@lang('front.contact_us')</h4>
                         </div>
                         <ul class="contact">
                             <li>+97165552588</li>
                             <li>contact@ghazaluae.com</li>
                             <li>www.ghazaluae.com</li>
-                            <li>الشارقة , الإمارات <br> العربية المتحدة.</li>
+                            <li>@lang('front.ssh')<br> @lang('front.arab_motahida')</li>
                         </ul>
                     </div> <!-- footer contact -->
                 </div>
@@ -469,7 +469,7 @@
                 <div class="col-lg-12">
                     <div class="copyright d-sm-flex justify-content-between">
                         <div class="copyright-content">
-                            <p class="text">تم التصميم والبرمجمة في <a href="http://ghazaluae.com" rel="nofollow">شركة غزال للتجارة والخدمات الإلكترونية ذ.م.م</a></p>
+                            <p class="text">@lang('front.tm_tasmim') <a href="http://ghazaluae.com" rel="nofollow">@lang('front.tm_tasmim_2')</a></p>
                         </div> <!-- copyright content -->
                     </div> <!-- copyright -->
                 </div>

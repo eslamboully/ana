@@ -30,7 +30,7 @@ Route::group([], function () {
 
 
     // User Home
-    Route::group(['middleware' => 'auth'],function () {
+    Route::group(['middleware' => 'auth' ],function () {
         // Home Page
         Route::get('/home','HomeController@index')->name('home');
         // Profile

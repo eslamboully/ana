@@ -44,6 +44,7 @@
     @endif
 
     @stack('css')
+
 </head>
 <!-- END: Head-->
 
@@ -125,19 +126,14 @@
             <div class="nav-wrapper">
                 <ul class="left hide-on-med-and-down" id="ul-horizontal-nav" data-menu="menu-navigation">
                     <li>
-                        <a class="dropdown-menu" href="Javascript:void(0)" data-target="TemplatesDropdown">
+                        <a class="waves-effect waves-light modal-trigger" href="{{ route('board.boards.all') }}">
                             <i class="material-icons">dvr</i>
                             <span>
-                                <span class="dropdown-title" data-i18n="Templates">
-                                    @lang('front.permissions')
+                                <span class="dropdown-title" data-i18n="Apps">
+                                    @lang('front.dashboard')
                                 </span>
-                                <i class="material-icons right">keyboard_arrow_down</i>
                             </span>
                         </a>
-                        <ul class="dropdown-content dropdown-horizontal-list" id="TemplatesDropdown">
-                            <li data-menu=""><a href="{{ route('board.boards.all') }}"><span data-i18n="Modern Menu">@lang('front.all_boards')</span></a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a class="waves-effect waves-light modal-trigger" href="{{ route('home') }}">
@@ -604,6 +600,37 @@
         });
     });
 </script>
+
+@if(!auth()->user()->hasPackage() and \Illuminate\Support\Facades\Request::segment(1) != 'profile')
+    <script>
+        $(document).ready(function (){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger edit-margin-cancel-button'
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: '{{ __('front.subscribe_sorry') }}',
+                text: '{{ __('front.subscribe_sorry_desc') }}',
+                icon: 'warning',
+                showCancelButton: false,
+                cancelButtonText: '{{ __('front.no_subscribe') }}',
+                confirmButtonText: '{{ __('front.yes_subscribe') }}',
+                reverseButtons: false,
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('profile') }}';
+                }
+            });
+        });
+    </script>
+@endif
+
+
 </body>
 
 </html>
