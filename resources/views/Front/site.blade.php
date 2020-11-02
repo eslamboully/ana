@@ -37,6 +37,18 @@
     <!--====== Style CSS ======-->
     <link rel="stylesheet" href="{{ url('Front')}}/assets/css/style.css">
 
+    @if(App()->getLocale() == 'ar')
+        <link href="https://fonts.googleapis.com/css?family=Cairo:400,700" rel="stylesheet">
+        <style>
+            body, h1, h2, h3, h4, h5, h6, a, li, label, input, span, button th, td, p ,tr{
+                font-family: 'Cairo', sans-serif !important;
+            }
+            .edit-margin-cancel-button {
+                margin: 7px;
+            }
+        </style>
+    @endif
+
 </head>
 
 <body>
