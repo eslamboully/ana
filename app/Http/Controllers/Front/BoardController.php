@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 
 class BoardController extends Controller {
@@ -249,34 +250,37 @@ class BoardController extends Controller {
         }
 
         if ($request->file('file')) {
-            $image = $request->file('file');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/uploads/home/files');
-            $image->move($destinationPath, $name);
+            $name = $request->file('file')->store("","google");
+
+            $url = Storage::disk('google')->url($name.'');
+//            $image = $request->file('file');
+//            $name = time().'.'.$image->getClientOriginalExtension();
+//            $destinationPath = public_path('/uploads/home/files');
+//            $image->move($destinationPath, $name);
             if ($request->get('isPublic') == 0) {
                 File::create([
                     'board_id' => $request->get('board_id'),
                     'very_small_board_id' => null,
-                    'file' => $name
+                    'file' => $url
                 ]);
             } else {
                 File::create([
                     'board_id' => $request->get('board_id'),
                     'very_small_board_id' => $request->get('id'),
-                    'file' => $name
+                    'file' => $url
                 ]);
             }
         }
 
-        $package = new Log();
+//        $package = new Log();
 
         // Save With Database Language Not Dimsav Locales
-        foreach ($this->langs as $index=>$lang) {
-            $package->translateOrNew($index)->title = __('front.update_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $very->title],$index);
-        }
-        $smallBoard = SmallBoard::find($very->small_board_id);
-        $package->board_id = $smallBoard->board_id;
-        $package->save();
+//        foreach ($this->langs as $index=>$lang) {
+//            $package->translateOrNew($index)->title = __('front.update_very_small_board_log',['user' => auth()->user()->name,'verysmallboard' => $very->title],$index);
+//        }
+//        $smallBoard = SmallBoard::find($very->small_board_id);
+//        $package->board_id = $smallBoard->board_id;
+//        $package->save();
         return response()->json(['data' => $very,'message' => null,'status' => 1]);
     }
 
