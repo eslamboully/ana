@@ -115,7 +115,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Package::class,'user_package','user_id','package_id');
     }
 
-        public function hasPackage()
+    public function hasPackage()
     {
         $lastPackage = $this->packages()->get()->last();
         if($lastPackage) {
@@ -128,5 +128,20 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function hasPackageInfo()
+    {
+        $lastPackage = $this->packages()->get()->last();
+        if($lastPackage) {
+            $expirationCondition = DB::table('user_package')
+                ->where('user_id',$this->id)
+                ->where('package_id',$lastPackage->id)
+                ->get()->last();
+            if (Carbon::parse($expirationCondition->end_at) > Carbon::now()) {
+                return ['package' => $lastPackage,'package-info' => $expirationCondition];
+            }
+        }
+        return null;
     }
 }

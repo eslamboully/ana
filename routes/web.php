@@ -88,6 +88,10 @@ Route::group([], function () {
 
         // Boards Logs
         Route::post('board/logs','BoardController@boardLogs')->name('board.logs');
+
+        // Board Pay
+        Route::post('board/pay','BoardController@boardBuyPackage')->name('board.buy.package');
+        Route::post('board/after/pay','BoardController@boardAfterBuyPackage')->name('board.after.buy.package');
     });
 
 

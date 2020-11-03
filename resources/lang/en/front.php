@@ -133,4 +133,5 @@ return [
     'ssh' => 'Sharjah, UAE',
     'tm_tasmim' => 'Designed and programmed in',
     'tm_tasmim_2' => 'Ghazal Trade and Electronic Services Company LLC',
+    'choose_package' => 'Choose Suitable Package',
 ];

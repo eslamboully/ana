@@ -17,6 +17,7 @@ use App\Models\Package;
 use App\Models\SmallBoard;
 use App\Models\User;
 use App\Models\VerySmallBoard;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -424,6 +425,25 @@ class BoardController extends Controller {
     {
         $logs = Log::with(['translations'])->where('board_id',$request->get('board_id'))->get();
         return response()->json(['data' => $logs,'message' => null, 'status' => 1]);
+    }
+
+    public function boardBuyPackage(Request $request)
+    {
+        $package = Package::find($request->get('package_id'));
+        return view('Front.buy_package',compact('package'));
+    }
+
+    public function boardAfterBuyPackage(Request $request)
+    {
+        $package = Package::find($request->get('package_id'));
+        DB::table('user_package')->insert([
+            'user_id' => auth()->user()->id,
+            'package_id' => $package->id,
+            'start_at' => Carbon::now()->format('d-m-Y'),
+            'end_at' => Carbon::now()->addDays($package->days)->format('d-m-Y'),
+        ]);
+
+        return response()->json(['data' => null,'message' => null,'status' => 1]);
     }
 
     public function lang($lang)

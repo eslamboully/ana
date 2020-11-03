@@ -67,7 +67,7 @@
                                                                             <span>العنوان</span>
                                                                         </div>
                                                                         <div class="col-md-10">
-                                                                            <input type="text" id="first-name" class="form-control" name="{{ $index }}[title]" value="{{ old($index)["title"] }}" placeholder="العنوان">
+                                                                            <input type="text" id="first-name" class="form-control" name="{{ $index }}[title]" value="" placeholder="العنوان">
                                                                         </div>
                                                                     </div>
                                                                 </div>

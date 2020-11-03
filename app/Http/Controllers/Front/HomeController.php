@@ -121,7 +121,8 @@ class HomeController extends Controller {
     }
 
     public function profile() {
-        return view('Front.profile');
+        $packages = Package::all();
+        return view('Front.profile',compact('packages'));
     }
 
     public function profilePost(Request $request) {

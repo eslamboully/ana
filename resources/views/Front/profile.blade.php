@@ -316,11 +316,28 @@
                         </form>
                     </div>
                     <div class="col s12" id="subscription">
-                        <div id="smart-button-container">
-                            <div style="text-align: center;">
-                                <div id="paypal-button-container"></div>
-                            </div>
-                        </div>
+{{--                        <div id="smart-button-container">--}}
+{{--                            <div style="text-align: center;">--}}
+{{--                                <div id="paypal-button-container"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        @if(auth()->user()->hasPackage())
+                            <p>@lang('front.you_are_has_package') : {{ auth()->user()->hasPackageInfo()['package']->title }}</p>
+                            <p>@lang('front.sub_at') : {{ auth()->user()->hasPackageInfo()['package-info']->start_at }}</p>
+                            <p>@lang('front.end_at') : {{ auth()->user()->hasPackageInfo()['package-info']->end_at }}</p>
+                        @else
+                            <form action="{{ route('board.buy.package') }}" method="post">
+                                @csrf
+                                <select name="package_id" id="">
+                                    <option value="">@lang('front.choose_package')</option>
+                                    @foreach($packages as $package)
+                                        <option value="{{ $package->id }}">{{ $package->title }} @lang('front.price') {{ $package->price }}$</option>
+                                    @endforeach
+                                </select>
+
+                                <button type="submit" class="btn btn-success" style="font-family: 'Cairo', sans-serif">@lang('front.pay')</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 <!-- </div> -->
