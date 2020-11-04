@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'admin','as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin-panel','as' => 'admin.'], function () {
 
     // Admin Login
     Route::get('/login','HomeController@login')->name('login');

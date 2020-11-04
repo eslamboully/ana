@@ -913,7 +913,7 @@
 
                     Swal.hideLoading();
                     Swal.clickConfirm();
-                    
+
                     Swal.fire(
                         "{{ __('front.good_job') }}",
                         "{{ __('front.success_upload') }}",
