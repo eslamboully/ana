@@ -210,7 +210,7 @@
                                     title: e.target[0].value,
                                     id: data.data.id,
                                     border: "red",
-                                    dueDate: "00/00/0000",
+                                    dueDate: "{{ \Carbon\Carbon::now()->format('d-m-Y') }}",
                                     comment: 0,
                                     attachment: 0,
                                     users: [
@@ -872,7 +872,7 @@
                     $(".ql-editor").html("");
                     data.data.comments.forEach((comment) => {
                         $(".comments_paragraph").append(
-                            `<p>${comment.comment} <span style="font-size: 9px">${ comment.very_small_board !== null ? comment.very_small_board.title : '{{ __('front.public_comment') }}' }</span></p>
+                            `<p>${comment.comment} <span style="font-size: 9px">${ comment.very_small_board !== null ? comment.very_small_board.title : '{{ __('front.public_comment') }}' } ${ new Date(comment.created_at) }</span></p>
                             <p style="text-align: left;font-size: 14px;">${comment.user.name}</p>`
                         );
                     });
@@ -960,7 +960,7 @@
                 success: function (data) {
                     $('.board-list-logs').html("");
                     data.data.forEach( function (log) {
-                        $('.board-list-logs').append(`<tr><td>${log.title}</td></tr>`);
+                        $('.board-list-logs').append(`<tr><td>${log.title} <span style="font-size: 11px">${ '{{ __('front.log_date') }}' + new Date(log.created_at)}</span></td></tr>`);
                     });
                 }
             });
@@ -1111,9 +1111,9 @@
         <div class="modal-content">
             <h4>@lang('front.logs')</h4>
             <table class="table">
-                <tr>
-                    <td>@lang('front.logs')</td>
-                </tr>
+{{--                <tr>--}}
+{{--                    <td>@lang('front.logs')</td>--}}
+{{--                </tr>--}}
                 @csrf
                 <tbody class="board-list-logs">
 

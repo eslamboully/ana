@@ -134,4 +134,13 @@ return [
     'tm_tasmim' => 'Designed and programmed in',
     'tm_tasmim_2' => 'Ghazal Trade and Electronic Services Company LLC',
     'choose_package' => 'Choose Suitable Package',
+    'price' => 'Price',
+    'pay' => 'Pay',
+    'start_at' => 'Start at',
+    'end_at' => 'End at',
+    'days' => 'Days',
+    'day' => 'Day',
+    'package_title' => 'Choosen Package',
+    'you_are_has_package' => 'You Are Already Have Package',
+    'sub_at' => 'Sub At',
 ];

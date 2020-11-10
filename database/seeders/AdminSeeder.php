@@ -68,21 +68,21 @@ class AdminSeeder extends Seeder
         ]);
 
         SmallBoard::create([
-            'title' => 'Tasks List',
+            'title' => 'قائمة المهام',
             'board_id' => 1,
             'bg-color' => 'blue',
             'count_number' => 1
         ]);
 
         SmallBoard::create([
-            'title' => 'On Progress',
+            'title' => 'قيد التنفيذ',
             'board_id' => 1,
             'bg-color' => 'red',
             'count_number' => 2
         ]);
 
         SmallBoard::create([
-            'title' => 'Completed',
+            'title' => 'منتهي',
             'board_id' => 1,
             'bg-color' => 'cyan',
             'count_number' => 3

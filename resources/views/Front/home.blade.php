@@ -425,7 +425,6 @@
                             var kanbanNewBoardData = '<div class="dropdown">' +
                                 '<a class="dropdown-trigger" href="#" data-target="kan' + i + '" > <i class="material-icons white-text">more_vert</i></a>' +
                                 '<ul id="kan' + i + '" class="dropdown-content">' +
-                                '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Copy Link</span></a></li>' +
                                 '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
                                 '</ul></div>';
                             var kanbanNewDropdown = $(kanbanNewBoard).find("header");
@@ -473,7 +472,6 @@
                 kanban_dropdown.innerHTML =
                     '<a class="dropdown-trigger" href="#" data-target="" > <i class="material-icons white-text">more_vert</i></a>' +
                     '<ul id="" class="dropdown-content">' +
-                    '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Copy Link</span></a></li>' +
                     '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
                     '</ul>';
                 if (!$(".kanban-board-header div").hasClass("dropdown")) {

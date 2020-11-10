@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'english' => 'الانجليزية',
+    'english' => 'English',
     'arabic' => 'العربية',
-    'site_name' => 'سي بانل',
+    'site_name' => 'لوحة التحكم',
     'search' => ' بحث ',
-    'search_desc' => ' استكشف سي بانل ',
-    'dashboard' => 'الرئيسية',
+    'search_desc' => ' استكشف لوحة التحكم ',
+    'dashboard' => 'لوحات التحكم',
     'my' => 'لوحتي الشخصية',
     'latest_ques' => 'اخر زيارة',
     'permissions' => 'لوحة التحكم',
@@ -25,7 +25,7 @@ return [
     'save' => 'حفظ',
     'delete' => 'احذف',
     'file' => 'ملف',
-    'add_new_work' => 'اضف عمل جديد',
+    'add_new_work' => 'اضف لوحة تحكم جديدة',
     'name_of_board' => 'اسم المشروع او اللوحة',
     'project_name' => 'اسم المشروع',
     'agree' => 'تأكيد',
@@ -143,4 +143,5 @@ return [
     'package_title' => 'الباقة المحجوزة',
     'you_are_has_package' => 'انت مشترك بالفعل في باقة',
     'sub_at' => 'تاريخ تسجيل الباقة',
+    'log_date' => 'تاريخ الحدث',
 ];

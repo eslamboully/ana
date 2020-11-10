@@ -57,7 +57,7 @@
             <div class="nav-wrapper">
                 <ul class="left">
                     <li>
-                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ route('home') }}"><img src="{{ url('Front') }}/cpanel.png" style="width: 100px;height: 33px;" alt="materialize logo"><span class="logo-text hide-on-med-and-down"></span></a></h1>
+                        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ route('home') }}"><img src="{{ url('Front') }}/white_cpanel.png" style="width: 187px;height: 60px;margin-top: -19px" alt="materialize logo"><span class="logo-text hide-on-med-and-down"></span></a></h1>
                     </li>
                 </ul>
                 <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons" style="font-family: 'Cairo', sans-serif !important;"> @lang('front.search')</i>
@@ -135,16 +135,16 @@
                             </span>
                         </a>
                     </li>
-                    <li>
-                        <a class="waves-effect waves-light modal-trigger" href="{{ route('home') }}">
-                            <i class="material-icons">dashboard</i>
-                            <span>
-                                <span class="dropdown-title" data-i18n="Apps">
-                                    @lang('front.my')
-                                </span>
-                            </span>
-                        </a>
-                    </li>
+{{--                    <li>--}}
+{{--                        <a class="waves-effect waves-light modal-trigger" href="{{ route('home') }}">--}}
+{{--                            <i class="material-icons">dashboard</i>--}}
+{{--                            <span>--}}
+{{--                                <span class="dropdown-title" data-i18n="Apps">--}}
+{{--                                    @lang('front.my')--}}
+{{--                                </span>--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 {{--                    <li><a class="dropdown-menu" href="Javascript:void(0)" data-target="AppsDropdown"><i class="material-icons">mail_outline</i><span><span class="dropdown-title" data-i18n="Apps">@lang('front.settings')</span><i class="material-icons right">keyboard_arrow_down</i></span></a>--}}
 {{--                        <ul class="dropdown-content dropdown-horizontal-list" id="AppsDropdown">--}}
 {{--                            <li data-menu=""><a href="app-email.html"><span data-i18n="Mail">@lang('front.settings')</span></a>--}}
